@@ -2,7 +2,7 @@ import React from 'react'
 
 function Activity(props) {
     return (
-        <div>
+        <div className="activity">
             <h1>{props.title}</h1>
             <h4>{props.date} - {props.time}</h4>
             <p>{props.description}</p>

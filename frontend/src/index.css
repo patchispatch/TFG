@@ -1,3 +1,4 @@
+/* GLOBALS */
 :root {
   --bg: #ffffff;
   --text-color: #404040;
@@ -37,4 +38,24 @@ body {
 .list-view {
   height: inherit;
   padding: 10px 50px;
+}
+
+/* ACTIVITIES */
+.activity {
+  width: 400px;
+  margin: 15px;
+  background-color: #6666ff;
+  color: white;
+  padding: 5px 25px ;
+  border: 2px solid #6666ff;
+  border-radius: 10px;
+  transition: 0.3s;
+
+}
+
+.activity:hover {
+  color: #6666ff;
+  background-color: #e6e6ff;
+  border: 2px solid #6666ff;
+  cursor: pointer;
 }
