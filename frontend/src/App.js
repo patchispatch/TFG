@@ -1,33 +1,17 @@
 import React, {useState, useEffect} from 'react'
-import axios from "axios"
-import Activity from './components/Activity'
+import Sidebar from './components/Sidebar'
+import View from './components/View'
 
 function App() {
-  const [activities, setActivities] = useState([])
+    // State
+    const [view, setView] = useState('list')
 
-  useEffect(() => {
-    axios.get("http://localhost:8000/api/activities")
-    .then(res => setActivities(res.data))
-    .catch(err => console.log(err))
-
-    console.log(activities)
-  }, [])
-
-  return (
-    <main>
-      <h1>Hello World</h1>
-      {activities.map((act) => {
-        return (
-        <Activity 
-          key={act.id}
-          title={act.title}
-          description={act.description}
-          date={act.date}
-          time={act.time}
-        />)
-      })}
-    </main>
-  );
+    return (
+        <div>
+            <Sidebar />
+            <View type={view}/>
+        </div>
+    )
 }
 
 export default App;
