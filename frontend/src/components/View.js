@@ -8,7 +8,7 @@ function View(props) {
 
     // Fetch activities
     useEffect(() => {
-        axios.get("http://localhost:8000/api/activities")
+        axios.get("http://localhost:8000/activities/")
         .then(res => setActivities(res.data))
         .catch(err => console.log(err))
     }, [])
