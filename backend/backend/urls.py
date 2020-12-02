@@ -5,8 +5,9 @@ from core import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('activities/', views.ActivityList),
-    path('activities/<int:pk>', views.ActivityDetail)
+    path('', views.api_root, name='api-root'),
+    path('activities/', views.ActivityList.as_view(), name='activity-list'),
+    path('activities/<int:pk>', views.ActivityDetail.as_view(), name='activity-detail'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
