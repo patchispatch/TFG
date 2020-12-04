@@ -6,14 +6,9 @@ function Modal(props){
     ? createPortal(
         <div className="modal-container">
             <div className="modal">
-                <div>
-                    <h5>Modal</h5>
-                    <span>
-                        Why this modal has popped up
-                    </span>
-                </div>
+                {props.children}
                 <button onClick={props.hideModal}>
-                    Close
+                    &times;
                 </button>
             </div>
         </div>,
