@@ -8,19 +8,20 @@ import useModal from './hooks/useModal'
 function App() {
     // State
     const [view, setView] = useState('list')
-    const {isVisible, toggleModal} = useModal()
+    const [activityFormVisible, activityFormToggle] = useModal()
 
     return (
         <div>
             <Sidebar>
-                <button onClick={toggleModal}>New activity</button>
-                <Modal isVisible={isVisible} hideModal={toggleModal}>
+                {/* New activity form */}
+                <button onClick={activityFormToggle}>New activity</button>
+                <Modal isVisible={activityFormVisible} hideModal={activityFormToggle}>
                     <ActivityForm />
                 </Modal>
             </Sidebar>
-            <View type={view}/>
-            
 
+            {/* Current view */}
+            <View type={view}/>
         </div>
     )
 }

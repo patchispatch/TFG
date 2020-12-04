@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import useForm from '../hooks/useForm'
 
-function ActivityForm() {
+function ActivityForm(props) {
     // Initial values of the form
     const initialValues = {
         title: "",

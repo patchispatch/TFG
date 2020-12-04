@@ -7,10 +7,10 @@ function useModal() {
         setIsVisible(!isVisible)
     }
 
-    return {
+    return [
         isVisible,
         toggleModal,
-    }
+    ]
 }
 
 export default useModal
