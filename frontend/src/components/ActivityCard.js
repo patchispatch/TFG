@@ -6,6 +6,7 @@ function Activity(props) {
             <h1>{props.title}</h1>
             <h4>{props.date} - {props.time}</h4>
             <p>{props.description}</p>
+            <button onClick={() => props.deleteFn(props.id)}>Delete</button>
         </div>
     )
 }
