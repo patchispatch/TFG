@@ -5,7 +5,6 @@ function useModal() {
 
     const toggleModal = () => {
         setIsVisible(!isVisible)
-        console.log(isVisible)
     }
 
     return {

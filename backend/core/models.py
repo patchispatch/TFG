@@ -4,7 +4,7 @@ from django.db import models
 class Activity(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(blank=True)
-    date = models.DateField()
+    date = models.DateField(null=True, blank=True)
     time = models.TimeField(null=True, blank=True)
 
     def __str__(self):
