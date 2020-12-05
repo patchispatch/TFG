@@ -7,10 +7,7 @@ function useModal() {
         setIsVisible(!isVisible)
     }
 
-    return [
-        isVisible,
-        toggleModal,
-    ]
+    return [isVisible, toggleModal]
 }
 
 export default useModal
