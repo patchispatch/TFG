@@ -1,8 +1,7 @@
 import React from 'react'
-import axios from 'axios'
 import useForm from '../hooks/useForm'
 
-function ActivityForm(props) {
+function NewActivityForm(props) {
     // Initial values of the form
     const initialValues = {
         title: "",
@@ -11,21 +10,12 @@ function ActivityForm(props) {
         time: "",
     }
 
-    // Submit callback
-    function onSubmit() {
-        console.log(values)
-
-        // Create activity
-        axios.post('http://localhost:8000/activities/', values)
-            .catch(err => console.log(err))
-    }
-
     // Form hook
     const {
         values,
         handleChange,
         handleSubmit,
-    } = useForm(onSubmit, initialValues)
+    } = useForm(props.onSubmit, initialValues)
 
     return (
         <form className="form" onSubmit={handleSubmit}>
@@ -66,4 +56,4 @@ function ActivityForm(props) {
     )
 }
 
-export default ActivityForm
+export default NewActivityForm

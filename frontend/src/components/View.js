@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import ListView from './ListView'
+import Modal from './Modal'
+import NewActivityForm from './NewActivityForm'
+import useModal from '../hooks/useModal'
 
 function View(props) {
     // State
     const [activities, setActivities] = useState([])
+    const [activityFormVisible, switchActivityFormVisible] = useModal()
 
     // Fetch activities
     function fetchActivities() {
@@ -16,6 +20,13 @@ function View(props) {
     useEffect(() => {
         fetchActivities()
     }, [])
+
+    // New activity
+    function newActivity(values) {
+        axios.post('http://localhost:8000/activities/', values)
+            .then(fetchActivities())
+            .catch(err => console.log(err))
+    }
 
     // Modify activity
     // TO DO
@@ -43,6 +54,13 @@ function View(props) {
 
     return (
         <div className="view">
+            {/* New activity form */}
+            <button onClick={switchActivityFormVisible}>New activity</button>
+            <Modal isVisible={activityFormVisible} hideModal={switchActivityFormVisible}>
+                <NewActivityForm onSubmit={newActivity}/>
+            </Modal>
+
+            {/* Current view */}
             {switchView()}
         </div>
     )

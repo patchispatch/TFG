@@ -15,7 +15,7 @@ function useForm(onSubmit, initialValues) {
         if(event)
             event.preventDefault()
         // Callback 
-        onSubmit()
+        onSubmit(values)
     }
 
     return {
