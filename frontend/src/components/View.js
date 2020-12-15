@@ -38,7 +38,6 @@ function View(props) {
             .catch(err => console.log(err))
     }
 
-
     function switchView() {
         switch(props.type) {
             case 'list':
