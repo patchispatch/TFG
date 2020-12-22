@@ -58,7 +58,7 @@ function View(props) {
     return (
         <div className="view">
             {/* New activity form */}
-            <button onClick={switchActivityFormVisible}>New activity</button>
+            <button name="newActivity" onClick={switchActivityFormVisible}>New activity</button>
             <Modal isVisible={activityFormVisible} hideModal={switchActivityFormVisible}>
                 <NewActivityForm onSubmit={newActivity}/>
             </Modal>

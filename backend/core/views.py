@@ -9,3 +9,7 @@ from .serializers import *
 class ActivityViewSet(viewsets.ModelViewSet):
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
+
+class ObjectiveViewSet(viewsets.ModelViewSet):
+    queryset = Objective.objects.all()
+    serializer_class = ObjectiveSerializer

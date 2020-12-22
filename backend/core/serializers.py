@@ -16,3 +16,8 @@ class ActivitySerializer(serializers.ModelSerializer):
             data['time'] = None
 
         return super(ActivitySerializer, self).to_internal_value(data)
+
+class ObjectiveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Objective
+        fields = ('id', 'title', 'goal', 'progress')
