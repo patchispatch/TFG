@@ -6,24 +6,23 @@ import NewActivityForm from './NewActivityForm'
 import useModal from '../hooks/useModal'
 
 function View(props) {
+    // API URL (probably moving this)
+    const api = "http://localhost:8000"
+
     // State
     const [activities, setActivities] = useState([])
     const [activityFormVisible, switchActivityFormVisible] = useModal()
 
     // Fetch activities
     function fetchActivities() {
-        axios.get("http://localhost:8000/activities/")
+        axios.get(`${api}/activities/`)
         .then(res => setActivities(res.data))
         .catch(err => console.log(err))
     }
 
-    useEffect(() => {
-        fetchActivities()
-    }, [])
-
     // New activity
     function newActivity(values) {
-        axios.post('http://localhost:8000/activities/', values)
+        axios.post(`${api}/activities/`, values)
             .then(fetchActivities())
             .catch(err => console.log(err))
     }
@@ -33,7 +32,7 @@ function View(props) {
 
     // Delete activity
     function deleteActivity(id) {
-        axios.delete(`http://localhost:8000/activities/${id}`)
+        axios.delete(`${api}/activities/${id}`)
             .then(fetchActivities)
             .catch(err => console.log(err))
     }
@@ -50,6 +49,11 @@ function View(props) {
                 throw new Error("This view does not exist")
         }
     }
+
+    // Fetch activities when the component mounts
+    useEffect(() => {
+        fetchActivities()
+    }, [])
 
     return (
         <div className="view">

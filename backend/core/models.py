@@ -9,3 +9,12 @@ class Activity(models.Model):
 
     def __str__(self):
         return self.title
+
+class Objective(models.Model):
+    title = models.CharField(max_length=200)
+    goal = models.PositiveSmallIntegerField()
+    progress = models.PositiveSmallIntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
