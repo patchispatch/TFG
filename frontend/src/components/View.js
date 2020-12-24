@@ -4,15 +4,18 @@ import ListView from './ListView'
 import Modal from './Modal'
 import NewActivityForm from './NewActivityForm'
 import useModal from '../hooks/useModal'
+import NewObjectiveForm from './NewObjectiveForm'
 
 function View(props) {
     // API URL (probably moving this)
     const api = "http://localhost:8000"
 
-    // State
+    // STATE
     const [activities, setActivities] = useState([])
     const [activityFormVisible, switchActivityFormVisible] = useModal()
+    const [objectiveFormVisible, switchObjectiveFormVisible] = useModal()
 
+    // ACTIVITIES (I don't know where to put this but now it works as intended so here we are)
     // Fetch activities
     function fetchActivities() {
         axios.get(`${api}/activities/`)
@@ -33,9 +36,18 @@ function View(props) {
     // Delete activity
     function deleteActivity(id) {
         axios.delete(`${api}/activities/${id}`)
-            .then(fetchActivities)
+            .then(fetchActivities())
             .catch(err => console.log(err))
     }
+
+
+    // OBJECTIVES (same as activities)
+    function newObjective(values) {
+        axios.post(`${api}/objectives/`, values)
+            .then(alert("Objective successfully created"))
+            .catch(err => console.log(err))
+    }
+
 
     function switchView() {
         switch(props.type) {
@@ -58,9 +70,19 @@ function View(props) {
     return (
         <div className="view">
             {/* New activity form */}
-            <button name="newActivity" onClick={switchActivityFormVisible}>New activity</button>
+            <button name="newActivity" onClick={switchActivityFormVisible}>
+                New activity
+            </button>
             <Modal isVisible={activityFormVisible} hideModal={switchActivityFormVisible}>
                 <NewActivityForm onSubmit={newActivity}/>
+            </Modal>
+
+            {/* New objective form */}
+            <button name="newObjective" onClick={switchObjectiveFormVisible}>
+                New objective
+            </button>
+            <Modal isVisible={objectiveFormVisible} hideModal={switchObjectiveFormVisible}>
+                <NewObjectiveForm onSubmit={newObjective}/>
             </Modal>
 
             {/* Current view */}
