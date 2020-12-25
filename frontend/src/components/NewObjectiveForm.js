@@ -3,8 +3,8 @@ import useForm from '../hooks/useForm'
 
 function NewObjectiveForm(props) {
     const initialValues = {
-        title: "",
-        goal: ""
+        title: undefined,
+        goal: "",
     }
 
     // Form hook

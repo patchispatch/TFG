@@ -1,29 +1,38 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import {render, screen} from '@testing-library/react'
+import {render, screen, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import axios from 'axios'
 
-import App from '../App'
+import View from '../components/View'
 import NewObjectiveForm from '../components/NewObjectiveForm'
 
+// Mocking axios
+const mockData = [
+    {"id":1,"title":"Comprar pan","goal":5,"progress":0},
+    {"id":2,"title":"Salir a correr","goal":2,"progress":1},
+    {"id":3,"title":"Swim","goal":2,"progress":2}
+]
+
 describe("UH 1 - Create objective", () => {
-    test("The user can click New Objective button", () => {
-        render(<App />)
+    test("The user can click New Objective button", async () => {
+        axios.get.mockResolvedValue(mockData)
+        render(<View type="list"/>)
 
         // The button exists in the DOM
-        expect(screen.getByRole("button", {name: /new objective/i})).toBeInTheDocument()
+        await waitFor(() => expect(screen.getByRole("button", {name: /new objective/i})).toBeInTheDocument())
     })
 
-    test("Clicking the New Objective button makes the New Objective form to appear", () => {
-        render(<App />)
+    test("Clicking the New Objective button makes the New Objective form to appear", async () => {
+        axios.get.mockResolvedValue(mockData)
+        render(<View type="list" />)
 
         // The user clicks the button
         const button = screen.getByRole("button", {name: /new objective/i})
         userEvent.click(button)
 
         // The form appears in the DOM
-        expect(screen.getByRole("form", {name: /new objective/i})).toBeInTheDocument()
+        await waitFor(() => expect(screen.getByRole("form", {name: /new objective/i})).toBeInTheDocument())
     })
 
     // Fake submit function
@@ -59,13 +68,14 @@ describe("UH 1 - Create objective", () => {
         userEvent.type(titleBox, "Running")
 
         // The form contains the data
-        expect(titleBox.textContent).toBe("Running")
+        expect(titleBox).toHaveValue("Running")
 
         // The user clicks the submit button
         const submitButton = screen.getByText(/Save/i)
         userEvent.click(submitButton)
 
-        // The submit function must not have been called
-        expect(fakeSubmit).not.toHaveBeenCalledTimes(1)
+        // The error message must be there
+        const error = screen.getByText("You need to set a goal")
+        expect(error).toBeInTheDocument()
     })
 })
