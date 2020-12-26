@@ -82,7 +82,7 @@ function View(props) {
                 New objective
             </button>
             <Modal isVisible={objectiveFormVisible} hideModal={switchObjectiveFormVisible}>
-                <NewObjectiveForm onSubmit={newObjective}/>
+                <NewObjectiveForm onSubmit={newObjective} onCancel={switchObjectiveFormVisible}/>
             </Modal>
 
             {/* Current view */}

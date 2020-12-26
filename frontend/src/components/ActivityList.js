@@ -4,7 +4,7 @@ import ActivityCard from './ActivityCard'
 function ActivityList(props) {
     return (
     <Fragment>
-        {props.activities.map((act) => {
+        {props.activities && props.activities.map((act) => {
             return (
             <ActivityCard 
                 key={act.id}
