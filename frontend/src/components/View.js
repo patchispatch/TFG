@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import ListView from './ListView'
+import ObjectiveListView from './ObjectiveListView'
 import Modal from './Modal'
 import NewActivityForm from './NewActivityForm'
 import useModal from '../hooks/useModal'
@@ -12,6 +13,7 @@ function View(props) {
 
     // STATE
     const [activities, setActivities] = useState([])
+    const [objectives, setObjectives] = useState([])
     const [activityFormVisible, switchActivityFormVisible] = useModal()
     const [objectiveFormVisible, switchObjectiveFormVisible] = useModal()
 
@@ -42,21 +44,24 @@ function View(props) {
 
 
     // OBJECTIVES (same as activities)
-    function newObjective(values) {
-        axios.post(`${api}/objectives/`, values)
-            .then(alert("Objective successfully created"))
+    function fetchObjectives() {
+        axios.get(`${api}/objectives/`)
+            .then(res => setObjectives(res.data))
             .catch(err => console.log(err))
     }
 
+    function newObjective(values) {
+        axios.post(`${api}/objectives/`, values)
+            .then(fetchObjectives())
+            .catch(err => console.log(err))
+    }
 
     function switchView() {
         switch(props.type) {
             case 'list':
                 return <ListView activities={activities} deleteFn={deleteActivity}/>
-            case 'timeline':
-                throw new Error("Not implemented yet")
-            case 'day':
-                throw new Error("Not implemented yet")
+            case 'objectiveList':
+                return <ObjectiveListView objectives={objectives}/>
             default:
                 throw new Error("This view does not exist")
         }
@@ -65,6 +70,7 @@ function View(props) {
     // Fetch activities when the component mounts
     useEffect(() => {
         fetchActivities()
+        fetchObjectives()
     }, [])
 
     return (

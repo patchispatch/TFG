@@ -63,6 +63,11 @@ body {
   cursor: pointer;
 }
 
+/* TOPBAR */
+.topBar {
+  margin-left: var(--sidebar-width)
+}
+
 /* VIEWS */
 .view {
   height: 100vh;
