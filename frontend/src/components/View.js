@@ -4,8 +4,10 @@ import ListView from './ListView'
 import ObjectiveListView from './ObjectiveListView'
 import Modal from './Modal'
 import NewActivityForm from './NewActivityForm'
-import useModal from '../hooks/useModal'
+import Topbar from './Topbar'
 import NewObjectiveForm from './NewObjectiveForm'
+import useModal from '../hooks/useModal'
+
 
 function View(props) {
     // API URL (probably moving this)
@@ -67,7 +69,7 @@ function View(props) {
         }
     }
 
-    // Fetch activities when the component mounts
+    // Fetch data when the component mounts
     useEffect(() => {
         fetchActivities()
         fetchObjectives()
@@ -75,18 +77,23 @@ function View(props) {
 
     return (
         <div className="view">
+            {/* Top bar */}
+            <Topbar view={props.type} switchView={props.switchView}>
+                <button name="newActivity" onClick={switchActivityFormVisible}>
+                    New activity
+                </button>
+
+                <button name="newObjective" onClick={switchObjectiveFormVisible}>
+                    New objective
+                </button>
+            </Topbar>
+
             {/* New activity form */}
-            <button name="newActivity" onClick={switchActivityFormVisible}>
-                New activity
-            </button>
             <Modal isVisible={activityFormVisible} hideModal={switchActivityFormVisible}>
                 <NewActivityForm onSubmit={newActivity}/>
             </Modal>
 
             {/* New objective form */}
-            <button name="newObjective" onClick={switchObjectiveFormVisible}>
-                New objective
-            </button>
             <Modal isVisible={objectiveFormVisible} hideModal={switchObjectiveFormVisible}>
                 <NewObjectiveForm onSubmit={newObjective} onCancel={switchObjectiveFormVisible}/>
             </Modal>
