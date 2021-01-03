@@ -15,10 +15,10 @@ function NewObjectiveForm(props) {
                 ref={register({required: true, maxLength: 200})}
             />
             {errors.title && errors.title.type === "required" && (
-                <span role="alert">The objective must have a title</span>
+                <span className="alert" role="alert">The objective must have a title</span>
             )}
             {errors.title && errors.title.type === "maxLength" && (
-                <span role="alert">The title must be less than 200 characters long</span>
+                <span className="alert" role="alert">The title must be less than 200 characters long</span>
             )}
 
             <label htmlFor="newObjectiveGoal">Goal</label>
@@ -30,11 +30,11 @@ function NewObjectiveForm(props) {
                 ref={register({required: true})}
             />
             {errors.goal && errors.goal.type === "required" && (
-                <span role="alert">You need to set a goal</span>
+                <span className="alert" role="alert">You need to set a goal</span>
             )}
 
             <button onClick={props.onCancel}>Cancel</button>
-            <button type="submit">Save</button>
+            <button type="submit" className="submit-button">Save</button>
         </form>
     )
 }

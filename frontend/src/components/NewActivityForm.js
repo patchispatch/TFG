@@ -56,7 +56,7 @@ function NewActivityForm(props) {
                     value={values.time}
                 />
             </fieldset>
-            <button>Create activity</button>
+            <button className="submit-button">Create activity</button>
         </form>
     )
 }

@@ -1,8 +1,9 @@
 /* GLOBALS */
 :root {
   --bg: #ffffff;
-  --text-color: #404040;
   --sidebar-width: 400px;
+  --light-grey: #eeeeee;
+  --dark-grey: #404040;
 }
 
 body {
@@ -85,7 +86,7 @@ body {
 
 .form label{
   display: block;
-  color: var(--text-color);
+  color: var(--dark-grey);
   margin-bottom: 5px;
 }
 
@@ -94,7 +95,7 @@ body {
   margin: 8px 0;
 }
 
-.form input[type=text] {
+.form input[type=text], input[type=number] {
   display: block;
   width: 100%;
   box-sizing: border-box;
@@ -108,10 +109,29 @@ body {
 .form button {
   padding: 15px 25px;
   margin: 10px 0;
-  background-color: #6666ff;
-  color: white;
-  border: 1px solid #6666ff;
+  margin-right: 15px;
   border-radius: 5px;
+  color: var(--dark-grey);
+  background-color: var(--light-grey);
+  border: 1px solid var(--light-grey);
+  transition-duration: 0.3s;
+  opacity: 0.7;
+}
+
+.form button:hover {
+  opacity: 1;
+}
+
+.form .submit-button {
+  background-color: var(--dark-grey);
+  color: white;
+  border: 1px solid var(--dark-grey);
+}
+
+.form .alert {
+  display: block;
+  font-size: 10;
+  color: rgb(212, 57, 57);
 }
 
 
