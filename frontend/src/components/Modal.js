@@ -6,10 +6,10 @@ function Modal(props){
     ? createPortal(
         <div className="modal-container">
             <div className="modal">
-                {props.children}
-                <button onClick={props.hideModal}>
+                <button className="close-button" onClick={props.hideModal}>
                     &times;
                 </button>
+                {props.children}
             </div>
         </div>,
         document.body

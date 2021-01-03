@@ -37,20 +37,25 @@ function NewActivityForm(props) {
                 required
             />
 
-            <input 
-                type="date"
-                name="date"
-                onChange={handleChange}
-                value={values.date}
-            />
+            <fieldset>
+                <label>Date</label>
+                <input 
+                    type="date"
+                    name="date"
+                    onChange={handleChange}
+                    value={values.date}
+                />
+            </fieldset>
 
-            <input 
-                type="time"
-                name="time"
-                onChange={handleChange}
-                value={values.time}
-            />
-
+            <fieldset>
+                <label>Time</label>
+                <input 
+                    type="time"
+                    name="time"
+                    onChange={handleChange}
+                    value={values.time}
+                />
+            </fieldset>
             <button>Create activity</button>
         </form>
     )

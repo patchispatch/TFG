@@ -41,17 +41,22 @@ body {
 }
 
 .modal {
+  position: relative;
   background-color: var(--bg);
   margin: 15% auto; /* 15% from the top and centered */
   border-radius: 5px;
   padding: 20px;
   border: 1px solid #888;
-  width: 60%; /* Could be more or less, depending on screen size */
+  width: 40%; /* Could be more or less, depending on screen size */
 }
 
 .close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
   color: #aaa;
-  float: right;
+  background-color: var(--bg);
+  border: none;
   font-size: 28px;
   font-weight: bold;
 }
@@ -65,8 +70,50 @@ body {
 
 /* TOPBAR */
 .topBar {
-  margin-left: var(--sidebar-width)
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
+
+/* FORM */
+.form fieldset {
+  width: 50%;
+  display: inline-block;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.form label{
+  display: block;
+  color: var(--text-color);
+  margin-bottom: 5px;
+}
+
+.form input {
+  padding: 12px 20px;
+  margin: 8px 0;
+}
+
+.form input[type=text] {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form input[type=date], input[type=time] {
+  display: inline-block;
+  width: 80%;
+}
+
+.form button {
+  padding: 15px 25px;
+  margin: 10px 0;
+  background-color: #6666ff;
+  color: white;
+  border: 1px solid #6666ff;
+  border-radius: 5px;
+}
+
 
 /* VIEWS */
 .view {
