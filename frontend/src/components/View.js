@@ -78,15 +78,12 @@ function View(props) {
     return (
         <div className="view">
             {/* Top bar */}
-            <Topbar view={props.type} switchView={props.switchView}>
-                <button name="newActivity" onClick={switchActivityFormVisible}>
-                    New activity
-                </button>
-
-                <button name="newObjective" onClick={switchObjectiveFormVisible}>
-                    New objective
-                </button>
-            </Topbar>
+            <Topbar 
+                view={props.type} 
+                switchView={props.switchView}
+                activityForm={switchActivityFormVisible}
+                objectiveForm={switchObjectiveFormVisible}
+            />
 
             {/* New activity form */}
             <Modal isVisible={activityFormVisible} hideModal={switchActivityFormVisible}>
