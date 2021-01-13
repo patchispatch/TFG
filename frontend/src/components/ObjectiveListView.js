@@ -17,7 +17,6 @@ function ObjectiveListView(props) {
             accessor: 'progress'
         }
     ], [])
-    const objectiveList = useTable({columns, data})
 
     const {
         getTableProps,
@@ -25,7 +24,7 @@ function ObjectiveListView(props) {
         headerGroups,
         rows,
         prepareRow,
-    } = objectiveList
+    } = useTable({columns, data})
 
     return (
         <table aria-label="Objective list" {...getTableProps()}>
