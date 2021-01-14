@@ -6,15 +6,18 @@ function ObjectiveListView(props) {
     const columns = useMemo(() => [
         {
             Header: 'Title',
+            Footer: 'Title',
             accessor: 'title',
         },
         {
             Header: 'Goal',
+            Footer: 'Goal',
             accessor: 'goal',
         },
         {
             Header: 'Progress',
-            accessor: 'progress'
+            Footer: 'Progress',
+            accessor: 'progress',
         }
     ], [])
 
@@ -22,41 +25,56 @@ function ObjectiveListView(props) {
         getTableProps,
         getTableBodyProps,
         headerGroups,
+        footerGroups,
         rows,
         prepareRow,
     } = useTable({columns, data})
 
     return (
-        <table aria-label="Objective list" {...getTableProps()}>
-            <thead>
-            {headerGroups.map(headerGroup => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map(column => (
-                        <th {...column.getHeaderProps()}>
-                            {column.render('Header')}
-                        </th>
-                    ))}
-                </tr>
-            ))}
-            </thead>
+        <div className="objective-list-view">
+            <table aria-label="Objective list" {...getTableProps()}>
+                <thead>
+                {headerGroups.map(headerGroup => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map(column => (
+                            <th {...column.getHeaderProps()}>
+                                {column.render('Header')}
+                            </th>
+                        ))}
+                    </tr>
+                ))}
+                </thead>
 
-            <tbody {...getTableBodyProps()}>
-                {rows.map(row => {
-                    prepareRow(row)
-                    return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map(cell => {
-                                return (
-                                    <td {...cell.getCellProps()}>
-                                        {cell.render('Cell')}
-                                    </td>
-                                )
-                            })}
+                <tbody {...getTableBodyProps()}>
+                    {rows.map(row => {
+                        prepareRow(row)
+                        return (
+                            <tr {...row.getRowProps()}>
+                                {row.cells.map(cell => {
+                                    return (
+                                        <td {...cell.getCellProps()}>
+                                            {cell.render('Cell')}
+                                        </td>
+                                    )
+                                })}
+                            </tr>
+                        )
+                    })}
+                </tbody>
+
+                <tfoot>
+                    {footerGroups.map(footerGroup => (
+                        <tr {...footerGroup.getFooterGroupProps()}>
+                            {footerGroup.headers.map(column => (
+                                <td {...column.getFooterProps()}>
+                                    {column.render('Footer')}
+                                </td>
+                            ))}
                         </tr>
-                    )
-                })}
-            </tbody>
-        </table>
+                    ))}
+                </tfoot>
+            </table>
+        </div>
     )
 }
 

@@ -132,15 +132,47 @@ body {
 
 /* VIEWS */
 .view {
-  height: 100vh;
+  height: 100%;
   margin-left: var(--sidebar-width);
-  overflow-x: hidden;
-
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .list-view {
   height: inherit;
   padding: 10px 50px;
+}
+
+.objective-list-view {
+  height: inherit;
+  overflow-y: auto;
+}
+
+.objective-list-view table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.objective-list-view table td, .objective-list-view table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.objective-list-view table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.objective-list-view table tr:hover {
+  background-color: #ddd;
+}
+
+.objective-list-view table th, .objective-list-view tfoot td {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: var(--dark-grey);
+  color: white;
 }
 
 /* TOPBAR */
@@ -197,27 +229,4 @@ body {
   background-color: #e6e6ff;
   border: 2px solid #6666ff;
   cursor: pointer;
-}
-
-/* TABLE */
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-table td, table th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-table tr:nth-child(even){background-color: #f2f2f2;}
-
-table tr:hover {background-color: #ddd;}
-
-table th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: center;
-  background-color: var(--dark-grey);
-  color: white;
 }
