@@ -10,54 +10,6 @@ import useModal from '../hooks/useModal'
 
 
 function View(props) {
-    // API URL (probably moving this)
-    const api = "http://localhost:8000"
-
-    // STATE
-    const [activities, setActivities] = useState([])
-    const [objectives, setObjectives] = useState([])
-    const [activityFormVisible, switchActivityFormVisible] = useModal()
-    const [objectiveFormVisible, switchObjectiveFormVisible] = useModal()
-
-    // ACTIVITIES (I don't know where to put this but now it works as intended so here we are)
-    // Fetch activities
-    function fetchActivities() {
-        axios.get(`${api}/activities/`)
-        .then(res => setActivities(res.data))
-        .catch(err => console.log(err))
-    }
-
-    // New activity
-    function newActivity(values) {
-        axios.post(`${api}/activities/`, values)
-            .then(fetchActivities())
-            .catch(err => console.log(err))
-    }
-
-    // Modify activity
-    // TO DO
-
-    // Delete activity
-    function deleteActivity(id) {
-        axios.delete(`${api}/activities/${id}`)
-            .then(fetchActivities())
-            .catch(err => console.log(err))
-    }
-
-
-    // OBJECTIVES (same as activities)
-    function fetchObjectives() {
-        axios.get(`${api}/objectives/`)
-            .then(res => setObjectives(res.data))
-            .catch(err => console.log(err))
-    }
-
-    function newObjective(values) {
-        axios.post(`${api}/objectives/`, values)
-            .then(fetchObjectives())
-            .catch(err => console.log(err))
-    }
-
     function switchView() {
         switch(props.type) {
             case 'list':
@@ -69,22 +21,8 @@ function View(props) {
         }
     }
 
-    // Fetch data when the component mounts
-    useEffect(() => {
-        fetchActivities()
-        fetchObjectives()
-    }, [])
-
     return (
         <div className="view">
-            {/* Top bar */}
-            <Topbar 
-                view={props.type} 
-                switchView={props.switchView}
-                activityForm={switchActivityFormVisible}
-                objectiveForm={switchObjectiveFormVisible}
-            />
-
             {/* New activity form */}
             <Modal isVisible={activityFormVisible} hideModal={switchActivityFormVisible}>
                 <NewActivityForm onSubmit={newActivity}/>
