@@ -1,21 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React from 'react'
 import ListView from './ListView'
 import ObjectiveListView from './ObjectiveListView'
-import Modal from './Modal'
-import NewActivityForm from './NewActivityForm'
-import Topbar from './Topbar'
-import NewObjectiveForm from './NewObjectiveForm'
-import useModal from '../hooks/useModal'
 
 
 function View(props) {
-    function switchView() {
+    function renderView() {
         switch(props.type) {
             case 'list':
-                return <ListView activities={activities} deleteFn={deleteActivity}/>
+                return <ListView activities={props.activities} deleteFn={props.deleteActivity}/>
             case 'objectiveList':
-                return <ObjectiveListView objectives={objectives}/>
+                return <ObjectiveListView objectives={props.objectives}/>
             default:
                 throw new Error("This view does not exist")
         }
@@ -23,18 +17,8 @@ function View(props) {
 
     return (
         <div className="view">
-            {/* New activity form */}
-            <Modal isVisible={activityFormVisible} hideModal={switchActivityFormVisible}>
-                <NewActivityForm onSubmit={newActivity}/>
-            </Modal>
-
-            {/* New objective form */}
-            <Modal isVisible={objectiveFormVisible} hideModal={switchObjectiveFormVisible}>
-                <NewObjectiveForm onSubmit={newObjective} onCancel={switchObjectiveFormVisible}/>
-            </Modal>
-
             {/* Current view */}
-            {switchView()}
+            {renderView()}
         </div>
     )
 }

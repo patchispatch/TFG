@@ -27,7 +27,7 @@ function ObjectiveListView(props) {
         headerGroups,
         footerGroups,
         rows,
-        prepareRow,
+        prepareRow
     } = useTable({columns, data})
 
     return (

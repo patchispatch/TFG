@@ -4,6 +4,7 @@ import {render, screen, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import axios from 'axios'
 
+import App from '../App'
 import View from '../components/View'
 import NewObjectiveForm from '../components/NewObjectiveForm'
 
@@ -20,14 +21,14 @@ describe("UH 1 - Create objective", () => {
     })
 
     test("The user can click New Objective button", async () => {
-        render(<View type="objectiveList"/>)
+        render(<View type="objectiveList" objectives={mockData}/>)
 
         // The button exists in the DOM
         await waitFor(() => expect(screen.getByRole("button", {name: /new objective/i})).toBeInTheDocument())
     })
 
     test("Clicking the New Objective button makes the New Objective form to appear", async () => {
-        render(<View type="objectiveList" />)
+        render(<View type="objectiveList" objectives={mockData}/>)
 
         // The user clicks the button
         const button = screen.getByRole("button", {name: /new objective/i})
@@ -83,7 +84,7 @@ describe("UH 1 - Create objective", () => {
     })
 
     test("The user closes the form and it disappears", async () => {
-        render(<View type="objectiveList" />)
+        render(<View type="objectiveList" objectives={mockData}/>)
 
         // Open the form
         const openButton = screen.getByRole("button", {name: /New objective/i})

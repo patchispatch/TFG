@@ -2,9 +2,10 @@
 :root {
   --bg: #ffffff;
   --sidebar-width: 400px;
+  --topbar-height: 60px;
+  --topbar-width: calc(100vw - var(--sidebar-width));
   --light-grey: #eeeeee;
   --dark-grey: #404040;
-  --topbar-size: 60px;
 }
 
 body {
@@ -134,6 +135,7 @@ body {
 .view {
   height: 100%;
   margin-left: var(--sidebar-width);
+  margin-top: var(--topbar-height);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -177,7 +179,12 @@ body {
 
 /* TOPBAR */
 .topbar {
-  height: var(--topbar-size);
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: var(--topbar-height);
+  width: var(--topbar-width);
+  margin-left: var(--sidebar-width);
   background-color: var(--bg);
   padding: 0 1rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -192,14 +199,14 @@ body {
 }
 
 .top-item {
-  width: calc(var(--topbar-size) * 0.8);
+  width: calc(var(--topbar-height) * 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .icon-button {
-  --button-size: calc(var(--topbar-size) * 0.7);
+  --button-size: calc(var(--topbar-height) * 0.7);
   width: var(--button-size);
   height: var(--button-size);
   border: none;
