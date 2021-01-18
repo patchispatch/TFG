@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react'
-import {useTable} from 'react-table'
+import {useTable, useSortBy} from 'react-table'
 
 function ObjectiveListView(props) {
     const data = useMemo(() => props.objectives, [])
@@ -10,14 +10,13 @@ function ObjectiveListView(props) {
             accessor: 'title',
         },
         {
-            Header: 'Goal',
-            Footer: 'Goal',
-            accessor: 'goal',
-        },
-        {
             Header: 'Progress',
             Footer: 'Progress',
             accessor: 'progress',
+            Cell: (props) => {
+                console.log(props)
+                return <span>{props.row.original.progress}/{props.row.original.goal} veces/semana</span>
+            }
         }
     ], [])
 
@@ -28,7 +27,7 @@ function ObjectiveListView(props) {
         footerGroups,
         rows,
         prepareRow
-    } = useTable({columns, data})
+    } = useTable({columns, data}, useSortBy)
 
     return (
         <div className="objective-list-view">
@@ -37,8 +36,11 @@ function ObjectiveListView(props) {
                 {headerGroups.map(headerGroup => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map(column => (
-                            <th {...column.getHeaderProps()}>
+                            <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                                 {column.render('Header')}
+                                <span>
+                                    {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                                </span>
                             </th>
                         ))}
                     </tr>
