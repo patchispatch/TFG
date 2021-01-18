@@ -5,7 +5,6 @@ import userEvent from '@testing-library/user-event'
 import axios from 'axios'
 
 import App from '../App'
-import View from '../components/View'
 import ObjectiveListView from '../components/ObjectiveListView'
 
 // Mocking axios

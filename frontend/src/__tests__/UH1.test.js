@@ -21,14 +21,14 @@ describe("UH 1 - Create objective", () => {
     })
 
     test("The user can click New Objective button", async () => {
-        render(<View type="objectiveList" objectives={mockData}/>)
+        render(<App view="objectiveList"/>)
 
         // The button exists in the DOM
         await waitFor(() => expect(screen.getByRole("button", {name: /new objective/i})).toBeInTheDocument())
     })
 
     test("Clicking the New Objective button makes the New Objective form to appear", async () => {
-        render(<View type="objectiveList" objectives={mockData}/>)
+        render(<App view="objectiveList"/>)
 
         // The user clicks the button
         const button = screen.getByRole("button", {name: /new objective/i})
@@ -84,7 +84,7 @@ describe("UH 1 - Create objective", () => {
     })
 
     test("The user closes the form and it disappears", async () => {
-        render(<View type="objectiveList" objectives={mockData}/>)
+        render(<App view="objectiveList"/>)
 
         // Open the form
         const openButton = screen.getByRole("button", {name: /New objective/i})

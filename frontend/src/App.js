@@ -11,12 +11,12 @@ import NewObjectiveForm from './components/NewObjectiveForm'
 import useModal from './hooks/useModal'
 
 
-function App() {
+function App(props) {
     // API URL
     const api = "http://localhost:8000"
 
     // STATE
-    const [view, setView] = useState('list')
+    const [view, setView] = useState(props.view || 'list')
     const [activities, setActivities] = useState([])
     const [objectives, setObjectives] = useState([])
     const [activityFormVisible, switchActivityFormVisible] = useModal()
