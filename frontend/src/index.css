@@ -146,30 +146,30 @@ body {
   padding: 10px 50px;
 }
 
-.objective-list-view {
+.objective-table {
   height: inherit;
   overflow-y: auto;
 }
 
-.objective-list-view table {
+.objective-table table {
   border-collapse: collapse;
   width: 100%;
 }
 
-.objective-list-view table td, .objective-list-view table th {
+.objective-table table td, .objective-table table th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-.objective-list-view table tr:nth-child(even) {
+.objective-table table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.objective-list-view table tr:hover {
+.objective-table table tr:hover {
   background-color: #ddd;
 }
 
-.objective-list-view table th, .objective-list-view tfoot td {
+.objective-table table th, .objective-table tfoot td {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
