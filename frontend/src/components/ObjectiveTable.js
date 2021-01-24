@@ -13,8 +13,16 @@ function ObjectiveTable({objectives}) {
         {
             Header: 'Progress',
             Footer: 'Progress',
+            accessor: 'complete',
+            sortType: 'basic',
             Cell: (props) => {
-                return <span>{props.row.original.progress}/{props.row.original.goal} veces/semana</span>
+                const progress = props.row.original.progress
+                const goal = props.row.original.goal
+                const complete = props.row.original.complete
+
+                return <span>
+                    {progress}/{goal} veces/semana {complete && "✔️"}
+                </span>
             },
         }
     ], [])
@@ -28,7 +36,7 @@ function ObjectiveTable({objectives}) {
         prepareRow,
         state,
         setGlobalFilter,
-    } = useTable({columns, data}, useFilters, useGlobalFilter, useSortBy)
+    } = useTable({columns, data}, useGlobalFilter, useSortBy)
 
     const {globalFilter} = state
 

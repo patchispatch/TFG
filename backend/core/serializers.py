@@ -20,4 +20,9 @@ class ActivitySerializer(serializers.ModelSerializer):
 class ObjectiveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Objective
-        fields = ('id', 'title', 'goal', 'progress')
+        fields = '__all__'
+    
+
+    complete = serializers.SerializerMethodField()
+    def get_complete(self, instance):
+        return instance.progress >= instance.goal
