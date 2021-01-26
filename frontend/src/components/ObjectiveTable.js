@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react'
+import React, {useMemo, Fragment} from 'react'
 import {useTable, useSortBy, useGlobalFilter, useFilters} from 'react-table'
 import GlobalFilter from './GlobalFilter'
 
@@ -24,7 +24,25 @@ function ObjectiveTable({objectives}) {
                     {progress}/{goal} veces/semana {complete && "✔️"}
                 </span>
             },
-        }
+        },
+        {
+            Header: 'Options',
+            Footer: 'Options',
+            Cell: (props) => {
+                const id = props.row.original.id
+                return (
+                <Fragment>
+                    <button onClick={() => console.log(`Editing ${id}`)}>
+                        Edit
+                    </button>
+
+                    <button onClick={() => console.log(`Deleting ${id}`)}>
+                        Delete
+                    </button>
+                </Fragment>
+                )
+            }
+        },
     ], [])
 
     const {
