@@ -9,7 +9,7 @@ function View(props) {
             case 'list':
                 return <ListView activities={props.activities} deleteFn={props.deleteActivity}/>
             case 'objectiveList':
-                return <ObjectiveListView objectives={props.objectives}/>
+                return <ObjectiveListView objectives={props.objectives} deleteObjective={props.deleteObjective}/>
             default:
                 throw new Error("This view does not exist")
         }

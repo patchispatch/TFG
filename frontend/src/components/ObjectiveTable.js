@@ -1,9 +1,10 @@
-import React, {useMemo, Fragment} from 'react'
-import {useTable, useSortBy, useGlobalFilter, useFilters} from 'react-table'
+import React, {useState, useMemo, Fragment} from 'react'
+import {useTable, useSortBy, useGlobalFilter} from 'react-table'
 import GlobalFilter from './GlobalFilter'
 
-function ObjectiveTable({objectives}) {
-    const data = useMemo(() => objectives, [])
+function ObjectiveTable({objectives, deleteObjective}) {
+    const [editing, setEditing] = useState(false)
+    const data = useMemo(() => objectives, [objectives])
     const columns = useMemo(() => [
         {
             Header: 'Title',
@@ -20,9 +21,14 @@ function ObjectiveTable({objectives}) {
                 const goal = props.row.original.goal
                 const complete = props.row.original.complete
 
-                return <span>
-                    {progress}/{goal} veces/semana {complete && "✔️"}
-                </span>
+                if(editing) {
+                    return <input type="text" placeholder={progress}/>
+                }
+                else {
+                    return <span>
+                        {progress}/{goal} veces/semana {complete && "✔️"}
+                    </span>
+                }
             },
         },
         {
@@ -32,18 +38,18 @@ function ObjectiveTable({objectives}) {
                 const id = props.row.original.id
                 return (
                 <Fragment>
-                    <button onClick={() => console.log(`Editing ${id}`)}>
+                    <button onClick={() => {setEditing(!editing)}}>
                         Edit
                     </button>
 
-                    <button onClick={() => console.log(`Deleting ${id}`)}>
+                    <button onClick={() => deleteObjective(id)}>
                         Delete
                     </button>
                 </Fragment>
                 )
             }
         },
-    ], [])
+    ], [deleteObjective, editing])
 
     const {
         getTableProps,
@@ -54,7 +60,7 @@ function ObjectiveTable({objectives}) {
         prepareRow,
         state,
         setGlobalFilter,
-    } = useTable({columns, data}, useGlobalFilter, useSortBy)
+    } = useTable({columns, data, deleteObjective}, useGlobalFilter, useSortBy)
 
     const {globalFilter} = state
 

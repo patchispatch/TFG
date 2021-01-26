@@ -61,6 +61,12 @@ function App(props) {
             .catch(err => console.log(err))
     }
 
+    function deleteObjective(id) {
+        axios.delete(`${api}/objectives/${id}`)
+            .then(fetchActivities())
+            .catch(err => console.log(err))
+    }
+
     // Fetch data when the component mounts
     useEffect(() => {
         fetchActivities()
@@ -97,6 +103,7 @@ function App(props) {
                 activities={activities}
                 objectives={objectives}
                 deleteActivity={deleteActivity}
+                deleteObjective={deleteObjective}
             />
 
             {/* New activity form */}

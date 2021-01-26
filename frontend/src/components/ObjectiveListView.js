@@ -1,10 +1,10 @@
 import React from 'react'
 import ObjectiveTable from './ObjectiveTable'
 
-function ObjectiveListView({objectives}) {
+function ObjectiveListView({objectives, deleteObjective}) {
 
     return (
-        <ObjectiveTable objectives={objectives}/>
+        <ObjectiveTable objectives={objectives} deleteObjective={deleteObjective}/>
     )
 }
 
