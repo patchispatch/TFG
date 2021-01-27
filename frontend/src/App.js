@@ -52,6 +52,7 @@ function App(props) {
     function fetchObjectives() {
         axios.get(`${api}/objectives/`)
             .then(res => setObjectives(res.data))
+            .then(console.log(objectives))
             .catch(err => console.log(err))
     }
 
@@ -63,7 +64,7 @@ function App(props) {
 
     function deleteObjective(id) {
         axios.delete(`${api}/objectives/${id}`)
-            .then(fetchActivities())
+            .then(fetchObjectives())
             .catch(err => console.log(err))
     }
 
