@@ -3,7 +3,7 @@ import {useTable, useSortBy, useGlobalFilter} from 'react-table'
 import GlobalFilter from './GlobalFilter'
 
 function ObjectiveTable({objectives, deleteObjective}) {
-    const [editing, setEditing] = useState(false)
+    const [editing, setEditing] = useState(null)
     const data = useMemo(() => objectives, [objectives])
     const columns = useMemo(() => [
         {
@@ -17,11 +17,12 @@ function ObjectiveTable({objectives, deleteObjective}) {
             accessor: 'complete',
             sortType: 'basic',
             Cell: (props) => {
+                const id = props.row.original.id
                 const progress = props.row.original.progress
                 const goal = props.row.original.goal
                 const complete = props.row.original.complete
 
-                if(editing) {
+                if(editing === id) {
                     return <input type="text" placeholder={progress}/>
                 }
                 else {
@@ -36,15 +37,31 @@ function ObjectiveTable({objectives, deleteObjective}) {
             Footer: 'Options',
             Cell: (props) => {
                 const id = props.row.original.id
-                return (
-                <Fragment>
-                    <button onClick={() => {setEditing(!editing)}}>
+                let editButton = null
+                let deleteButton = null
+
+                if(editing === id) {
+                    editButton = <button onClick={() => console.log(`Objective ${id} modified`)}>
+                        Save
+                    </button>
+                    deleteButton = <button onClick={() =>setEditing(null)}>
+                        Cancel
+                    </button>
+                }
+                else if(editing === null) {
+                    editButton = <button onClick={() => {setEditing(id)}}>
                         Edit
                     </button>
 
-                    <button onClick={() => deleteObjective(id)}>
+                    deleteButton = <button onClick={() => deleteObjective(id)}>
                         Delete
                     </button>
+                }
+
+                return (
+                <Fragment>
+                    {editButton}
+                    {deleteButton}
                 </Fragment>
                 )
             }
