@@ -1,5 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react'
-import axios from 'axios'
+import api from './api'
 
 import Sidebar from './components/Sidebar'
 import View from './components/View'
@@ -12,9 +12,6 @@ import useModal from './hooks/useModal'
 
 
 function App(props) {
-    // API URL
-    const api = "http://localhost:8000"
-
     // STATE
     const [view, setView] = useState(props.view || 'list')
     const [activities, setActivities] = useState([])
@@ -24,48 +21,70 @@ function App(props) {
 
     // ACTIVITIES
     // Fetch activities
-    function fetchActivities() {
-        axios.get(`${api}/activities/`)
-        .then(res => setActivities(res.data))
-        .catch(err => console.log(err))
+    async function fetchActivities() {
+        try {
+            const res = await api.get(`activities`)
+            setActivities(res.data)
+        }
+        catch(err) {
+            console.log(err)
+        }
     }
 
     // New activity
-    function newActivity(values) {
-        axios.post(`${api}/activities/`, values)
-            .then(fetchActivities())
-            .catch(err => console.log(err))
+    async function newActivity(values) {
+        try {
+            await api.post(`activities/`, values)
+            fetchActivities()
+        }
+        catch(err) {
+            console.log(err)
+        }
     }
 
     // Modify activity
     // TO DO
 
     // Delete activity
-    function deleteActivity(id) {
-        axios.delete(`${api}/activities/${id}`)
-            .then(fetchActivities())
-            .catch(err => console.log(err))
+    async function deleteActivity(id) {
+        try {
+            await api.delete(`activities/${id}`)
+            fetchActivities()
+        }
+        catch(err) {
+            console.log(err)
+        }
     }
-
 
     // OBJECTIVES (same as activities)
-    function fetchObjectives() {
-        axios.get(`${api}/objectives/`)
-            .then(res => setObjectives(res.data))
-            .then(console.log(objectives))
-            .catch(err => console.log(err))
+    async function fetchObjectives() {
+        try {
+            const res = await api.get(`objectives`)
+            setObjectives(res.data)
+        }
+        catch(err) {
+            console.log(err)
+        }
     }
 
-    function newObjective(values) {
-        axios.post(`${api}/objectives/`, values)
-            .then(fetchObjectives())
-            .catch(err => console.log(err))
+    async function newObjective(values) {
+        try {
+            await api.post(`objectives`, values)
+            fetchObjectives()
+        }
+        catch(err) {
+            console.log(err)
+        }
     }
 
-    function deleteObjective(id) {
-        axios.delete(`${api}/objectives/${id}`)
-            .then(fetchObjectives())
-            .catch(err => console.log(err))
+    async function deleteObjective(id) {
+        try {
+            await api.delete(`objectives/${id}`)
+            fetchObjectives()
+        }
+        catch(err) {
+            console.log(err)
+        }
     }
 
     // Fetch data when the component mounts
