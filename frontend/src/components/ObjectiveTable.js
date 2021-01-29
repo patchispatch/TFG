@@ -3,68 +3,92 @@ import {useTable, useSortBy, useGlobalFilter} from 'react-table'
 import GlobalFilter from './GlobalFilter'
 
 function ObjectiveTable({objectives, deleteObjective}) {
-    function startEditing(id) {
-        // Set editing row to id
-        setEditingId(id)
-        // Set modifiedValues to selected row current data
-        setModifiedValues(/* data */)
-    }
-
-    function stopEditing() {
-        // Set editing row to null
-        setEditingId(null)
-        // Set modifiedValues to empty object
-        setModifiedValues({})
-    }
-
-    function updateData(data) {
-        setModifiedValues({
-            ...modifiedValues,
-            data
-        })
-        console.log(modifiedValues)
-    }
-
     const [editingId, setEditingId] = useState(null)
-    const [modifiedValues, setModifiedValues] = useState({title: "", goal: 0})
+    const [modifiedValues, setModifiedValues] = useState({})
     const data = useMemo(() => objectives, [objectives])
-    const columns = useMemo(() => [
+    const columns = useMemo(() => {
+        function startEditing(id) {
+            // Set editing row to id
+            setEditingId(id)
+            // Set modifiedValues to selected row current data
+            const data = objectives.find(e => e.id === id)
+            setModifiedValues({title: data.title, goal: data.goal})
+        }
+    
+        function stopEditing() {
+            // Set editing row to null
+            setEditingId(null)
+            // Set modifiedValues to empty object
+            setModifiedValues({})
+        }
+
+        function updateData(data) {
+            const values = {...modifiedValues, ...data}
+            setModifiedValues(values)
+        }
+        
+        return [
         {
             Header: 'Title',
             Footer: 'Title',
             accessor: 'title',
+            Cell: ({row}) => {
+                const {id,title} = row.original
+
+                // Default cell
+                let cell = <span>
+                    {title}
+                </span>
+
+                // Editing cell
+                if(editingId === id) {
+                    cell = <input 
+                        name="title"
+                        type="text" 
+                        onChange={e => updateData({title: e.target.value})}
+                        value={modifiedValues.title} 
+                    />
+                }
+
+                return cell
+            }
         },
         {
             Header: 'Progress',
             Footer: 'Progress',
             accessor: 'complete',
             sortType: 'basic',
-            Cell: (props) => {
-                const id = props.row.original.id
-                const progress = props.row.original.progress
-                const goal = props.row.original.goal
-                const complete = props.row.original.complete
+            Cell: ({row}) => {
+                const {id, progress, goal, complete} = row.original
 
+                // Default cell
+                let cell = <span>
+                    {progress}/{goal} veces/semana {complete && "✔️"}
+                </span>
+
+                // Editing cell
                 if(editingId === id) {
-                    return <input type="text" placeholder={progress} />
+                    cell = <input 
+                        name="goal"
+                        type="number" 
+                        onChange={e => updateData({goal: e.target.value})}
+                        value={modifiedValues.goal} 
+                    />
                 }
-                else {
-                    return <span>
-                        {progress}/{goal} veces/semana {complete && "✔️"}
-                    </span>
-                }
+                
+                return cell
             },
         },
         {
             Header: 'Options',
             Footer: 'Options',
-            Cell: (props) => {
-                const id = props.row.original.id
+            Cell: ({row}) => {
+                const {id} = row.original
                 let editButton = null
                 let deleteButton = null
 
                 if(editingId === id) {
-                    editButton = <button onClick={() => console.log(`Objective ${id} modified`)}>
+                    editButton = <button onClick={() => console.log(modifiedValues)}>
                         Save
                     </button>
                     deleteButton = <button onClick={() =>stopEditing()}>
@@ -89,7 +113,7 @@ function ObjectiveTable({objectives, deleteObjective}) {
                 )
             }
         },
-    ], [deleteObjective, editingId])
+    ]}, [objectives, deleteObjective, editingId, modifiedValues])
 
     const {
         getTableProps,
