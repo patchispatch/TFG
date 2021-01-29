@@ -3,7 +3,30 @@ import {useTable, useSortBy, useGlobalFilter} from 'react-table'
 import GlobalFilter from './GlobalFilter'
 
 function ObjectiveTable({objectives, deleteObjective}) {
-    const [editing, setEditing] = useState(null)
+    function startEditing(id) {
+        // Set editing row to id
+        setEditingId(id)
+        // Set modifiedValues to selected row current data
+        setModifiedValues(/* data */)
+    }
+
+    function stopEditing() {
+        // Set editing row to null
+        setEditingId(null)
+        // Set modifiedValues to empty object
+        setModifiedValues({})
+    }
+
+    function updateData(data) {
+        setModifiedValues({
+            ...modifiedValues,
+            data
+        })
+        console.log(modifiedValues)
+    }
+
+    const [editingId, setEditingId] = useState(null)
+    const [modifiedValues, setModifiedValues] = useState({title: "", goal: 0})
     const data = useMemo(() => objectives, [objectives])
     const columns = useMemo(() => [
         {
@@ -22,8 +45,8 @@ function ObjectiveTable({objectives, deleteObjective}) {
                 const goal = props.row.original.goal
                 const complete = props.row.original.complete
 
-                if(editing === id) {
-                    return <input type="text" placeholder={progress}/>
+                if(editingId === id) {
+                    return <input type="text" placeholder={progress} />
                 }
                 else {
                     return <span>
@@ -40,16 +63,16 @@ function ObjectiveTable({objectives, deleteObjective}) {
                 let editButton = null
                 let deleteButton = null
 
-                if(editing === id) {
+                if(editingId === id) {
                     editButton = <button onClick={() => console.log(`Objective ${id} modified`)}>
                         Save
                     </button>
-                    deleteButton = <button onClick={() =>setEditing(null)}>
+                    deleteButton = <button onClick={() =>stopEditing()}>
                         Cancel
                     </button>
                 }
-                else if(editing === null) {
-                    editButton = <button onClick={() => {setEditing(id)}}>
+                else if(editingId === null) {
+                    editButton = <button onClick={() => {startEditing(id)}}>
                         Edit
                     </button>
 
@@ -66,7 +89,7 @@ function ObjectiveTable({objectives, deleteObjective}) {
                 )
             }
         },
-    ], [deleteObjective, editing])
+    ], [deleteObjective, editingId])
 
     const {
         getTableProps,
