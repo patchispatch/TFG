@@ -1,10 +1,36 @@
-import React, {useState, useMemo, Fragment} from 'react'
+import React, {useState, useRef, useMemo, Fragment, useEffect} from 'react'
 import {useTable, useSortBy, useGlobalFilter} from 'react-table'
 import GlobalFilter from './GlobalFilter'
 
+// Editable cell renderer
+function EditableCell({value: initialValue, row: {index}, column: {id}, updateData}) {
+    // State of the cell
+    const [value, setValue] = useState(initialValue)
+
+    // Update the initialValue if needed
+    useEffect(() => {
+        setValue(initialValue)
+    }, [initialValue])
+
+    // OnChange event
+    function onChange(e) {
+        setValue(e.target.value)
+    }
+
+    // Only update the external data when the input is blurred
+    function onBlur() {
+        updateData(index, id, value)
+    }
+
+    return (
+        <input value={value} onChange={onChange} onBlur={onBlur} />
+    )
+}
+
 function ObjectiveTable({objectives, deleteObjective}) {
     const [editingId, setEditingId] = useState(null)
-    const [modifiedValues, setModifiedValues] = useState({})
+    const modifiedValues = useRef({})
+
     const data = useMemo(() => objectives, [objectives])
     const columns = useMemo(() => {
         function startEditing(id) {
@@ -12,19 +38,19 @@ function ObjectiveTable({objectives, deleteObjective}) {
             setEditingId(id)
             // Set modifiedValues to selected row current data
             const data = objectives.find(e => e.id === id)
-            setModifiedValues({title: data.title, goal: data.goal})
+            modifiedValues.current = {title: data.title, goal: data.goal}
         }
     
         function stopEditing() {
             // Set editing row to null
             setEditingId(null)
             // Set modifiedValues to empty object
-            setModifiedValues({})
+            modifiedValues.current = {}
         }
 
         function updateData(data) {
-            const values = {...modifiedValues, ...data}
-            setModifiedValues(values)
+            const values = {...modifiedValues.current, ...data}
+            modifiedValues.current = values
         }
         
         return [
@@ -46,7 +72,7 @@ function ObjectiveTable({objectives, deleteObjective}) {
                         name="title"
                         type="text" 
                         onChange={e => updateData({title: e.target.value})}
-                        value={modifiedValues.title} 
+                        value={modifiedValues.current.title} 
                     />
                 }
 
@@ -72,7 +98,7 @@ function ObjectiveTable({objectives, deleteObjective}) {
                         name="goal"
                         type="number" 
                         onChange={e => updateData({goal: e.target.value})}
-                        value={modifiedValues.goal} 
+                        value={modifiedValues.current.goal}
                     />
                 }
                 
@@ -88,7 +114,7 @@ function ObjectiveTable({objectives, deleteObjective}) {
                 let deleteButton = null
 
                 if(editingId === id) {
-                    editButton = <button onClick={() => console.log(modifiedValues)}>
+                    editButton = <button onClick={() => console.log(modifiedValues.current)}>
                         Save
                     </button>
                     deleteButton = <button onClick={() =>stopEditing()}>
