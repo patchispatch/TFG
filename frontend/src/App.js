@@ -69,7 +69,7 @@ function App(props) {
 
     async function newObjective(values) {
         try {
-            await api.post(`objectives`, values)
+            await api.post(`objectives/`, values)
             fetchObjectives()
         }
         catch(err) {

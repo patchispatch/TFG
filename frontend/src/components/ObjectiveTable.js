@@ -3,7 +3,7 @@ import {useTable, useSortBy, useGlobalFilter} from 'react-table'
 import GlobalFilter from './GlobalFilter'
 
 // Editable cell renderer
-function EditableCell({value: initialValue, row: {index}, column: {id}, updateData}) {
+function EditableCell({type, value: initialValue, column, updateData}) {
     // State of the cell
     const [value, setValue] = useState(initialValue)
 
@@ -14,16 +14,17 @@ function EditableCell({value: initialValue, row: {index}, column: {id}, updateDa
 
     // OnChange event
     function onChange(e) {
+        console.log(e.target.value)
         setValue(e.target.value)
     }
 
-    // Only update the external data when the input is blurred
-    function onBlur() {
-        updateData(index, id, value)
-    }
+    // Only update the external data when the state has been updated
+    useEffect(() => {
+        updateData({[column]: value})
+    }, [value])
 
     return (
-        <input value={value} onChange={onChange} onBlur={onBlur} />
+        <input type={type} value={value} onChange={onChange} />
     )
 }
 
@@ -68,12 +69,7 @@ function ObjectiveTable({objectives, deleteObjective}) {
 
                 // Editing cell
                 if(editingId === id) {
-                    cell = <input 
-                        name="title"
-                        type="text" 
-                        onChange={e => updateData({title: e.target.value})}
-                        value={modifiedValues.current.title} 
-                    />
+                   cell = <EditableCell type="text" value={title} column={"title"} updateData={updateData} />
                 }
 
                 return cell
@@ -94,13 +90,8 @@ function ObjectiveTable({objectives, deleteObjective}) {
 
                 // Editing cell
                 if(editingId === id) {
-                    cell = <input 
-                        name="goal"
-                        type="number" 
-                        onChange={e => updateData({goal: e.target.value})}
-                        value={modifiedValues.current.goal}
-                    />
-                }
+                    cell = <EditableCell type="number" value={goal} column={"goal"} updateData={updateData} />
+                 }
                 
                 return cell
             },
