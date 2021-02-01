@@ -77,6 +77,16 @@ function App(props) {
         }
     }
 
+    async function editObjective(id, values) {
+        try {
+            await api.put(`objectives/${id}`, values)
+            fetchObjectives()
+        }
+        catch(err) {
+            console.log(err)
+        }
+    }
+
     async function deleteObjective(id) {
         try {
             await api.delete(`objectives/${id}`)
@@ -123,6 +133,7 @@ function App(props) {
                 activities={activities}
                 objectives={objectives}
                 deleteActivity={deleteActivity}
+                editObjective={editObjective}
                 deleteObjective={deleteObjective}
             />
 

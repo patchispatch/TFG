@@ -14,21 +14,20 @@ function EditableCell({type, value: initialValue, column, updateData}) {
 
     // OnChange event
     function onChange(e) {
-        console.log(e.target.value)
         setValue(e.target.value)
     }
 
     // Only update the external data when the state has been updated
     useEffect(() => {
         updateData({[column]: value})
-    }, [value])
+    }, [value, column, updateData])
 
     return (
         <input type={type} value={value} onChange={onChange} />
     )
 }
 
-function ObjectiveTable({objectives, deleteObjective}) {
+function ObjectiveTable({objectives, editObjective, deleteObjective}) {
     const [editingId, setEditingId] = useState(null)
     const modifiedValues = useRef({})
 
@@ -39,7 +38,7 @@ function ObjectiveTable({objectives, deleteObjective}) {
             setEditingId(id)
             // Set modifiedValues to selected row current data
             const data = objectives.find(e => e.id === id)
-            modifiedValues.current = {title: data.title, goal: data.goal}
+            modifiedValues.current = data
         }
     
         function stopEditing() {
@@ -105,7 +104,7 @@ function ObjectiveTable({objectives, deleteObjective}) {
                 let deleteButton = null
 
                 if(editingId === id) {
-                    editButton = <button onClick={() => console.log(modifiedValues.current)}>
+                    editButton = <button onClick={() => editObjective(id, modifiedValues.current)}>
                         Save
                     </button>
                     deleteButton = <button onClick={() =>stopEditing()}>
@@ -130,7 +129,7 @@ function ObjectiveTable({objectives, deleteObjective}) {
                 )
             }
         },
-    ]}, [objectives, deleteObjective, editingId, modifiedValues])
+    ]}, [objectives, editObjective, deleteObjective, editingId, modifiedValues])
 
     const {
         getTableProps,
