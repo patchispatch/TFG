@@ -4,7 +4,7 @@ from .models import *
 class ActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Activity
-        fields = ('id', 'title', 'description', 'date', 'time')
+        fields = '__all__'
 
     def to_internal_value(self, data):
         # Check for "date": ""  and "time": "", and convert to None
@@ -22,7 +22,7 @@ class ObjectiveSerializer(serializers.ModelSerializer):
         model = Objective
         fields = '__all__'
     
-
     complete = serializers.SerializerMethodField()
+    
     def get_complete(self, instance):
         return instance.progress >= instance.goal
