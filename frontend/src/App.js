@@ -79,7 +79,7 @@ function App(props) {
 
     async function editObjective(id, values) {
         try {
-            await api.patch(`objectives/${id}`, values)
+            await api.patch(`objectives/${id}/`, values)
             fetchObjectives()
         }
         catch(err) {

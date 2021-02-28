@@ -11,6 +11,6 @@ class ActivityViewSet(viewsets.ModelViewSet):
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
 
-class ObjectiveViewSet(EnablePartialUpdateMixin, viewsets.ModelViewSet):
+class ObjectiveViewSet(viewsets.ModelViewSet):
     queryset = Objective.objects.all()
     serializer_class = ObjectiveSerializer
