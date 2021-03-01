@@ -1,16 +1,24 @@
 import React from 'react'
 import {useForm} from 'react-hook-form'
 
-function editObjectiveForm({onSubmit}) {
+function EditObjectiveForm({id, title, goal, onSubmit, onCancel}) {
     const {register, handleSubmit, errors} = useForm()
 
     return (
         <form className="form" aria-label="Edit objective" onSubmit={handleSubmit(onSubmit)}>
+            <input 
+                type="hidden"
+                name="id"
+                value={id}
+                ref={register}
+            />
+
             <label htmlFor="editObjectiveTitle">Title</label>
             <input
                 id="editObjectiveTitle" 
                 type="text"
                 name="title"
+                placeholder={title}
                 aria-invalid={errors.title ? "true" : "false"}
                 ref={register({required: true, maxLength: 200})}
             />
@@ -27,6 +35,7 @@ function editObjectiveForm({onSubmit}) {
                 id="editObjectiveGoal"
                 type="number"
                 name="goal"
+                placeholder={goal}
                 aria-invalid={errors.goal ? "true" : "false"}
                 ref={register({required: true})}
             />
@@ -40,3 +49,5 @@ function editObjectiveForm({onSubmit}) {
         </form>
     )
 }
+
+export default EditObjectiveForm

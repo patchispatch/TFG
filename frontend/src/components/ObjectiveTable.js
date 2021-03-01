@@ -1,6 +1,7 @@
 import React, {useState, useRef, useMemo, Fragment, useEffect, useCallback} from 'react'
 import {useTable, useSortBy, useGlobalFilter, useExpanded} from 'react-table'
 import GlobalFilter from './GlobalFilter'
+import EditObjectiveForm from './EditObjectiveForm'
 
 // Editable cell renderer
 function EditableCell({type, value: initialValue, column, updateData}) {
@@ -33,7 +34,12 @@ function ObjectiveTable({objectives, editObjective, deleteObjective}) {
 
     const renderRowSubComponent = useCallback(
         ({row}) => (
-            <code>{JSON.stringify({values: row.values}, null, 2)}</code>
+            <EditObjectiveForm 
+                id={row.original.id}
+                title={row.original.title}
+                goal={row.original.goal}
+                onSubmit={editObjective}
+            />
         ), 
         []
     )
