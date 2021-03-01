@@ -79,7 +79,6 @@ function App(props) {
 
     async function editObjective(values) {
         try {
-            console.debug(values)
             await api.patch(`objectives/${values.id}/`, values)
             fetchObjectives()
         }
