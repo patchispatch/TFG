@@ -1,5 +1,5 @@
-import React, {useState, useRef, useMemo, Fragment, useEffect} from 'react'
-import {useTable, useSortBy, useGlobalFilter} from 'react-table'
+import React, {useState, useRef, useMemo, Fragment, useEffect, useCallback} from 'react'
+import {useTable, useSortBy, useGlobalFilter, useExpanded} from 'react-table'
 import GlobalFilter from './GlobalFilter'
 
 // Editable cell renderer
@@ -31,6 +31,13 @@ function ObjectiveTable({objectives, editObjective, deleteObjective}) {
     const [editingId, setEditingId] = useState(null)
     const modifiedValues = useRef({})
 
+    const renderRowSubComponent = useCallback(
+        ({row}) => (
+            <code>{JSON.stringify({values: row.values}, null, 2)}</code>
+        ), 
+        []
+    )
+
     const data = useMemo(() => objectives, [objectives])
     const columns = useMemo(() => {
         function startEditing(id) {
@@ -54,6 +61,16 @@ function ObjectiveTable({objectives, editObjective, deleteObjective}) {
         }
         
         return [
+        {
+            Header: () => null,
+            id: "expander",
+            Cell: ({row}) => (
+                // Example expander
+                <span {...row.getToggleRowExpandedProps()}>
+                    {row.isExpanded ? '👇' : '👉'}
+                </span>
+            )
+        },
         {
             Header: 'Title',
             Footer: 'Title',
@@ -136,11 +153,12 @@ function ObjectiveTable({objectives, editObjective, deleteObjective}) {
         getTableBodyProps,
         headerGroups,
         footerGroups,
+        visibleColumns,
         rows,
         prepareRow,
         state,
         setGlobalFilter,
-    } = useTable({columns, data, deleteObjective}, useGlobalFilter, useSortBy)
+    } = useTable({columns, data, deleteObjective}, useGlobalFilter, useSortBy, useExpanded)
 
     const {globalFilter} = state
 
@@ -166,16 +184,27 @@ function ObjectiveTable({objectives, editObjective, deleteObjective}) {
                 <tbody {...getTableBodyProps()}>
                     {rows.map(row => {
                         prepareRow(row)
+                        const rowProps = row.getRowProps()
                         return (
-                            <tr {...row.getRowProps()}>
-                                {row.cells.map(cell => {
-                                    return (
-                                        <td {...cell.getCellProps()}>
-                                            {cell.render('Cell')}
+                            <Fragment key={rowProps.key}>
+                                <tr {...rowProps}>
+                                    {row.cells.map(cell => {
+                                        return (
+                                            <td {...cell.getCellProps()}>
+                                                {cell.render('Cell')}
+                                            </td>
+                                        )
+                                    })}
+                                </tr>
+
+                                {row.isExpanded && (
+                                    <tr>
+                                        <td colSpan={visibleColumns.length}>
+                                            {renderRowSubComponent({row})}
                                         </td>
-                                    )
-                                })}
-                            </tr>
+                                    </tr>
+                                )}
+                            </Fragment>
                         )
                     })}
                 </tbody>
