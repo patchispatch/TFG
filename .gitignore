@@ -124,3 +124,12 @@ yarn-debug.log*
 yarn-error.log*
 
 .eslintcache
+
+# TEX
+*.out
+*.aux
+*.bbl
+*.log
+*.synctex.gz
+*.toc
+*.blg
