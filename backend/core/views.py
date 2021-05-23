@@ -8,28 +8,6 @@ from .models import *
 from .serializers import *
 
 # Create your views here:
-@method_decorator(name='list', decorator=swagger_auto_schema(
-    operation_description="Get a list of all activities"
-))
-@method_decorator(name='retrieve', decorator=swagger_auto_schema(
-    operation_description="Get an activity by ID"
-))
-@method_decorator(name='create', decorator=swagger_auto_schema(
-    operation_description="Create a new activity"
-))
-@method_decorator(name='update', decorator=swagger_auto_schema(
-    operation_description="Update an existing activity"
-))
-@method_decorator(name='partial_update', decorator=swagger_auto_schema(
-    operation_description="Partially update an existing activity"
-))
-@method_decorator(name='destroy', decorator=swagger_auto_schema(
-    operation_description="Delete an activity by ID"
-))
-class ActivityViewSet(viewsets.ModelViewSet):
-    queryset = Activity.objects.all()
-    serializer_class = ActivitySerializer
-
 
 @method_decorator(name='list', decorator=swagger_auto_schema(
     operation_description="Get a list of all objectives"
