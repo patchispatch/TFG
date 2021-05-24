@@ -1,50 +1,64 @@
-// Objective model
-
 import { autoserializeAs, deserializeAs } from "dcerialize";
 
+/**
+ * Objective status
+ */
+export enum ObjectiveStatus {
+    ACTIVE = 'active',
+    PAUSED = 'paused',
+}
+
+
+/**
+ * Objective model
+ */
 export class Objective {
     /**
      * Objective ID
      */
-    @deserializeAs(() => Number) id: number;
+    @deserializeAs(() => Number) id: number | undefined;
 
     /**
      * Objective title
      */
-    @autoserializeAs(() => String) title: string;
+    @autoserializeAs(() => String) name: string | undefined;
 
     /**
      * Objective goal
      */
-    @autoserializeAs(() => Number) goal: number;
-
-    /**
-     * Objective progress
-     */
-    @autoserializeAs(() => Number) progress: number;
+    @autoserializeAs(() => Number) goal: number | undefined;
 
     /**
      * Objective status
-     * NOTE: maybe this is frontend-only since it's autocalculated to sort
-     * the objective list. For now it stays like this and comes from the API
      */
-    @autoserializeAs(() => Boolean) complete: boolean;
+    @autoserializeAs(() => String) status: ObjectiveStatus | undefined;
 
+    /**
+     * Current streak
+     */
+    @autoserializeAs(() => Number) current_streak: number | undefined;
+
+    /**
+     * Best streak
+     */
+    @autoserializeAs(() => Number) best_streak: number | undefined;
     
     /**
      * Constructor
      */
     constructor(
-        id: number,
-        title: string,
-        goal: number,
-        progress: number,
-        complete: boolean
+        id?: number,
+        name?: string,
+        goal?: number,
+        status?: ObjectiveStatus,
+        current_streak?: number,
+        best_streak?: number,
     ) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.goal = goal;
-        this.progress = progress;
-        this.complete = complete;
+        this.status = status;
+        this.current_streak = current_streak;
+        this.best_streak = best_streak;
     }
 }

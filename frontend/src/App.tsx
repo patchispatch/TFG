@@ -1,40 +1,52 @@
 import * as React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {ObjectiveService} from './services/objective-service';
 import {Objective} from './models/objective';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useMemo} from 'react';
+import {Provider, Button, Grid, View, defaultTheme} from '@adobe/react-spectrum';
 
 function App() {
-  let objectiveService = new ObjectiveService();
+
+  // Initialize services
+  let objectiveService = useMemo(() => new ObjectiveService(), []);
 
   // State
-  let [obj, setObj] = useState<Objective>();
+  let [objectiveList, setObjectiveList] = useState<Objective[]>([]);
 
+  // On initialization
   useEffect(() => {
-    objectiveService.get(17).subscribe(result => {
-      setObj(result);
-    });
-  }, [])
+    objectiveService.list().subscribe(result => setObjectiveList(result));
+  }, [objectiveService])
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo"/>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <button onClick={() => console.log(obj)}>Obj</button>
-      </header>
-    </div>
+    <Provider theme={defaultTheme}>
+      <Grid
+        areas={['header header', 'sidebar content', 'footer footer']}
+        columns={['1fr 3fr']}
+        gap="size-100"
+        height="100vh"
+      >
+        <View backgroundColor="blue-400" gridArea="content" position="relative">
+          <Button 
+            variant="overBackground" 
+            onPress={() => console.log(objectiveList)}
+            position="absolute"
+            bottom="size-200"
+            right="size-200"
+
+          >
+            Hello React Spectrum!
+          </Button>
+        </View>
+        <View backgroundColor="celery-400" gridArea="footer">
+        </View>
+        <View backgroundColor="fuchsia-400" gridArea="sidebar">
+        </View>
+        <View backgroundColor="purple-400" gridArea="header">
+        </View>
+      </Grid>
+      
+    </Provider>
   );
 }
 
