@@ -35,12 +35,25 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
 
     # ObjectiveEntry endpoints
 
-    @action(detail=False)
+    @action(detail=True, serializer_class=ObjectiveEntrySerializerInput, methods=['get', 'post'])
     def entries(self, request, pk=None):
-        objective_entries = ObjectiveEntry.objects.select_related('objective_id').get(id=pk)
-        serializer = ObjectiveEntrySerializer(objective_entries, many=True)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        if request.method == 'GET':
+            objective_entries = ObjectiveEntry.objects.select_related('objective_id').filter(objective_id=pk)
+            serializer = ObjectiveEntrySerializer(objective_entries, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        elif request.method == 'POST':
+            # Add id to data
+            patched_data = request.data.copy()
+            patched_data['objective_id'] = int(pk)
+
+            serializer = ObjectiveEntrySerializer(data=patched_data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 
 
 # Category endpoints
@@ -64,6 +77,6 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
 ))
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
-    serializer_class = ObjectiveSerializer
+    serializer_class = CategorySerializer
 
 

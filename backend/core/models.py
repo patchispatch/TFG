@@ -19,6 +19,7 @@ class Objective(models.Model):
     best_streak = models.PositiveSmallIntegerField()
     category_id = models.ForeignKey(
         'Category',
+        default=None,
         null=True,
         on_delete=models.SET_NULL,
     )
