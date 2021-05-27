@@ -4,7 +4,7 @@ import { autoserializeAs, deserializeAs } from "dcerialize";
 /**
  * Objective model
  */
-export class Objective {
+export class ObjectiveEntry {
     /**
      * Objective entry ID
      */

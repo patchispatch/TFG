@@ -11,14 +11,9 @@ export class Category {
     @deserializeAs(() => Number) id: number | undefined;
 
     /**
-     * Objective id
+     * Category name
      */
     @autoserializeAs(() => String) name: string | undefined;
-
-    /**
-     * Date of entry
-     */
-    @autoserializeAs(() => Date) date: Date | undefined;
 
     /**
      * Constructor
@@ -26,10 +21,8 @@ export class Category {
     constructor(
         id?: number,
         name?: string,
-        date?: Date,
     ) {
         this.id = id;
         this.name = name;
-        this.date = date;
     }
 }

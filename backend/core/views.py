@@ -33,8 +33,7 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
     queryset = Objective.objects.all()
     serializer_class = ObjectiveSerializer
 
-    # ObjectiveEntry endpoints
-
+    # ObjectiveEntry 'shortcut' endpoints
     @action(detail=True, serializer_class=ObjectiveEntrySerializerInput, methods=['get', 'post'])
     def entries(self, request, pk=None):
 
@@ -44,7 +43,7 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         
         elif request.method == 'POST':
-            # Add id to data
+            # Add objective id to data
             patched_data = request.data.copy()
             patched_data['objective_id'] = int(pk)
 
@@ -52,8 +51,31 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
+
+
+# ObjectiveEntry endpoints
+@method_decorator(name='list', decorator=swagger_auto_schema(
+    operation_description="Get a list of all objective entries"
+))
+@method_decorator(name='retrieve', decorator=swagger_auto_schema(
+    operation_description="Get an objective entry by ID"
+))
+@method_decorator(name='create', decorator=swagger_auto_schema(
+    operation_description="Create a new objective entry"
+))
+@method_decorator(name='update', decorator=swagger_auto_schema(
+    operation_description="Update an existing objective entry"
+))
+@method_decorator(name='partial_update', decorator=swagger_auto_schema(
+    operation_description="Partially update an existing objective entry"
+))
+@method_decorator(name='destroy', decorator=swagger_auto_schema(
+    operation_description="Delete an objective entry by ID"
+))
+class ObjectiveEntryViewSet(viewsets.ModelViewSet):
+    queryset = ObjectiveEntry.objects.all()
+    serializer_class = ObjectiveEntrySerializer
 
 
 # Category endpoints

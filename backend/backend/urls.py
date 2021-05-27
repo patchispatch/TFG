@@ -11,6 +11,7 @@ from core import views
 router = DefaultRouter()
 router.register(r'objectives', views.ObjectiveViewSet)
 router.register(r'categories', views.CategoryViewSet)
+router.register(r'objective-entries', views.ObjectiveEntryViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
