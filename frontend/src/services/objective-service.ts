@@ -1,5 +1,5 @@
 import axios from 'axios-observable';
-import { Deserialize, DeserializeArray, IJsonArray, IJsonObject } from 'dcerialize';
+import { Deserialize, DeserializeArray, IJsonArray, IJsonObject, Serialize } from 'dcerialize';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Objective } from '../models/objective';
@@ -8,7 +8,7 @@ import { CRUDL } from './crudl';
 
 export class ObjectiveService implements CRUDL {
     // Base URL
-    baseUrl = '/objectives'
+    baseUrl = '/objectives/'
 
     /**
      * Returns a list of all the objectives
@@ -25,7 +25,7 @@ export class ObjectiveService implements CRUDL {
      * Get a resource by ID
      */
     get(id: number): Observable<Objective> {
-        return axios.get<IJsonObject>(`${this.baseUrl}/${id}`)
+        return axios.get<IJsonObject>(`${this.baseUrl}${id}`)
             .pipe(
                 map(result => Deserialize(result.data, () => Objective)),
                 catchError(err => of(err))
@@ -36,7 +36,7 @@ export class ObjectiveService implements CRUDL {
      * Add a new objective
      */
     post(data: Objective): Observable<Objective> {
-        return axios.post<IJsonObject>(this.baseUrl, data)
+        return axios.post<IJsonObject>(this.baseUrl, Serialize(data, () => Objective))
             .pipe(
                 map(result => Deserialize(result.data, () => Objective)),
                 catchError(err => of(err))
@@ -47,7 +47,7 @@ export class ObjectiveService implements CRUDL {
      * Update a resource
      */
     update(data: Objective): Observable<Objective> {
-        return axios.put<IJsonObject>(`${this.baseUrl}/${data.id}`, data)
+        return axios.put<IJsonObject>(`${this.baseUrl}${data.id}`, Serialize(data, () => Objective))
             .pipe(
                 map(result => Deserialize(result.data, () => Objective)),
                 catchError(err => of(err))
@@ -58,7 +58,7 @@ export class ObjectiveService implements CRUDL {
      * Delete an objective by ID
      */
     delete(id: number): Observable<null> {
-        return axios.delete<null>(`${this.baseUrl}/${id}`)
+        return axios.delete<null>(`${this.baseUrl}${id}`)
         .pipe(
             catchError(err => of(err))
         )

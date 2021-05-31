@@ -14,51 +14,58 @@ export enum ObjectiveStatus {
  */
 export class Objective {
     /**
+     * Objective title
+     */
+    @autoserializeAs(() => String) name: string;
+
+    /**
+     * Objective goal
+     */
+    @autoserializeAs(() => Number) goal: number;
+
+    /**
      * Objective ID
      */
     @deserializeAs(() => Number) id: number | undefined;
 
     /**
-     * Objective title
-     */
-    @autoserializeAs(() => String) name: string | undefined;
-
-    /**
-     * Objective goal
-     */
-    @autoserializeAs(() => Number) goal: number | undefined;
-
-    /**
      * Objective status
      */
-    @autoserializeAs(() => String) status: ObjectiveStatus | undefined;
+    @autoserializeAs(() => String) status: ObjectiveStatus;
+
+    /**
+     * Category ID
+     */
+    @autoserializeAs(() => Number, 'category_id') categoryId: number | undefined;
 
     /**
      * Current streak
      */
-    @autoserializeAs(() => Number) current_streak: number | undefined;
+    @autoserializeAs(() => Number, 'current_streak') currentStreak: number;
 
     /**
      * Best streak
      */
-    @autoserializeAs(() => Number) best_streak: number | undefined;
+    @autoserializeAs(() => Number, 'best_streak') bestStreak: number;
     
     /**
      * Constructor
      */
     constructor(
-        id?: number,
-        name?: string,
-        goal?: number,
+        name: string,
+        goal: number,
+        categoryId?: number,
         status?: ObjectiveStatus,
-        current_streak?: number,
-        best_streak?: number,
+        currentStreak?: number,
+        bestStreak?: number,
+        id?: number,
     ) {
-        this.id = id;
         this.name = name;
         this.goal = goal;
-        this.status = status;
-        this.current_streak = current_streak;
-        this.best_streak = best_streak;
+        this.status = status ? status : ObjectiveStatus.ACTIVE;
+        this.currentStreak = currentStreak ? currentStreak : 0;
+        this.bestStreak = bestStreak ? bestStreak : 0;
+        this.id = id;
+        this.categoryId = categoryId;
     }
 }

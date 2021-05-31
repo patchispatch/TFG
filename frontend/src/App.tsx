@@ -7,12 +7,6 @@ import {Provider, Button, Grid, View, defaultTheme, DialogTrigger, ActionButton,
 import {ObjectiveForm} from 'src/components/objective/ObjectiveForm';
 
 function App() {
-
-  // Initialize services
-  let objectiveService = useMemo(() => new ObjectiveService(), []);
-
-
-
   return (
     <Provider theme={defaultTheme}>
       <Grid
@@ -33,23 +27,7 @@ function App() {
             </ActionButton>
 
             {(close) => (
-              <Dialog>
-                <Heading>New objective</Heading>
-                <Divider />
-
-                <Content>
-                  <ObjectiveForm />
-                </Content>
-
-                <ButtonGroup>
-                  <Button variant="secondary" onPress={close}>
-                    Cancel
-                  </Button>
-                  <Button variant="cta" onPress={close}>
-                    Create
-                  </Button>
-                </ButtonGroup>
-              </Dialog>
+              <ObjectiveForm title="New objective" close={close}/>
             )}
           </DialogTrigger>
         </View>
