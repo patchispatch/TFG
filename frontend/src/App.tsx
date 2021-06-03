@@ -3,41 +3,69 @@ import './App.css';
 import {ObjectiveService} from './services/objective-service';
 import {Objective} from './models/objective';
 import {useState, useEffect, useMemo} from 'react';
-import {Provider, Button, Grid, View, defaultTheme, DialogTrigger, ActionButton, Heading, Divider, Content, Dialog, ButtonGroup} from '@adobe/react-spectrum';
 import {ObjectiveForm} from 'src/components/objective/ObjectiveForm';
+import { AppBar, createStyles, CssBaseline, Drawer, makeStyles, Theme, ThemeProvider, Toolbar, Typography } from '@material-ui/core';
+import {theme} from 'src/theme';
+
+// Style
+const drawerWidth = 400;
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+    },
+    mainView: {
+      width: `calc(100% - ${drawerWidth}px)`,
+    },
+    drawer: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+    drawerPaper: {
+      width: drawerWidth,
+    },
+    // necessary for content to be below app bar
+    toolbar: theme.mixins.toolbar,
+    content: {
+      flexGrow: 1,
+      backgroundColor: theme.palette.background.default,
+      padding: theme.spacing(3),
+    },
+  }),
+);
+
 
 function App() {
-  return (
-    <Provider theme={defaultTheme}>
-      <Grid
-        areas={['sidebar header', 'sidebar content']}
-        columns={['400px auto']}
-        rows={['75px auto']}
-        gap="size-0"
-        height="100vh"
-      >
-        <View backgroundColor="gray-50" gridArea="content" position="relative">
-          <DialogTrigger>
-            <ActionButton
-              position="absolute"
-              top="size-200"
-              left="size-200"
-            >
-              Objective form
-            </ActionButton>
+  const classes = useStyles();
 
-            {(close) => (
-              <ObjectiveForm title="New objective" close={close}/>
-            )}
-          </DialogTrigger>
-        </View>
-        <View backgroundColor="gray-200" gridArea="sidebar">
-        </View>
-        <View backgroundColor="gray-100" gridArea="header">
-        </View>
-      </Grid>
-      
-    </Provider>
+  return (
+    <ThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <CssBaseline />
+        <Drawer
+          variant="permanent"
+          className={classes.drawer}
+          classes={{paper: classes.drawerPaper}}
+          anchor="left"
+        >
+          Drawer
+        </Drawer>
+        <main className={classes.mainView}>
+          <AppBar elevation={0} position="sticky">
+            <Toolbar>
+              <Typography variant="h6">
+                Home
+              </Typography>
+            </Toolbar>
+          </AppBar>
+
+          <div className={classes.content}>
+            <Typography variant="h6">MAIN VIEW</Typography>
+          </div>
+        </main>
+      </div>
+    </ThemeProvider>
   );
 }
 
