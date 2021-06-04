@@ -6,6 +6,7 @@ import {useState, useEffect, useMemo} from 'react';
 import {ObjectiveForm} from 'src/components/objective/ObjectiveForm';
 import { AppBar, createStyles, CssBaseline, Drawer, makeStyles, Theme, ThemeProvider, Toolbar, Typography } from '@material-ui/core';
 import {theme} from 'src/theme';
+import { CreateObjective } from './components/objective/CreateObjective';
 
 // Style
 const drawerWidth = 400;
@@ -62,6 +63,7 @@ function App() {
 
           <div className={classes.content}>
             <Typography variant="h6">MAIN VIEW</Typography>
+            <CreateObjective />
           </div>
         </main>
       </div>
