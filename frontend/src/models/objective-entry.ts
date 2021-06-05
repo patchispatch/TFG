@@ -6,38 +6,38 @@ import { autoserializeAs, deserializeAs } from "dcerialize";
  */
 export class ObjectiveEntry {
     /**
-     * Objective entry ID
-     */
-    @deserializeAs(() => Number) id: number | undefined;
-
-    /**
      * Objective id
      */
-    @autoserializeAs(() => Number) objective_id: number | undefined;
+    @autoserializeAs(() => Number) objective_id: number;
 
     /**
      * Date of entry
      */
-    @autoserializeAs(() => Date) date: Date | undefined;
+    @autoserializeAs(() => Date) date: Date;
 
     /**
      * Objective status
      */
-    @autoserializeAs(() => Number) progress: number | undefined;
+    @autoserializeAs(() => Number) progress: number;
+    
+    /**
+     * Objective entry ID
+     */
+    @deserializeAs(() => Number) id?: number | undefined;
 
     
     /**
      * Constructor
      */
     constructor(
-        id?: number,
-        objective_id?: number,
-        date?: Date,
-        progress?: number,
+      objective_id: number,
+      date: Date,
+      progress: number,
+      id?: number,
     ) {
-        this.id = id;
-        this.objective_id = objective_id;
-        this.date = date;
-        this.progress = progress;
+      this.objective_id = objective_id;
+      this.date = date;
+      this.progress = progress;
+      this.id = id;
     }
 }
