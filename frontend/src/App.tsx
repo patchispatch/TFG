@@ -1,9 +1,5 @@
 import * as React from 'react';
 import './App.css';
-import {ObjectiveService} from './services/objective-service';
-import {Objective} from './models/objective';
-import {useState, useEffect, useMemo} from 'react';
-import {ObjectiveForm} from 'src/components/objective/ObjectiveForm';
 import { AppBar, createStyles, CssBaseline, Drawer, makeStyles, Theme, ThemeProvider, Toolbar, Typography } from '@material-ui/core';
 import {theme} from 'src/theme';
 import { CreateObjective } from './components/objective/CreateObjective';

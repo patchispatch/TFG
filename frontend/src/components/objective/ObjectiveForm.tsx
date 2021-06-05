@@ -6,9 +6,9 @@ import {CategoryService} from 'src/services/category-service';
 import { Category } from 'src/models/category';
 import { Objective } from 'src/models/objective';
 import { createStyles, makeStyles, MenuItem, TextField, Theme } from '@material-ui/core';
-import classes from '*.module.css';
 
-// Style
+
+// Styles
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
     root: {
@@ -32,25 +32,36 @@ interface ObjectiveFormProps {
   postSubmit?: (response?: Objective) => any
 }
 
+
 // Form values
 interface FormValues {
   name: string,
   goal: number,
-  categoryId?: number | undefined
+  categoryId: number
 }
 
-export function ObjectiveForm({objective, postSubmit}: ObjectiveFormProps) {
-  const classes = useStyles();
 
+/**
+ * Objective form component
+ * Generic component that includes objective form inputs, logic and validation
+ */
+export function ObjectiveForm({objective, postSubmit}: ObjectiveFormProps) {
   // Services
   const objectiveService = useMemo(() => new ObjectiveService(), []);
   const categoryService = useMemo(() => new CategoryService(), []);
 
-  // Form
-  const {handleSubmit, control} = useForm<FormValues>();
-
   // State
   let [categoryList, setCategoryList] = useState<Category[]>([]);
+
+
+  // Form control
+  const initialFormState: FormValues = {
+    name: objective ? objective.name : "",
+    goal: objective ? objective.goal : 1,
+    categoryId: (objective && objective.categoryId) ? objective.categoryId : -1
+  }
+  const {handleSubmit, control} = useForm<FormValues>({defaultValues: initialFormState});
+
 
   // On init
   useEffect(() => {
@@ -60,13 +71,11 @@ export function ObjectiveForm({objective, postSubmit}: ObjectiveFormProps) {
 
   // On submit
   function onSubmit(data: FormValues) {
-    console.log(data);
-
     // If an objective is provided, edit
     if (objective) {
       objective.name = data.name;
       objective.goal = data.goal;
-      data.categoryId && (objective.categoryId = data.categoryId);
+      data.categoryId !== -1 && (objective.categoryId = data.categoryId);
 
       objectiveService.update(objective).subscribe(response => {
         if (postSubmit) {
@@ -76,7 +85,7 @@ export function ObjectiveForm({objective, postSubmit}: ObjectiveFormProps) {
     }
     else {
       const new_objective = new Objective(data.name, data.goal);
-      data.categoryId && (new_objective.categoryId = data.categoryId);
+      data.categoryId !== -1 && (new_objective.categoryId = data.categoryId);
 
       objectiveService.post(new_objective).subscribe(response => {
         if (postSubmit) {
@@ -86,13 +95,14 @@ export function ObjectiveForm({objective, postSubmit}: ObjectiveFormProps) {
     }
   }
 
+
   // Render
+  const classes = useStyles();
   return (
     <form id="objectiveForm" className={classes.root} onSubmit={handleSubmit(onSubmit)}>
       <Controller
         name="name"
         control={control}
-        defaultValue=""
         rules={{required: 'Name required'}}
         render={({field: {onChange, value}, fieldState: {error}}) => (
           <TextField
@@ -108,7 +118,6 @@ export function ObjectiveForm({objective, postSubmit}: ObjectiveFormProps) {
       <Controller
         name="goal"
         control={control}
-        defaultValue={1}
         rules={{required: 'Goal required', min: 1}}
         render={({field: {onChange, value}, fieldState: {error}}) => (
           <TextField
@@ -126,7 +135,6 @@ export function ObjectiveForm({objective, postSubmit}: ObjectiveFormProps) {
       <Controller
         name="categoryId"
         control={control}
-        defaultValue={undefined}
         render={({field: {onChange, value}}) => (
           <TextField
             select
@@ -134,8 +142,9 @@ export function ObjectiveForm({objective, postSubmit}: ObjectiveFormProps) {
             value={value}
             onChange={onChange}
             inputProps={{displayEmpty: true}}
+            InputLabelProps={{shrink: true}}
           >
-            <MenuItem value={undefined}>
+            <MenuItem key={-1} value={-1}>
               <em>None</em>
             </MenuItem>
             

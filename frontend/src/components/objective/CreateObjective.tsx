@@ -1,11 +1,29 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
+import { Button, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, makeStyles, Theme } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 import * as React from 'react'
-import { useMemo, useState } from 'react'
-import { Objective } from 'src/models/objective';
-import { ObjectiveService } from 'src/services/objective-service'
+import { useState } from 'react'
 import { ObjectiveForm } from './ObjectiveForm';
 
 // Style
+const useStyles = makeStyles((theme: Theme) => 
+  createStyles({
+    root: {
+      '& .MuiDivider-root': {
+        width: '100%'
+      }
+    },
+    headerFooter: { 
+      margin: 0,
+      padding: theme.spacing(2),
+    },
+    closeButton: {
+      position: 'absolute',
+      right: theme.spacing(1),
+      top: theme.spacing(1),
+      color: theme.palette.grey[500],
+    },
+  })
+);
 
 // Props
 
@@ -24,22 +42,35 @@ export function CreateObjective() {
   }
 
   // Render
+  const classes = useStyles();
   return (
-    <div>
+    <div className={classes.root}>
       <Button variant="contained" disableElevation color="primary" onClick={handleClickOpen}>
         New objective
       </Button>
 
       <Dialog open={open} onClose={handleClose} aria-labelledby="create-objective-title">
-        <DialogTitle id="create-objective-title">New objective</DialogTitle>
+        <DialogTitle className={classes.headerFooter} id="create-objective-title">
+          New objective
+
+          <IconButton aria-label="close" className={classes.closeButton} onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+
+        <Divider />
+
         <DialogContent>
           <ObjectiveForm postSubmit={handleClose}/>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
+
+        <Divider />
+
+        <DialogActions className={classes.headerFooter}>
+          <Button variant="contained" disableElevation onClick={handleClose}>
             Cancel
           </Button>
-          <Button type="submit" form="objectiveForm">
+          <Button variant="contained" disableElevation color="primary" type="submit" form="objectiveForm">
             Create
           </Button>
         </DialogActions>
