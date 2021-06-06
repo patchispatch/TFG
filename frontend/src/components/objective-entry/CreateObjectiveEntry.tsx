@@ -2,11 +2,16 @@ import { Button } from '@material-ui/core';
 import * as React from 'react'
 import { useState } from 'react'
 import { FormDialog } from '../utils/FormDialog';
-import { ObjectiveForm } from './ObjectiveForm';
+import { ObjectiveEntryForm } from './ObjectiveEntryForm';
 
+
+// Props
+interface CreateObjectiveEntryProps {
+  objectiveId: number
+}
 
 // Component
-export function CreateObjective() {
+export function CreateObjectiveEntry({objectiveId}: CreateObjectiveEntryProps) {
   // State
   const [open, setOpen] = useState(false);
 
@@ -22,17 +27,17 @@ export function CreateObjective() {
   // Render
   return (
     <>
-      <Button variant="contained" disableElevation color="primary" onClick={handleOpen}>
-        New objective
+      <Button variant="contained" disableElevation color="secondary" onClick={handleOpen}>
+        Update objective
       </Button>
 
       <FormDialog 
-        title="New objective" 
-        formId="objectiveForm"
+        title="Update objective"
+        formId="objectiveEntryForm"
         isOpen={open}
         onClose={handleClose}
       >
-        <ObjectiveForm postSubmit={handleClose}/>
+        <ObjectiveEntryForm objectiveId={objectiveId} postSubmit={handleClose}/>
       </FormDialog>
     </>
   )

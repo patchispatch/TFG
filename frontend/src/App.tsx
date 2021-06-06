@@ -3,6 +3,7 @@ import './App.css';
 import { AppBar, createStyles, CssBaseline, Drawer, makeStyles, Theme, ThemeProvider, Toolbar, Typography } from '@material-ui/core';
 import {theme} from 'src/theme';
 import { CreateObjective } from './components/objective/CreateObjective';
+import { CreateObjectiveEntry } from './components/objective-entry/CreateObjectiveEntry';
 
 // Style
 const drawerWidth = 400;
@@ -60,6 +61,7 @@ function App() {
           <div className={classes.content}>
             <Typography variant="h6">MAIN VIEW</Typography>
             <CreateObjective />
+            <CreateObjectiveEntry objectiveId={1}/>
           </div>
         </main>
       </div>

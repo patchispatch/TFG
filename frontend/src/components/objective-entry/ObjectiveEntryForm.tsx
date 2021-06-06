@@ -2,11 +2,11 @@ import * as React from 'react';
 import {useMemo, useState, useEffect} from 'react';
 import { useForm, Controller } from 'react-hook-form'
 import {ObjectiveService} from 'src/services/objective-service';
-import {CategoryService} from 'src/services/category-service';
-import { Category } from 'src/models/category';
-import { createStyles, makeStyles, MenuItem, TextField, Theme } from '@material-ui/core';
+import { createStyles, makeStyles, TextField, Theme } from '@material-ui/core';
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { ObjectiveEntry } from 'src/models/objective-entry';
 import { ObjectiveEntryService } from 'src/services/objective-entry-service';
+import DateFnsUtils from '@date-io/date-fns';
 
 
 // Styles
@@ -46,29 +46,17 @@ interface FormValues {
  * Objective form component
  * Generic component that includes objective form inputs, logic and validation
  */
-export function ObjectiveForm({objectiveId, entry, postSubmit}: ObjectiveEntryFormProps) {
+export function ObjectiveEntryForm({objectiveId, entry, postSubmit}: ObjectiveEntryFormProps) {
   // Services
   const objectiveService = useMemo(() => new ObjectiveService(), []);
   const objectiveEntryService = useMemo(() => new ObjectiveEntryService(), []);
-  const categoryService = useMemo(() => new CategoryService(), []);
-
-  // State
-  let [categoryList, setCategoryList] = useState<Category[]>([]);
-
 
   // Form control
   const initialFormState: FormValues = {
-    progress: 1,
-    date: new Date()
+    progress: entry ? entry.progress : 1,
+    date: entry ? entry.date : new Date()
   }
   const {handleSubmit, control} = useForm<FormValues>({defaultValues: initialFormState});
-
-
-  // On init
-  useEffect(() => {
-    // Populate category list
-    categoryService.list().subscribe(response => setCategoryList(response));
-  }, [categoryService])
 
   // On submit
   function onSubmit(data: FormValues) {
@@ -85,7 +73,7 @@ export function ObjectiveForm({objectiveId, entry, postSubmit}: ObjectiveEntryFo
     }
     else {
       const new_entry = new ObjectiveEntry(objectiveId, data.date, data.progress);
-      objectiveEntryService.post(new_entry).subscribe(response => {
+      objectiveService.addEntry(objectiveId, new_entry).subscribe(response => {
         if (postSubmit) {
           postSubmit(response);
         }
@@ -97,38 +85,43 @@ export function ObjectiveForm({objectiveId, entry, postSubmit}: ObjectiveEntryFo
   // Render
   const classes = useStyles();
   return (
-    <form id="objectiveForm" className={classes.root} onSubmit={handleSubmit(onSubmit)}>
-      <Controller
-        name="date"
-        control={control}
-        rules={{required: 'Name required'}}
-        render={({field: {onChange, value}, fieldState: {error}}) => (
-          <TextField
-            label="Name"
-            value={value}
-            onChange={onChange}
-            error={!!error}
-            helperText={error ? error.message : null}
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <form id="objectiveEntryForm" className={classes.root} onSubmit={handleSubmit(onSubmit)}>
+        
+          <Controller
+            name="date"
+            control={control}
+            rules={{required: 'Name required'}}
+            render={({field: {onChange, value}, fieldState: {error}}) => (
+              <KeyboardDateTimePicker
+                label="Date"
+                variant="inline"
+                disableFuture
+                value={value}
+                onChange={onChange}
+                error={!!error}
+                helperText={error ? error.message : null}
+              />
+            )}
           />
-        )}
-      />
 
-      <Controller
-        name="progress"
-        control={control}
-        rules={{required: 'Goal required', min: 1}}
-        render={({field: {onChange, value}, fieldState: {error}}) => (
-          <TextField
-            label="Goal"
-            type="number"
-            value={value}
-            onChange={onChange}
-            inputProps={{min: 1}}
-            error={!!error}
-            helperText={error ? error.message : null}
-          />
-        )}
-      />
-    </form>
+        <Controller
+          name="progress"
+          control={control}
+          rules={{required: 'Goal required', min: 1}}
+          render={({field: {onChange, value}, fieldState: {error}}) => (
+            <TextField
+              label="Goal"
+              type="number"
+              value={value}
+              onChange={onChange}
+              inputProps={{min: 1}}
+              error={!!error}
+              helperText={error ? error.message : null}
+            />
+          )}
+        />
+      </form>
+    </MuiPickersUtilsProvider>
   )
 }
