@@ -48,7 +48,7 @@ export class ObjectiveService implements CRUDL {
    * Update a resource
    */
   update(data: Objective): Observable<Objective> {
-    return axios.put<IJsonObject>(`${this.baseUrl}${data.id}`, Serialize(data, () => Objective))
+    return axios.put<IJsonObject>(`${this.baseUrl}${data.id}/`, Serialize(data, () => Objective))
       .pipe(
         map(result => Deserialize(result.data, () => Objective)),
         catchError(err => of(err))

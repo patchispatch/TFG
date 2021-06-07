@@ -87,24 +87,24 @@ export function ObjectiveEntryForm({objectiveId, entry, postSubmit}: ObjectiveEn
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <form id="objectiveEntryForm" className={classes.root} onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name="date"
-            control={control}
-            rules={{required: 'Name required'}}
-            render={({field: {onChange, value}, fieldState: {error}}) => (
-              <KeyboardDateTimePicker
-                label="Date"
-                variant="inline"
-                ampm={false}
-                disableFuture
-                format="dd/MM/yyyy HH:mm"
-                value={value}
-                onChange={onChange}
-                error={!!error}
-                helperText={error ? error.message : null}
-              />
-            )}
-          />
+        <Controller
+          name="date"
+          control={control}
+          rules={{required: 'Name required'}}
+          render={({field: {onChange, value}, fieldState: {error}}) => (
+            <KeyboardDateTimePicker
+              label="Date"
+              variant="inline"
+              ampm={false}
+              disableFuture
+              format="dd/MM/yyyy HH:mm"
+              value={value}
+              onChange={onChange}
+              error={!!error}
+              helperText={error ? error.message : null}
+            />
+          )}
+        />
 
         <Controller
           name="progress"
