@@ -5,6 +5,7 @@ import {theme} from 'src/theme';
 import { CreateObjective } from './components/objective/CreateObjective';
 import { CreateObjectiveEntry } from './components/objective-entry/CreateObjectiveEntry';
 import { EditObjective } from './components/objective/EditObjective';
+import ObjectiveTable from './components/objective/ObjectiveTable';
 
 // Style
 const drawerWidth = 400;
@@ -64,6 +65,8 @@ function App() {
             <CreateObjective />
             <CreateObjectiveEntry objectiveId={1} />
             <EditObjective objectiveId={1} />
+
+            <ObjectiveTable />
           </div>
         </main>
       </div>
