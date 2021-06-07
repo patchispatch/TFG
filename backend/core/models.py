@@ -30,7 +30,7 @@ class Objective(models.Model):
 
 class ObjectiveEntry(models.Model):
     # Objective
-    date = models.DateField()
+    date = models.DateTimeField()
     progress = models.PositiveSmallIntegerField()
     objective_id = models.ForeignKey(
         'Objective',
