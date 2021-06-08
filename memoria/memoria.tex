@@ -90,11 +90,51 @@ No sé si este capítulo procede en esta modalidad de TFG.
 
 \section{Metodología de desarrollo}
 
-Para la elaboración del proyecto se ha planteado utilizar aspectos sólidos de diversas metodologías ágiles, como SCRUM \cite{schwaber2017scrum} o Kanban. Al estar planteadas originalmente para equipos ---generalmente pequeños---, ha sido necesario adaptarlas a un desarrollo individual.
+Para la elaboración del proyecto se ha planteado utilizar aspectos sólidos de diversas metodologías ágiles, como SCRUM \cite{schwaber2017scrum} o \textit{Kanban} \cite{kanban}. Al estar planteadas originalmente para equipos ---generalmente pequeños---, ha sido necesario adaptarlas a un desarrollo individual. Se han seguido los principios del Manifiesto Ágil \cite{beck2001agile}.
 
 \medskip
 
-Los elementos a destacar de la 
+
+
+\medskip
+
+Los elementos a destacar de la metodología desarrollada son los siguientes:
+
+\subsection*{Tablero \textit{Kanban}}
+
+Utilizado para representar los posibles estados de cada tarea de forma visual.
+
+\medskip
+
+Al ser \textit{Kanban} un marco flexible, se han definido estados o columnas acordes a las necesidades del proyecto. Dado que el desarrollo ha sido llevado a cabo por un individuo, se puede prescindir de estados intermedios de aprobación de código por el resto del equipo.
+
+\medskip
+
+Los estados definidos son los siguientes:
+
+\begin{itemize}
+	\item \textbf{TO DO}
+	\item \textbf{MAKING TESTS}
+	\item \textbf{IN PROGRESS}
+	\item \textbf{DONE} 
+\end{itemize}
+
+El estado \textbf{MAKING TESTS} determina que que los \textit{tests} unitarios de una tarea están en desarrollo.
+
+
+\subsection*{Desarrollo iterativo e incremental}
+
+Presente en metodologías como \textit{SCRUM} o \textit{eXtreme Programming}, el desarrollo iterativo permite tener una visión temprana y real del proyecto, así como una mayor flexibilidad a la hora de detectar e implementar cambios y mejoras.
+
+\medskip
+
+Al tratarse de un proyecto centrado en el aprendizaje de nuevas tecnologías, esta flexibilidad ha permitido una mayor creatividad y un enfoque centrado en la implementación de la aplicación, utilizando documentación auxiliar en los casos necesarios.
+
+
+\subsection*{Historias de Usuario}
+
+Las historias de usuario
+
 
 \section{Análisis de requisitos}
 
@@ -137,8 +177,8 @@ Los elementos a destacar de la
 % Capítulo: bibliografía
 %	1. Tecnologías utilizadas
 %	2. Artículos consultados
-\addcontentsline{toc}{chapter}{Bibliografía}
 \bibliographystyle{apalike}
+\addcontentsline{toc}{chapter}{Bibliografía}
 \bibliography{bibliography}
 
 
