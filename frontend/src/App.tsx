@@ -6,8 +6,9 @@ import { CreateObjective } from './components/objective/CreateObjective';
 import { CreateObjectiveEntry } from './components/objective-entry/CreateObjectiveEntry';
 import { EditObjective } from './components/objective/EditObjective';
 import ObjectiveTable from './components/objective/ObjectiveTable';
+import { ObjectiveView } from './components/objective/ObjectiveView';
 
-// Style
+// Styles
 const drawerWidth = 400;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,11 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
-    content: {
-      flexGrow: 1,
-      backgroundColor: theme.palette.background.default,
-      padding: theme.spacing(3),
-    },
   }),
 );
 
@@ -52,22 +48,7 @@ function App() {
           Drawer
         </Drawer>
         <main className={classes.mainView}>
-          <AppBar elevation={0} position="sticky">
-            <Toolbar>
-              <Typography variant="h6">
-                Home
-              </Typography>
-            </Toolbar>
-          </AppBar>
-
-          <div className={classes.content}>
-            <Typography variant="h6">MAIN VIEW</Typography>
-            <CreateObjective />
-            <CreateObjectiveEntry objectiveId={1} />
-            <EditObjective objectiveId={1} />
-
-            <ObjectiveTable />
-          </div>
+          <ObjectiveView />
         </main>
       </div>
     </ThemeProvider>

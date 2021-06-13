@@ -1,8 +1,10 @@
-import { makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
+import { IconButton, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
 import * as React from "react";
 import { useMemo } from "react";
 import { Objective } from "src/models/objective";
 import { ObjectiveService } from "src/services/objective-service";
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 // Styles
@@ -34,8 +36,10 @@ export default function ObjectiveTable() {
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell align="right">Category</TableCell>
-            <TableCell align="right">Current streak&nbsp;(g)</TableCell>
-            <TableCell align="right">Best streak&nbsp;(g)</TableCell>
+            <TableCell align="right">Current streak</TableCell>
+            <TableCell align="right">Best streak</TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -47,6 +51,16 @@ export default function ObjectiveTable() {
               <TableCell align="right">{objective.categoryId}</TableCell>
               <TableCell align="right">{objective.currentStreak}</TableCell>
               <TableCell align="right">{objective.bestStreak}</TableCell>
+              <TableCell align="right" padding="checkbox">
+                <IconButton aria-label="edit">
+                  <EditIcon />
+                </IconButton>
+              </TableCell>
+              <TableCell align="right" padding="checkbox">
+                <IconButton aria-label="delete">
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
