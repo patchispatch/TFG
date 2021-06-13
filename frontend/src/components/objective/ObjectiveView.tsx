@@ -1,10 +1,10 @@
-import React from "react";
-import { AppBar, createStyles, makeStyles, Toolbar, Typography } from "@material-ui/core";
+import React, { useState } from "react";
+import { AppBar, Button, createStyles, makeStyles, Toolbar, Typography } from "@material-ui/core";
 import { CreateObjectiveEntry } from "../objective-entry/CreateObjectiveEntry";
-import { CreateObjective } from "./CreateObjective";
-import { EditObjective } from "./EditObjective";
-import ObjectiveTable from "./ObjectiveTable";
+import { ObjectiveTable } from "./ObjectiveTable";
 import { Theme } from "@material-ui/core";
+import { ObjectiveForm } from "./ObjectiveForm";
+import { FormDialog } from "../utils/FormDialog";
 
 
 // Styles
@@ -30,7 +30,20 @@ const useStyles = makeStyles((theme: Theme) =>
 // Component
 export function ObjectiveView() {
 
-  // 
+  // State
+  
+
+  // Handle dialog state
+  // TODO: think about doing it differently
+  let [dialogState, setDialogState] = useState(false);
+
+  function handleOpen(): void {
+    setDialogState(true);
+  }
+
+  function handleClose(): void {
+    setDialogState(false);
+  }
 
   // Render
   const classes = useStyles();
@@ -48,12 +61,23 @@ export function ObjectiveView() {
         <Typography variant="h6">Test buttons</Typography>
 
         <div className={classes.testButtons}>
-          <CreateObjective />
+          <Button onClick={handleOpen} variant="contained" color="primary">New objective</Button>
+
+
           <CreateObjectiveEntry objectiveId={1} />
-          <EditObjective objectiveId={1} />
         </div>
 
         <ObjectiveTable />
+
+        {/* Dialogs */}
+        <FormDialog 
+            title="New objective"
+            formId="objectiveForm"
+            isOpen={dialogState}
+            onClose={handleClose}
+        >
+          <ObjectiveForm postSubmit={handleClose} />
+        </FormDialog>
       </div>
     </>
   )

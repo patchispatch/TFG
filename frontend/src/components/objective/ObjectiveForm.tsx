@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 // Props
 interface ObjectiveFormProps {
-  objective?: Objective,
+  objectiveId?: number,
   postSubmit?: (response?: Objective) => any
 }
 
@@ -37,7 +37,7 @@ interface ObjectiveFormProps {
 interface FormValues {
   name: string,
   goal: number,
-  categoryId: number
+  categoryId?: number,
 }
 
 
@@ -45,29 +45,45 @@ interface FormValues {
  * Objective form component
  * Generic component that includes objective form inputs, logic and validation
  */
-export function ObjectiveForm({objective, postSubmit}: ObjectiveFormProps) {
+export function ObjectiveForm({objectiveId, postSubmit}: ObjectiveFormProps) {
   // Services
   const objectiveService = useMemo(() => new ObjectiveService(), []);
   const categoryService = useMemo(() => new CategoryService(), []);
 
   // State
   let [categoryList, setCategoryList] = useState<Category[]>([]);
+  let [objective, setObjective] = useState<Objective>();
 
 
   // Form control
-  const initialFormState: FormValues = {
-    name: objective ? objective.name : "",
-    goal: objective ? objective.goal : 1,
-    categoryId: (objective && objective.categoryId) ? objective.categoryId : -1
-  }
-  const {handleSubmit, control} = useForm<FormValues>({defaultValues: initialFormState});
+  const {handleSubmit, control, reset} = useForm({
+    defaultValues: {
+      name: "",
+      goal: 1,
+      categoryId: -1
+    }
+  });
 
 
   // On init
   useEffect(() => {
     // Populate category list
     categoryService.list().subscribe(response => setCategoryList(response));
-  }, [categoryService])
+
+    // If an objective ID is provided, retrieve it
+    if (objectiveId) {
+      objectiveService.get(objectiveId).subscribe(response => {
+        setObjective(response);
+        reset({
+          name: response?.name,
+          goal: response?.goal,
+          categoryId: response?.categoryId ? response?.categoryId : -1
+        });
+      });
+    }
+      
+  }, [categoryService, objectiveId, objectiveService])
+
 
   // On submit
   function onSubmit(data: FormValues) {
