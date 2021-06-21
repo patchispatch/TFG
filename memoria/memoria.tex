@@ -34,8 +34,6 @@
 \tableofcontents
 
 % Capítulo: introducción
-%	1. Resumen
-%	2. Resumen en inglés (mínimo 500 palabras)
 \chapter{Introducción}
 
 \textbf{Palabras clave:} palabras clave
@@ -48,53 +46,103 @@ Existe una gran oferta en cuanto a herramientas de organización personal. Desde
 
 \medskip
 
-Muchas de las herramientas más populares en este campo optan por ofrecer un servicio de suscripción ---a menudo con versión gratuita--- con ventajas tales como sincronización en la nube o integración con servicios adicionales. Sin embargo, a veces estas opciones son demasiado complejas para algunas personas, que simplemente buscan algo más sencillo o acorde a sus necesidades.
+Muchas de las herramientas más populares en este campo optan por ofrecer un servicio de suscripción ---a menudo con versión gratuita---, que aporta ventajas tales como la sincronización de los datos del usuario en la nube o integración con servicios adicionales. Sin embargo, a veces estas opciones son demasiado complejas para algunas personas, que simplemente buscan algo más sencillo o acorde a sus necesidades.
 
 \medskip
 
-Se plantea una propuesta de aplicación con una funcionalidad simple, orientada a reforzar y asistir en la creación de rutinas y hábitos, utilizando como soporte un sistema de objetivos y una estructura de horario semanal. La idea principal es brindar una funcionalidad simple a la vez que intuitiva, haciendo énfasis en la accesibilidad y facilidad de uso, optando por no incluir herramientas complejas, tales como un sistema de calendario o un bloc de notas ---opciones que muchos de los servicios mencionados anteriormente implementan---.
+Se plantea una propuesta de aplicación con una funcionalidad simple, orientada a asistir en la creación de rutinas y hábitos, utilizando como soporte un sistema de objetivos y una estructura de horario semanal. La idea principal es brindar una funcionalidad simple a la vez que intuitiva, haciendo énfasis en la facilidad de uso, optando por no incluir herramientas complejas, tales como un sistema de calendario o un bloc de notas ---opciones que muchos de los servicios mencionados anteriormente implementan---.
 
 \medskip
 
-La aplicación propuesta se ha implementado utilizando tecnologías web muy extendidas y con gran soporte en la actualidad, y se acoge a los estándares de accesibilidad WAI-ARIA definidos por el \textit{World Wide Web Consortium}.
+La aplicación propuesta se ha desarrollado utilizando tecnologías web extendidas y con gran soporte en la actualidad, y una arquitectura cliente-servidor basada en el patrón \textit{REST} \cite{fielding2000architectural}.
 
 \newpage
 
 
-\textbf{Keywords:} keywords
-
-
 \section{\textit{Abstract}}
 
-The personal organization market offers a lot of options and alternatives. From huge online communities using and reimagining the traditional notebooks and diaries
+Una vez esté aprobado el resumen, traducir.
 
+
+\newpage
+
+\section{Integración de conocimientos previos}
+
+Para la realización de este proyecto, han sido útiles los conocimientos adquiridos en las siguientes asignaturas del grado:
+
+\begin{itemize}
+	\item Fundamentos de Bases de Datos
+	\item Fundamentos de Ingeniería del Software
+	\item Ingeniería de Servidores
+	\item Sistemas de Información Basados en Web
+	\item Dirección y Gestión de Proyectos
+	\item Metodologías de Desarrollo Ágil
+\end{itemize}
 
 % Capítulo: estado del arte
-%	1. Crítica al estado del arte
-%	2. Propuesta
 \chapter{Estado del arte}
-
-No sé si este capítulo procede en esta modalidad de TFG.
 
 \section{Crítica al estado del arte}
 
+El mercado de aplicaciones de organización personal está repleto de opciones, con algunas de ellas muy populares. Las aplicaciones estudiadas pueden dividirse en las siguientes categorías, según su principal enfoque en cuanto a la organización personal
+
+\subsection*{Aplicaciones de agenda y calendario}
+
+Las aplicaciones de agenda y calendario son las más populares, debido a su enfoque principalmente profesional. Se trata de herramientas completas y potentes, con capacidad para gestionar diferentes calendarios simultáneos, recordatorios, exportación a distintos formatos e integración con otros servicios ---como por ejemplo es el caso de Google Calendar, en el que se pueden planificar citas a través de \textit{Gmail}, o adjuntar salas de videoconferencia de \textit{Google Meet}---. 
+
+\medskip
+
+Una de las principales ventajas de los principales servicios de este tipo es su gratuidad. Al estar mantenidos en su mayoría por grandes empresas tecnológicas ---Google, Microsoft, Apple, etc.---, no requieren de un esfuerzo adicional para el usuario del resto de sus respectivas aplicaciones.
+
+\medskip
+
+Estos servicios, pese a estar preparados para un uso intensivo y profesional, también se adaptan al usuario medio en mayor o menor medida. No obstante, su complejidad puede resultar abrumadora, y ante todo, suplen necesidades específicas: una agenda y un calendario tradicionales.
+
+\medskip
+
+Algunas de las aplicaciones de calendario más populares o influyentes son las siguientes:
+
+\begin{itemize}
+	\item Google Calendar
+	\item Microsoft Outlook
+	\item Apple Calendar (anteriormente llamado \textit{iCal})
+\end{itemize}
+
+
+\subsection*{Aplicaciones de tareas}
+
+Otro enfoque popular a la hora de ofrecer herramientas de organización personal es el de las aplicaciones de tareas. Estos servicios ofrecen la posibilidad de planificarse a través de listas de tareas, a menudo con añadidos como notificaciones y recordatorios, similares a los presentes en las aplicaciones más tradicionales anteriormente mencionadas. 
+
+\medskip
+
+Estas aplicaciones utilizan la \textbf{tarea} como elemento base, construyendo todo su funcionamiento en torno a ella, y poniendo el foco en facilitar la interacción del usuario con la misma. Pese a estar presentes en entornos profesionales, muchas de estas aplicaciones se orientan hacia el usuario medio en primer lugar, ofreciendo una experiencia más sencilla e intuitiva.
+
+\medskip
+
+No obstante, muchos de estos servicios cuentan con una funcionalidad limitada, a menudo como expositor de una suscripción; y aquellos que no disponen de esta opción suelen requerir de un esfuerzo adicional por parte del usuario ---por ejemplo, Tasks.org \cite{tasks.org}---.
+
+\medskip
+
+Algunos ejemplos de aplicaciones de tareas son las siguientes:
+
+\begin{itemize}
+	\item any.do
+	\item Todoist
+	\item Tasks.org
+\end{itemize}
+
+
 \section{Propuesta}
 
+\subsection{Objetivos}
 
-% Capítulo: análisis de objetivos y metodología
-%	1. Metodología de desarrollo
-%	2. Análisis de requisitos
-%	3. Análisis de tecnologías
-%	4. Presupuesto
-\chapter{Análisis de objetivos y metodología}
+
+
+\chapter{Metodología}
 
 \section{Metodología de desarrollo}
 
 Para la elaboración del proyecto se ha planteado utilizar aspectos sólidos de diversas metodologías ágiles, como SCRUM \cite{schwaber2017scrum} o \textit{Kanban} \cite{kanban}. Al estar planteadas originalmente para equipos ---generalmente pequeños---, ha sido necesario adaptarlas a un desarrollo individual. Se han seguido los principios del Manifiesto Ágil \cite{beck2001agile}.
-
-\medskip
-
-
 
 \medskip
 
@@ -138,34 +186,44 @@ Las historias de usuario
 
 \section{Análisis de requisitos}
 
-\section{Análisis de tecnologías}
+Listado de las historias de usuario
+
+\section{Planificación temporal}
+
+\subsection{Planificación inicial}
+
+La planificación que se hubiese seguido en condiciones ideales
+
+\subsection{Planificación final}
+
+La planificación seguida finalmente dados los distintos factores externos
+
+
 
 \section{Presupuesto}
 
+12 ECTS - 300 horas de trabajo - 37,5 días laborables a jornada completa
+Gastos de licencias: 0
+Gastos de infraestructura de desarrollo: ???
+Gastos de mantenimiento posterior: investigar cuotas Azure, Google Cloud y AWS para alojar la aplicación
+
+
 
 % Capítulo: diseño y resolución del trabajo
-%	1. Fase de prototipado
-%	2. Sistema de objetivos
-%	3. Sistema de horarios
-%	...
-%	n-1. Accesibilidad
-%	n. Producción
-\chapter{Diseño y resolución del trabajo}
+\chapter{Desarrollo del proyecto}
 
-\section{Fase de prototipado}
+\section{Primera iteración}
 
-\section{Sistema de objetivos}
+\subsection{Análisis}
 
-\section{Sistema de horarios}
+\subsection{Diseño}
 
-\section{Accesibilidad}
+\subsection{Implementación}
 
-\section{Producción}
+\subsection{Pruebas}
 
 
 % Capítulo: conclusiones y vías futuras
-%	1. Conclusiones
-%	2. Posibles modificaciones futuras
 \chapter{Conclusiones y vías futuras}
 
 \section{Conclusiones del proyecto}
@@ -175,8 +233,6 @@ Las historias de usuario
 \newpage
 
 % Capítulo: bibliografía
-%	1. Tecnologías utilizadas
-%	2. Artículos consultados
 \bibliographystyle{apalike}
 \addcontentsline{toc}{chapter}{Bibliografía}
 \bibliography{bibliography}
