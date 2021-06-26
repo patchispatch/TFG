@@ -14,6 +14,7 @@
 \usepackage{graphicx}
 \graphicspath{{img/}}
 \usepackage[numbers]{natbib}
+\usepackage{enumitem}
 
 % Document settings
 
@@ -180,7 +181,7 @@ Algunas aplicaciones populares en este ámbito son las siguientes:
 
 \subsection*{Crítica}
 
-No faltan soluciones de este tipo en el mercado. Desde un ámbito más profesional al usuario más ajeno a la tecnología, existe una gran variedad de aplicaciones para organizarse, con diversos enfoques y objetivos. 
+No faltan soluciones de este tipo en el mercado. Desde un ámbito más profesional hasta el usuario más ajeno a la tecnología, existe una gran variedad de aplicaciones para organizarse, con diversos enfoques y objetivos. 
 
 Pese a lo completas y maduras que son las aplicaciones más tradicionales, su enfoque profesional y multitud de funcionalidades pueden suponer un obstáculo para un perfil de usuario que no sólo no va a beneficiarse de todas las integraciones y ventajas que ofrecen, sino que no las necesita. 
 
@@ -190,19 +191,149 @@ Las aplicaciones de tareas suplen este exceso de complejidad con un planteamient
 
 \medskip
 
-Las aplicaciones de espacio de trabajo son herramientas muy potentes, que en manos de usuarios experimentados pueden resultar muy útiles y servir multitud de propósitos. Muchas de ellas ofrecen plantillas predefinidas para usos comunes, y permiten establecer sistemas de organización a medida, pero suelen centrarse en colecciones de datos.
+Las aplicaciones de espacio de trabajo son herramientas muy potentes, que en manos de usuarios experimentados pueden resultar muy útiles y servir multitud de propósitos. Muchas de ellas ofrecen plantillas predefinidas para usos comunes, y permiten establecer sistemas de organización a medida, pero suelen centrarse en colecciones de datos en lugar de eventos y tareas, y aunque puedan definirse fechas, notificaciones y, en algunos casos, calendarios, suelen ser atributos secundarios, que necesitan trabajo previo por parte del usuario para funcionar.
 
 \medskip
 
-Por último, las aplicaciones de seguimiento de hábitos siguen un propósito específico, alejado del resto de sistemas, y muchas veces sirviendo como complemento a los mismos. Gozan de gran popularidad y variedad, pero muchas de ellas ofrecen incentivos tan distintos al usuario que pueden resultar desde poco interesantes a abrumadores. 
+Por último, las aplicaciones de seguimiento de hábitos siguen un propósito específico, alejado del resto de sistemas. Su especificidad hace que este tipo de aplicaciones sean fáciles de entender con respecto a otras soluciones. No requieren de gran configuración previa, su función es limitada pero concreta, y sirven como apoyo al usuario para conseguir sus objetivos y ver su progreso de forma sencilla, independientemente de los medios que utilicen para llevarlos a cabo. No pretenden ser un sustituto de otros servicios como las aplicaciones de calendario o espacios de trabajo, y pueden llegar a complementarse muy bien.
 
-Además, el soporte de muchas de estas aplicaciones comparadas con el resto de casos estudiados suele ser escaso, o depender de servicios externos. Esto no es necesariamente un problema, pero puede suponer un inconveniente de cara al usuario.
+No obstante, pese a que gozan de gran popularidad y variedad, muchas de ellas ofrecen incentivos y mecanismos tan distintos al usuario que pueden resultar desde poco interesantes a abrumadoras. Además, el soporte de muchas de estas aplicaciones comparadas con el resto de casos estudiados suele ser escaso, o depender de servicios externos a configurar por el usuario. Esto último no es necesariamente algo negativo, pero puede inclinar al usuario a explorar otras opciones.
+
+
 
 
 \section{Propuesta}
 
 \subsection{Objetivos}
 
+Se plantean los siguientes objetivos para la aplicación propuesta. Pueden dividirse en varias secciones, cada una con sus propios objetivos anidados de diferente prioridad:
+
+\begin{itemize}
+	\item La aplicación debe permitir registrar, modificar y eliminar objetivos definidos por el usuario, permitiendo una visualización clara y detallada de su progreso, e incentivar el seguimiento de los mismos.
+	
+	\item La aplicación debe permitir registrar, modificar y eliminar actividades habituales que realiza el usuario, y mostrar un horario semanal con las mismas, de forma que el usuario pueda visualizar de forma clara su tiempo.
+	
+	\item La aplicación debe permitir registrar, modificar y eliminar categorías definidas por el usuario, para que pueda organizar sus objetivos y actividades de forma temática, así como visualizar su progreso de la misma manera.
+	
+	\item La aplicación debe mostrar un panel de navegación entre las diferentes vistas, con una lista de categorías definidas por el usuario, un indicador de fecha y hora, y acceso a las opciones de configuración, así como sugerencias de objetivos a completar.
+	
+	\item La aplicación debe permitir configurar aspectos como el día de la semana en el que se reinician los objetivos definidos por el usuario, la vista por defecto y el tema de la aplicación, y la zona horaria.
+	
+	\item La aplicación debe cumplir con los niveles de conformidad WCAG... (investigar)
+\end{itemize}
+
+
+\subsection*{Sección de objetivos}
+
+\subsubsection*{Fundamentales}
+
+\begin{enumerate}
+	\item Se debe poder crear, consultar, editar y eliminar objetivos.
+	
+	\item Se debe poder registrar una entrada de un objetivo, y ver reflejado el progreso del mismo.
+	
+	\item Se debe poder ver una lista de objetivos, que permita ser filtrada por estado de finalización.
+	
+	\item El progreso de los objetivos debe reiniciarse en el día de la semana establecido.
+	
+	\item Se debe mostrar una racha de finalización para cada objetivo, que indique el número de veces consecutivas en las que se ha completado. Tras completar un objetivo, se ha de incrementar dicha racha.
+	
+	\item Se debe guardar la máxima racha alcanzada para cada objetivo. En caso de ser superada, se actualizará debidamente.
+	
+	\item Se debe mostrar una vista con información general sobre los objetivos definidos, que incluya una lista de los mismos, detalles sobre las rachas, y un historial de entradas.
+\end{enumerate}
+
+
+\subsubsection*{Opcionales}
+
+\begin{enumerate}[resume]
+	\item Se debe permitir pausar un objetivo indefinidamente. Esto lo excluirá de la lista de objetivos activos, y no se podrá introducir nuevas entradas del mismo hasta que no sea reanudado. La racha actual se guardará.
+	
+	\item Se debe poder definir diferentes frecuencias al crear objetivos, que determinarán el reinicio del progreso de los mismos. Se podrá seleccionar entre frecuencia semanal y mensual.
+\end{enumerate}
+
+
+\subsection*{Sección de actividades}
+
+\subsubsection*{Fundamentales}
+
+\begin{enumerate}[resume]
+	\item Se debe poder crear, consultar, editar y eliminar actividades.
+	
+	\item Se debe mostrar una vista con el horario de la semana en formato de lista de actividades.
+\end{enumerate}
+
+\subsubsection*{Opcionales}
+
+\begin{enumerate}[resume]
+	\item Se debe poder ver una lista de las actividades pertenecientes a una categoría en la vista de resumen de la misma.
+\end{enumerate}
+
+
+\subsection*{Sección de categorías}
+
+\subsubsection*{Fundamentales}
+
+\begin{enumerate}[resume]
+	\item Se debe poder crear, consultar, editar y eliminar categorías.
+	
+	\item Se debe poder asignar una categoría a objetivos y actividades.
+	
+	\item Se debe mostrar una vista resumen de cada categoría, similar a la vista general de objetivos, con información relevante sobre los objetivos de la misma.
+\end{enumerate}
+
+
+\subsection*{Sección de panel de navegación o \textit{Vista Rápida}}
+
+\subsubsection*{Fundamentales}
+
+\begin{enumerate}[resume]
+	\item Se debe mostrar la fecha y hora actuales.
+	
+	\item Se deben mostrar varios objetivos pendientes de finalización como sugerencias al usuario, para incentivarlo a completarlos en caso de no saber qué hacer.
+	
+	\item Se debe mostrar un menú de navegación con las diferentes vistas principales de la aplicación para poder acceder a ellas en todo momento.
+	
+	\item Se debe mostrar una lista de las categorías definidas por el usuario, además de la categoría \textit{General}.
+	
+	\item Se debe mostrar un acceso a la configuración de la aplicación.
+\end{enumerate}
+
+\subsubsection*{Opcionales}
+
+\begin{enumerate}[resume]
+	\item Se debe poder ocultar y expandir el panel de navegación.
+\end{enumerate}
+
+
+\subsection*{Sección de configuración}
+
+\subsubsection*{Fundamentales}
+
+\begin{enumerate}[resume]
+	\item Se debe poder ajustar el día de la semana y la hora en la que se reinicia el progreso de los objetivos.
+	
+	\item Se debe poder definir la zona horaria de la aplicación.
+	
+	\item Se debe poder seleccionar la vista por defecto al entrar en la aplicación.
+\end{enumerate}
+
+\subsubsection*{Opcionales}
+
+\begin{enumerate}[resume]
+	\item Se debe poder seleccionar el tema de la aplicación.
+	
+	\item Se debe poder acceder a la configuración de las categorías desde los ajustes generales.
+\end{enumerate}
+
+
+\subsection*{Sección de accesibilidad}
+
+\subsubsection*{Fundamentales}
+
+\begin{enumerate}[resume]
+	\item Se debe cumplir el estándar WCAG nivel ... (investigar)
+\end{enumerate}
 
 
 \chapter{Metodología}
