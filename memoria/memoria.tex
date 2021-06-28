@@ -15,6 +15,7 @@
 \graphicspath{{img/}}
 \usepackage[numbers]{natbib}
 \usepackage{enumitem}
+\usepackage{colortbl}
 
 % Document settings
 
@@ -292,9 +293,7 @@ Se plantean los siguientes objetivos para la aplicación propuesta. Pueden divid
 	
 	\item Se deben mostrar varios objetivos pendientes de finalización como sugerencias al usuario, para incentivarlo a completarlos en caso de no saber qué hacer.
 	
-	\item Se debe mostrar un menú de navegación con las diferentes vistas principales de la aplicación para poder acceder a ellas en todo momento.
-	
-	\item Se debe mostrar una lista de las categorías definidas por el usuario, además de la categoría \textit{General}.
+	\item Se debe mostrar un menú de navegación con las diferentes vistas principales de la aplicación para poder acceder a ellas.
 	
 	\item Se debe mostrar un acceso a la configuración de la aplicación.
 \end{enumerate}
@@ -340,7 +339,7 @@ Se plantean los siguientes objetivos para la aplicación propuesta. Pueden divid
 
 \section{Metodología de desarrollo}
 
-Para la elaboración del proyecto se ha planteado utilizar aspectos sólidos de diversas metodologías ágiles, como SCRUM \cite{schwaber2017scrum} o \textit{Kanban} \cite{kanban}. Al estar planteadas originalmente para equipos ---generalmente pequeños---, ha sido necesario adaptarlas a un desarrollo individual. Se han seguido los principios del Manifiesto Ágil \cite{beck2001agile}.
+Para la elaboración del proyecto se ha planteado utilizar aspectos sólidos de diversas metodologías ágiles, como \textit{SCRUM} \cite{schwaber2017scrum} o \textit{Kanban} \cite{kanban}. Al estar planteadas originalmente para equipos ---generalmente pequeños---, ha sido necesario adaptarlas a un modelo de desarrollo individual. Se han seguido los principios del Manifiesto Ágil \cite{beck2001agile}.
 
 \medskip
 
@@ -352,11 +351,11 @@ Utilizado para representar los posibles estados de cada tarea de forma visual.
 
 \medskip
 
-Al ser \textit{Kanban} un marco flexible, se han definido estados o columnas acordes a las necesidades del proyecto. Dado que el desarrollo ha sido llevado a cabo por un individuo, se puede prescindir de estados intermedios de aprobación de código por el resto del equipo.
+Al ser \textit{Kanban} un marco flexible, se han definido estados o columnas acordes a las necesidades del proyecto. Dado que el desarrollo ha sido llevado a cabo por un individuo, se puede prescindir de estados intermedios, como por ejemplo <<pendiente de aprobación por el resto del equipo>>.
 
 \medskip
 
-Los estados definidos son los siguientes:
+Los estados definidos para este proyecto son los siguientes:
 
 \begin{itemize}
 	\item \textbf{TO DO}
@@ -400,11 +399,63 @@ La planificación seguida finalmente dados los distintos factores externos
 
 \section{Presupuesto}
 
-12 ECTS - 300 horas de trabajo - 37,5 días laborables a jornada completa
-Gastos de licencias: 0
-Gastos de infraestructura de desarrollo: ???
-Gastos de mantenimiento posterior: investigar cuotas Azure, Google Cloud y AWS para alojar la aplicación
+\subsection*{Material requerido}
 
+\begin{table}[h!]
+	\begin{center}
+		\begin{tabular}{|l|l|l|l|}
+			\hline
+			\rowcolor[HTML]{EFEFEF} 
+			\textbf{Material} & \textbf{Cantidad} & \textbf{Precio/unidad} & \textbf{Total} \\ \hline
+			&                   &                        &                \\ \hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+
+\subsection*{Recursos humanos}
+
+\begin{table}[h!]
+	\begin{center}
+		\begin{tabular}{|l|l|l|l|}
+			\hline
+			\rowcolor[HTML]{EFEFEF} 
+			\textbf{Servicio}                   & \textbf{Tarifa (€/mes)} & \textbf{Duración (meses)} & \textbf{Total}              \\ \hline
+			Salario de ingeniero informático junior a jornada completa & 1450       & 3          & \multicolumn{1}{r|}{4.350€} \\ \hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+Se ofrece además un presupuesto aproximado del coste de un año de mantenimiento de la aplicación por parte del equipo de desarrollo trabajando a media jornada (veinte horas semanales).
+
+\begin{table}[h!]
+	\begin{center}
+		\begin{tabular}{|l|l|l|l|}
+			\hline
+			\rowcolor[HTML]{EFEFEF} 
+			\textbf{Servicio}                   & \textbf{Tarifa (€/mes)} & \textbf{Duración (meses)} & \textbf{Total}              \\ \hline
+			Salario de ingeniero informático junior a media jornada & 725     & 12         & \multicolumn{1}{r|}{8.700€} \\ \hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+
+
+\subsection*{Servicios opcionales de despliegue y mantenimiento}
+
+Se ofrece además un presupuesto orientativo sobre el coste de desplegar y mantener la aplicación en \textit{Amazon Web Services}, utilizando instancias de coste moderado.
+
+\begin{table}[h!]
+	\begin{center}
+		\begin{tabular}{|l|r|r|}
+			\hline
+			\rowcolor[HTML]{EFEFEF} 
+			\textbf{Servicios opcionales}                                                                                                                                                           & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{Tarifa (€/hora)}} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{Coste/año}} \\ \hline
+			\begin{tabular}[c]{@{}l@{}}Despliegue de la base de datos en Amazon Aurora con una instancia \\ de tipo db.t2.medium, modelo Reserved, arrendamiento de un año, No Upfront\end{tabular} & 0,055                                                                 & 481,80€                                                         \\ \hline
+			Despliegue de la aplicación en un servidor virtual Amazon EC2 de tipo r4.xlarge                                                                                                         & 0,053                                                                 & 464,28€                                                         \\ \hline
+		\end{tabular}
+	\end{center}
+\end{table}
 
 
 % Capítulo: diseño y resolución del trabajo
