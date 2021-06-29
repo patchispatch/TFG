@@ -27,6 +27,15 @@ class Objective(models.Model):
     def __str__(self):
         return self.title
 
+    def progress(self):
+        entries = ObjectiveEntry.objects.select_related('objective_id').filter(objective_id=self.id)
+
+        progress = 0
+        for entry in entries:
+            progress += entry.progress
+        
+        return progress
+
 
 class ObjectiveEntry(models.Model):
     # Objective

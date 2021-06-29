@@ -1,0 +1,225 @@
+[
+{
+  "model": "core.objective",
+  "pk": 1,
+  "fields": {
+    "name": "Test objective",
+    "goal": 5,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": 1
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 2,
+  "fields": {
+    "name": "string",
+    "goal": 0,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": null
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 3,
+  "fields": {
+    "name": "string",
+    "goal": 2,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": 1
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 4,
+  "fields": {
+    "name": "string",
+    "goal": 3,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": null
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 5,
+  "fields": {
+    "name": "string",
+    "goal": 0,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": 1
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 6,
+  "fields": {
+    "name": "www",
+    "goal": 2,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": null
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 7,
+  "fields": {
+    "name": "Objetivo nuevo",
+    "goal": 3,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": 1
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 8,
+  "fields": {
+    "name": "qqqqq",
+    "goal": 1,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": 1
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 9,
+  "fields": {
+    "name": "Objetivo de prueba",
+    "goal": 2,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": null
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 10,
+  "fields": {
+    "name": "Otro objetivo de prueba",
+    "goal": 3,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": null
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 11,
+  "fields": {
+    "name": "A",
+    "goal": 2,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": 1
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 12,
+  "fields": {
+    "name": "qqq",
+    "goal": 1,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": null
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 13,
+  "fields": {
+    "name": "dfdd",
+    "goal": 1,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": 1
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 14,
+  "fields": {
+    "name": "dfdd",
+    "goal": 1,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": 1
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 15,
+  "fields": {
+    "name": "aa",
+    "goal": 1,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": null
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 16,
+  "fields": {
+    "name": "AAAA",
+    "goal": 2,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": null
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 17,
+  "fields": {
+    "name": "Salir a dar una vuelta",
+    "goal": 6,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": null
+  }
+},
+{
+  "model": "core.objective",
+  "pk": 18,
+  "fields": {
+    "name": "eee",
+    "goal": 1,
+    "status": "active",
+    "current_streak": 0,
+    "best_streak": 0,
+    "category_id": null
+  }
+},
+{
+  "model": "core.category",
+  "pk": 1,
+  "fields": {
+    "name": "Deporte"
+  }
+}
+]

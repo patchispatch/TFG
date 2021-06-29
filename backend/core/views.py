@@ -36,7 +36,6 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
     # ObjectiveEntry 'shortcut' endpoints
     @action(detail=True, serializer_class=ObjectiveEntrySerializerInput, methods=['get', 'post'])
     def entries(self, request, pk=None):
-
         if request.method == 'GET':
             objective_entries = ObjectiveEntry.objects.select_related('objective_id').filter(objective_id=pk)
             serializer = ObjectiveEntrySerializer(objective_entries, many=True)
@@ -52,6 +51,13 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
+
+    @action(detail=True, methods=['get'])
+    def progress(self, request, pk=None):
+        objective = Objective.objects.get(id=pk)
+        
+        # TODO: don't know if it's best to calculate progress on each call to objective, ask
+        return Response({'progress': objective.progress()}, status=status.HTTP_200_OK)
 
 
 # ObjectiveEntry endpoints
