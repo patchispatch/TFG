@@ -24,9 +24,7 @@ class Objective(models.Model):
         on_delete=models.SET_NULL,
     )
 
-    def __str__(self):
-        return self.title
-
+    @property
     def progress(self):
         entries = ObjectiveEntry.objects.select_related('objective_id').filter(objective_id=self.id)
 
@@ -35,6 +33,9 @@ class Objective(models.Model):
             progress += entry.progress
         
         return progress
+    
+    def __str__(self):
+        return self.title
 
 
 class ObjectiveEntry(models.Model):

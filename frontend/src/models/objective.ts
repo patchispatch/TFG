@@ -47,7 +47,13 @@ export class Objective {
      * Best streak
      */
     @autoserializeAs(() => Number, 'best_streak') bestStreak: number;
-    
+
+    /**
+     * Current progress
+     */
+    @deserializeAs(() => Number) progress: number | undefined; 
+
+
     /**
      * Constructor
      */
@@ -59,6 +65,7 @@ export class Objective {
         currentStreak?: number,
         bestStreak?: number,
         id?: number,
+        progress?: number
     ) {
         this.name = name;
         this.goal = goal;
@@ -67,5 +74,6 @@ export class Objective {
         this.bestStreak = bestStreak ? bestStreak : 0;
         this.id = id;
         this.categoryId = categoryId;
+        this.progress = progress;
     }
 }

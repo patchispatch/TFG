@@ -29,24 +29,25 @@ export function ObjectiveTable() {
   const [dialogState, setDialogState] = useState(false);
   const [selectedId, setSelectedId] = useState<number>();
 
-  function handleOpen(): void {
-    setDialogState(true);
-  }
 
-  function handleClose(): void {
+  function handleSubmit(response?: Objective, updated = false): void {
     setDialogState(false);
+
+    if (updated) {
+      objectiveService.list().subscribe(response => setObjectiveList(response));
+    }
   }
 
   // On init
   useEffect(() => {
     objectiveService.list().subscribe(response => setObjectiveList(response));
-  }, [])
+  }, [objectiveService])
 
   // On object selection
-  useEffect(() => {
-    if (selectedId)
-      handleOpen();
-  }, [selectedId])
+  function editObjective(objectiveId: number) {
+    setDialogState(true);
+    setSelectedId(objectiveId);
+  }
 
 
   // Render
@@ -59,6 +60,7 @@ export function ObjectiveTable() {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell align="right">Category</TableCell>
+              <TableCell align="right">Progress</TableCell>
               <TableCell align="right">Current streak</TableCell>
               <TableCell align="right">Best streak</TableCell>
               <TableCell></TableCell>
@@ -72,10 +74,11 @@ export function ObjectiveTable() {
                   {objective.name}
                 </TableCell>
                 <TableCell align="right">{objective.categoryId}</TableCell>
+                <TableCell align="right">{objective.progress}/{objective.goal}</TableCell>
                 <TableCell align="right">{objective.currentStreak}</TableCell>
                 <TableCell align="right">{objective.bestStreak}</TableCell>
                 <TableCell align="right" padding="checkbox">
-                  <IconButton onClick={() => setSelectedId(objective.id!)} aria-label="edit">
+                  <IconButton onClick={() => editObjective(objective.id!)} aria-label="edit">
                     <EditIcon />
                   </IconButton>
                 </TableCell>
@@ -96,9 +99,9 @@ export function ObjectiveTable() {
         title="Edit objective"
         formId="objectiveForm"
         isOpen={dialogState}
-        onClose={handleClose}
+        onClose={() => setDialogState(false)}
       >
-        <ObjectiveForm objectiveId={selectedId} postSubmit={handleClose} />
+        <ObjectiveForm objectiveId={selectedId} postSubmit={handleSubmit} />
       </FormDialog>
     </>
   );

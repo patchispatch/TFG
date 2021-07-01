@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
 // Props
 interface ObjectiveFormProps {
   objectiveId?: number,
-  postSubmit?: (response?: Objective) => any
+  postSubmit?: (response?: Objective, updated?: boolean) => any
 }
 
 
@@ -82,7 +82,7 @@ export function ObjectiveForm({objectiveId, postSubmit}: ObjectiveFormProps) {
       });
     }
       
-  }, [categoryService, objectiveId, objectiveService])
+  }, [categoryService, objectiveId, objectiveService, reset])
 
 
   // On submit
@@ -95,7 +95,7 @@ export function ObjectiveForm({objectiveId, postSubmit}: ObjectiveFormProps) {
 
       objectiveService.update(objective).subscribe(response => {
         if (postSubmit) {
-          postSubmit(response);
+          postSubmit(response, true);
         }
       });
     }
@@ -105,7 +105,7 @@ export function ObjectiveForm({objectiveId, postSubmit}: ObjectiveFormProps) {
 
       objectiveService.post(new_objective).subscribe(response => {
         if (postSubmit) {
-          postSubmit(response);
+          postSubmit(response, true);
         }
       });
     }

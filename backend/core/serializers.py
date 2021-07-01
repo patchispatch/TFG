@@ -5,7 +5,11 @@ from .models import *
 class ObjectiveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Objective
-        fields = '__all__'
+        fields = ('id', 'name', 'goal', 'status', 'current_streak', 
+                  'best_streak', 'category_id', 'progress')
+        extra_kwargs = {
+            'progress': {'read_only': True}
+        }
 
 
 class ObjectiveEntrySerializerInput(serializers.ModelSerializer):
