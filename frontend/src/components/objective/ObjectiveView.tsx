@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { AppBar, Button, createStyles, makeStyles, Toolbar, Typography } from "@material-ui/core";
-import { CreateObjectiveEntry } from "../objective-entry/CreateObjectiveEntry";
 import { ObjectiveTable } from "./ObjectiveTable";
 import { Theme } from "@material-ui/core";
 import { ObjectiveForm } from "./ObjectiveForm";
@@ -62,7 +61,6 @@ export function ObjectiveView() {
 
         <div className={classes.testButtons}>
           <Button onClick={handleOpen} variant="contained" color="primary">New objective</Button>
-          <CreateObjectiveEntry objectiveId={1} />
         </div>
 
         <ObjectiveTable />

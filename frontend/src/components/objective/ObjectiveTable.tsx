@@ -9,6 +9,8 @@ import UpdateIcon from '@material-ui/icons/Update';
 import { FormDialog } from "../utils/FormDialog";
 import { ObjectiveForm } from "./ObjectiveForm";
 import { ConfirmDialog } from "../utils/ConfirmDialog";
+import { ObjectiveEntryForm } from "../objective-entry/ObjectiveEntryForm";
+import { ObjectiveEntry } from "src/models/objective-entry";
 
 
 // Styles
@@ -27,18 +29,42 @@ export function ObjectiveTable() {
   const [objectiveList, setObjectiveList] = React.useState<Objective[]>([]);
 
   // Handle dialog state
-  // TODO: think about doing it differently
+  const [selectedId, setSelectedId] = useState<number>();
+  const [updateDialogState, setUpdateDialogState] = useState(false);
   const [editDialogState, setEditDialogState] = useState(false);
   const [deleteDialogState, setDeleteDialogState] = useState(false);
-  const [selectedId, setSelectedId] = useState<number>();
 
-
+  // Refresh table data
   function refreshTable(): void {
     objectiveService.list().subscribe(response => setObjectiveList(response));
   }
 
 
-  function handleSubmit(response?: Objective, updated = false): void {
+  // On init
+  useEffect(() => {
+    refreshTable();
+  }, [objectiveService])
+
+
+  // On objective update
+  function onUpdateObjective(objectiveId: number) {
+    setUpdateDialogState(true);
+    setSelectedId(objectiveId);
+  }
+
+  function handleUpdate(): void {
+    setUpdateDialogState(false);
+    refreshTable();
+  }
+
+
+  // On objective edit
+  function onEditObjective(objectiveId: number) {
+    setEditDialogState(true);
+    setSelectedId(objectiveId);
+  }
+
+  function handleEdit(response?: Objective, updated = false): void {
     setEditDialogState(false);
 
     if (updated) {
@@ -46,16 +72,6 @@ export function ObjectiveTable() {
     }
   }
 
-  // On init
-  useEffect(() => {
-    refreshTable();
-  }, [objectiveService])
-
-  // On objective edit
-  function onEditObjective(objectiveId: number) {
-    setEditDialogState(true);
-    setSelectedId(objectiveId);
-  }
 
   // On objective delete
   function onDeleteObjective(objectiveId: number) {
@@ -101,7 +117,7 @@ export function ObjectiveTable() {
                 <TableCell align="right">{objective.bestStreak}</TableCell>
 
                 <TableCell align="right" padding="checkbox">
-                  <IconButton aria-label="update">
+                  <IconButton onClick={() => onUpdateObjective(objective.id!)} aria-label="update">
                     <UpdateIcon />
                   </IconButton>
                 </TableCell>
@@ -124,12 +140,21 @@ export function ObjectiveTable() {
 
       {/* Dialogs */}
       <FormDialog 
+        title="Update objective"
+        formId="objectiveEntryForm"
+        isOpen={updateDialogState}
+        onClose={() => setUpdateDialogState(false)}
+      >
+        <ObjectiveEntryForm objectiveId={selectedId!} postSubmit={handleUpdate}/>
+      </FormDialog>
+
+      <FormDialog 
         title="Edit objective"
         formId="objectiveForm"
         isOpen={editDialogState}
         onClose={() => setEditDialogState(false)}
       >
-        <ObjectiveForm objectiveId={selectedId} postSubmit={handleSubmit} />
+        <ObjectiveForm objectiveId={selectedId} postSubmit={handleEdit} />
       </FormDialog>
 
       <ConfirmDialog
