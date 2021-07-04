@@ -5,7 +5,7 @@ import { Objective } from "src/models/objective";
 import { ObjectiveService } from "src/services/objective-service";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import UpdateIcon from '@material-ui/icons/Update';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import { FormDialog } from "../utils/FormDialog";
 import { ObjectiveForm } from "./ObjectiveForm";
 import { ConfirmDialog } from "../utils/ConfirmDialog";
@@ -118,7 +118,7 @@ export function ObjectiveTable() {
 
                 <TableCell align="right" padding="checkbox">
                   <IconButton onClick={() => onUpdateObjective(objective.id!)} aria-label="update">
-                    <UpdateIcon />
+                    <AddBoxIcon />
                   </IconButton>
                 </TableCell>
                 <TableCell align="right" padding="checkbox">
@@ -140,7 +140,7 @@ export function ObjectiveTable() {
 
       {/* Dialogs */}
       <FormDialog 
-        title="Update objective"
+        title="Add progress"
         formId="objectiveEntryForm"
         isOpen={updateDialogState}
         onClose={() => setUpdateDialogState(false)}
