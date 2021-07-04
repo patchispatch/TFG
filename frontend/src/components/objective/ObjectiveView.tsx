@@ -62,8 +62,6 @@ export function ObjectiveView() {
 
         <div className={classes.testButtons}>
           <Button onClick={handleOpen} variant="contained" color="primary">New objective</Button>
-
-
           <CreateObjectiveEntry objectiveId={1} />
         </div>
 

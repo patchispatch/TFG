@@ -5,8 +5,10 @@ import { Objective } from "src/models/objective";
 import { ObjectiveService } from "src/services/objective-service";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import UpdateIcon from '@material-ui/icons/Update';
 import { FormDialog } from "../utils/FormDialog";
 import { ObjectiveForm } from "./ObjectiveForm";
+import { ConfirmDialog } from "../utils/ConfirmDialog";
 
 
 // Styles
@@ -26,27 +28,46 @@ export function ObjectiveTable() {
 
   // Handle dialog state
   // TODO: think about doing it differently
-  const [dialogState, setDialogState] = useState(false);
+  const [editDialogState, setEditDialogState] = useState(false);
+  const [deleteDialogState, setDeleteDialogState] = useState(false);
   const [selectedId, setSelectedId] = useState<number>();
 
 
+  function refreshTable(): void {
+    objectiveService.list().subscribe(response => setObjectiveList(response));
+  }
+
+
   function handleSubmit(response?: Objective, updated = false): void {
-    setDialogState(false);
+    setEditDialogState(false);
 
     if (updated) {
-      objectiveService.list().subscribe(response => setObjectiveList(response));
+      refreshTable();
     }
   }
 
   // On init
   useEffect(() => {
-    objectiveService.list().subscribe(response => setObjectiveList(response));
+    refreshTable();
   }, [objectiveService])
 
-  // On object selection
-  function editObjective(objectiveId: number) {
-    setDialogState(true);
+  // On objective edit
+  function onEditObjective(objectiveId: number) {
+    setEditDialogState(true);
     setSelectedId(objectiveId);
+  }
+
+  // On objective delete
+  function onDeleteObjective(objectiveId: number) {
+    setDeleteDialogState(true);
+    setSelectedId(objectiveId);
+  }
+
+  function deleteObjective(objectiveId: number): void {
+    objectiveService.delete(objectiveId).subscribe(() => {
+      setDeleteDialogState(false);
+      refreshTable();
+    });
   }
 
 
@@ -65,6 +86,7 @@ export function ObjectiveTable() {
               <TableCell align="right">Best streak</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -77,13 +99,19 @@ export function ObjectiveTable() {
                 <TableCell align="right">{objective.progress}/{objective.goal}</TableCell>
                 <TableCell align="right">{objective.currentStreak}</TableCell>
                 <TableCell align="right">{objective.bestStreak}</TableCell>
+
                 <TableCell align="right" padding="checkbox">
-                  <IconButton onClick={() => editObjective(objective.id!)} aria-label="edit">
+                  <IconButton aria-label="update">
+                    <UpdateIcon />
+                  </IconButton>
+                </TableCell>
+                <TableCell align="right" padding="checkbox">
+                  <IconButton onClick={() => onEditObjective(objective.id!)} aria-label="edit">
                     <EditIcon />
                   </IconButton>
                 </TableCell>
                 <TableCell align="right" padding="checkbox">
-                  <IconButton aria-label="delete">
+                  <IconButton onClick={() => onDeleteObjective(objective.id!)} aria-label="delete">
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -98,11 +126,19 @@ export function ObjectiveTable() {
       <FormDialog 
         title="Edit objective"
         formId="objectiveForm"
-        isOpen={dialogState}
-        onClose={() => setDialogState(false)}
+        isOpen={editDialogState}
+        onClose={() => setEditDialogState(false)}
       >
         <ObjectiveForm objectiveId={selectedId} postSubmit={handleSubmit} />
       </FormDialog>
+
+      <ConfirmDialog
+        title="Delete objective"
+        message={`Are you sure you want to delete Objective ${selectedId}?`}
+        isOpen={deleteDialogState}
+        onConfirm={() => deleteObjective(selectedId!)}
+        onClose={() => setDeleteDialogState(false)}
+      />
     </>
   );
 }
