@@ -2,7 +2,7 @@ import axios from "axios";
 import { IJsonArray, DeserializeArray, IJsonObject, Deserialize, Serialize } from "dcerialize";
 import { Observable, of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
-import { Objective, ObjectiveStatus } from "src/models/objective";
+import { Objective } from "src/models/objective";
 import { CRUDL } from "../crudl";
 
 export class ObjectiveService implements CRUDL {
@@ -13,7 +13,7 @@ export class ObjectiveService implements CRUDL {
       "Test objective 1", 
       1,
       undefined,
-      ObjectiveStatus.ACTIVE,
+      false,
       0,
       0,
       1
@@ -22,7 +22,7 @@ export class ObjectiveService implements CRUDL {
       "Test objective 2", 
       1, 
       2, 
-      ObjectiveStatus.PAUSED,
+      false,
       0,
       0,
       2
@@ -31,7 +31,7 @@ export class ObjectiveService implements CRUDL {
       "TestObjective 3", 
       10,
       2,
-      ObjectiveStatus.ACTIVE,
+      true,
       3,
       7,
       3

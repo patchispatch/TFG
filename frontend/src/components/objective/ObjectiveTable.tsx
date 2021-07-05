@@ -6,6 +6,8 @@ import { ObjectiveService } from "src/services/objective-service";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddBoxIcon from '@material-ui/icons/AddBox';
+import PauseIcon from '@material-ui/icons/Pause';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import { FormDialog } from "../utils/FormDialog";
 import { ObjectiveForm } from "./ObjectiveForm";
 import { ConfirmDialog } from "../utils/ConfirmDialog";
@@ -87,7 +89,28 @@ export function ObjectiveTable() {
   }
 
 
+  // On objective pause/resume
+  function onPauseResume(objectiveId: number) {
+    objectiveService.pauseResume(objectiveId).subscribe(() => {
+      refreshTable();
+    })
+  }
+
+
   // Render
+  // If an objective is paused, show resume button. Else, show pause button
+  function pauseResumeButton(obj: Objective) {
+    let label = obj.paused ? "resume" : "pause";
+    let icon = obj.paused ? <PlayArrowIcon /> : <PauseIcon />;
+
+    return (
+      <IconButton aria-label={label} onClick={() => onPauseResume(obj.id!)}>
+        {icon}
+      </IconButton>
+    )
+  }
+
+
   const classes = useStyles();
   return (
     <>
@@ -100,6 +123,7 @@ export function ObjectiveTable() {
               <TableCell align="right">Progress</TableCell>
               <TableCell align="right">Current streak</TableCell>
               <TableCell align="right">Best streak</TableCell>
+              <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
@@ -121,6 +145,11 @@ export function ObjectiveTable() {
                     <AddBoxIcon />
                   </IconButton>
                 </TableCell>
+
+                <TableCell align="right" padding="checkbox">
+                  {pauseResumeButton(objective)}
+                </TableCell>
+
                 <TableCell align="right" padding="checkbox">
                   <IconButton onClick={() => onEditObjective(objective.id!)} aria-label="edit">
                     <EditIcon />

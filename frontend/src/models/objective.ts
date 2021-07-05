@@ -1,15 +1,6 @@
 import { autoserializeAs, deserializeAs } from "dcerialize";
 
 /**
- * Objective status
- */
-export enum ObjectiveStatus {
-    ACTIVE = 'active',
-    PAUSED = 'paused',
-}
-
-
-/**
  * Objective model
  */
 export class Objective {
@@ -31,7 +22,7 @@ export class Objective {
     /**
      * Objective status
      */
-    @autoserializeAs(() => String) status: ObjectiveStatus;
+    @autoserializeAs(() => Boolean) paused: boolean;
 
     /**
      * Category ID
@@ -61,7 +52,7 @@ export class Objective {
         name: string,
         goal: number,
         categoryId?: number,
-        status?: ObjectiveStatus,
+        paused?: boolean,
         currentStreak?: number,
         bestStreak?: number,
         id?: number,
@@ -69,7 +60,7 @@ export class Objective {
     ) {
         this.name = name;
         this.goal = goal;
-        this.status = status ? status : ObjectiveStatus.ACTIVE;
+        this.paused = paused ? paused : false;
         this.currentStreak = currentStreak ? currentStreak : 0;
         this.bestStreak = bestStreak ? bestStreak : 0;
         this.id = id;

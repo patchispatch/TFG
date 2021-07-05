@@ -88,4 +88,15 @@ export class ObjectiveService implements CRUDL {
       catchError(err => of(err))
     );
   }
+
+  /**
+   * Pause or resume an objective
+   */
+  pauseResume(id: number): Observable<Objective> {
+    return axios.get<IJsonObject>(`${this.baseUrl}${id}/pause-resume/`)
+    .pipe(
+      map(result => Deserialize(result.data, () => Objective)),
+      catchError(err => of(err))
+    );
+  }
 }

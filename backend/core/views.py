@@ -55,9 +55,15 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def progress(self, request, pk=None):
         objective = Objective.objects.get(id=pk)
-        
-        # TODO: don't know if it's best to calculate progress on each call to objective, ask
         return Response({'progress': objective.progress()}, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['get'], url_path='pause-resume')
+    def pause_resume(self, request, pk=None):
+        objective = Objective.objects.get(id=pk)
+        objective.pause_resume()
+
+        serializer = ObjectiveSerializer(objective)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # ObjectiveEntry endpoints

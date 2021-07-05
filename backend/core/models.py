@@ -10,11 +10,7 @@ class Objective(models.Model):
 
     name = models.CharField(max_length=120)
     goal = models.PositiveSmallIntegerField()
-    status = models.CharField(
-        max_length=6,
-        choices=ObjectiveStatus.choices,
-        default=ObjectiveStatus.ACTIVE,
-    )
+    paused = models.BooleanField(default=False)
     current_streak = models.PositiveSmallIntegerField()
     best_streak = models.PositiveSmallIntegerField()
     category_id = models.ForeignKey(
@@ -36,6 +32,10 @@ class Objective(models.Model):
     
     def __str__(self):
         return self.title
+
+    def pause_resume(self):
+        self.paused = not self.paused
+        self.save()
 
 
 class ObjectiveEntry(models.Model):

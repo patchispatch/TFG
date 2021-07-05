@@ -33,7 +33,6 @@ export function ObjectiveView() {
   
 
   // Handle dialog state
-  // TODO: think about doing it differently
   let [dialogState, setDialogState] = useState(false);
 
   function handleOpen(): void {
