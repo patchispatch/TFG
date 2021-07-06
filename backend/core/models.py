@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date, timedelta
 
 
 class Objective(models.Model):
@@ -22,7 +23,19 @@ class Objective(models.Model):
 
     @property
     def progress(self):
-        entries = ObjectiveEntry.objects.select_related('objective_id').filter(objective_id=self.id)
+        # Fetch current week entries
+        reset_day = Settings.objects.filter().first().weekly_reset_day
+        today = date.today()
+
+        # Calculate dates
+        last_date = today + timedelta((reset_day - today.weekday()) % 7)
+        first_date = last_date - timedelta(7)
+
+        entries = ObjectiveEntry.objects.select_related('objective_id').filter(
+            objective_id=self.id,
+            date__gte=first_date,
+            date__lt=last_date
+        )
 
         progress = 0
         for entry in entries:
@@ -54,5 +67,15 @@ class ObjectiveEntry(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=16)
 
-    def __Str__(self):
+    def __str__(self):
         return self.name
+
+
+class Settings(models.Model):
+    weekly_reset_day = models.PositiveSmallIntegerField()
+
+    # Singleton
+    def save(self, *args, **kwargs):
+        if self.__class__.objects.count():
+            self.pk = self.__class__.objects.first().pk
+        super().save(*args, **kwargs)
