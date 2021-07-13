@@ -12,8 +12,7 @@ class Objective(models.Model):
     name = models.CharField(max_length=120)
     goal = models.PositiveSmallIntegerField()
     paused = models.BooleanField(default=False)
-    current_streak = models.PositiveSmallIntegerField()
-    best_streak = models.PositiveSmallIntegerField()
+    best_streak = models.PositiveSmallIntegerField(default=0)
     category_id = models.ForeignKey(
         'Category',
         default=None,
@@ -43,8 +42,13 @@ class Objective(models.Model):
         
         return progress
     
+    @property
+    def current_streak(self):
+        # TODO: implement
+        pass
+    
     def __str__(self):
-        return self.title
+        return self.name
 
     def pause_resume(self):
         self.paused = not self.paused

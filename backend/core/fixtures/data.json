@@ -6,7 +6,6 @@
     "name": "Test objective 1",
     "goal": 3,
     "paused": false,
-    "current_streak": 0,
     "best_streak": 0,
     "category_id": null
   }
@@ -18,7 +17,6 @@
     "name": "Test objective 2",
     "goal": 0,
     "paused": false,
-    "current_streak": 0,
     "best_streak": 0,
     "category_id": 1
   }
