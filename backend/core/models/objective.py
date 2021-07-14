@@ -1,7 +1,7 @@
+from ..utils import get_next_reset_day, get_week
 from django.db import models
-from datetime import date, timedelta
+from datetime import timedelta
 from .objective_entry import ObjectiveEntry
-from .settings import Settings
 
 
 class Objective(models.Model):
@@ -25,21 +25,14 @@ class Objective(models.Model):
     @property
     def progress(self):
         # Fetch current week entries
-        reset_day = Settings.objects.filter().first().weekly_reset_day
-        today = date.today()
-
-        # Calculate dates
-        last_date = today + timedelta((reset_day - today.weekday()) % 7)
-        first_date = last_date - timedelta(7)
-        
+        first_date, last_date = get_week()
         return self.__progress_between_dates(first_date, last_date)
     
     @property
     def current_streak(self):
         streak = 0
         completed = True if self.progress >= self.goal else False
-        reset_day = Settings.objects.filter().first().weekly_reset_day
-        reset_day = date.today() + timedelta((reset_day - date.today().weekday()) % 7)
+        reset_day = get_next_reset_day()
 
         while completed:
             streak += 1
@@ -63,8 +56,14 @@ class Objective(models.Model):
         Returns whether the objective is completed between the selected dates
         """
         if not first_date and not last_date:
-          pass
-
+            # Use current week start and end
+            first_date, last_date = get_week()
+        
+        elif (first_date and not last_date) or (not first_date and last_date):
+            # If only a date is passed, throw error
+            raise ValueError('Must pass two dates as arguments')
+          
+        return True if self.__progress_between_dates(first_date, last_date) >= self.goal else False
 
     def __progress_between_dates(self, first_date, last_date):
         """

@@ -5,12 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Django",
+            "name": "Django tests",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/backend/manage.py",
             "args": [
-                "runserver"
+                "test",
+                "core"
             ],
             "django": true
         }

@@ -1,10 +1,8 @@
 from django.utils.decorators import method_decorator
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.reverse import reverse
 from rest_framework import viewsets, status
 from drf_yasg.utils import swagger_auto_schema
-from .utils import EnablePartialUpdateMixin
 from .models import *
 from .serializers import *
 

@@ -1,9 +1,9 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from django.test import TestCase
 from freezegun import freeze_time
 from django.utils import timezone
 from rest_framework.test import APIClient
-from core.models import *
+from ..models.objective import Objective
 
 
 #### OBJECTIVES
