@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import *
+from .models.objective import Objective
+from .models.category import Category
+from .models.objective_entry import ObjectiveEntry
 
 
 class ObjectiveSerializer(serializers.ModelSerializer):

@@ -1,6 +1,9 @@
 from typing import Set
 from django.contrib import admin
-from .models import *
+from .models.objective import Objective
+from .models.category import Category
+from .models.objective_entry import ObjectiveEntry
+from .models.settings import Settings
 
 
 class ObjectiveAdmin(admin.ModelAdmin):

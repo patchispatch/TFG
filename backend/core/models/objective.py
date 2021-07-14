@@ -1,5 +1,7 @@
 from django.db import models
 from datetime import date, timedelta
+from .objective_entry import ObjectiveEntry
+from .settings import Settings
 
 
 class Objective(models.Model):
@@ -56,7 +58,14 @@ class Objective(models.Model):
         self.paused = not self.paused
         self.save()
 
-    
+    def __is_complete(self, first_date=None, last_date=None):
+        """
+        Returns whether the objective is completed between the selected dates
+        """
+        if not first_date and not last_date:
+          pass
+
+
     def __progress_between_dates(self, first_date, last_date):
         """
         Returns the progress of the current objective between two dates
@@ -72,34 +81,4 @@ class Objective(models.Model):
             progress += entry.progress
         
         return progress
-
-
-
-class ObjectiveEntry(models.Model):
-    # Objective
-    date = models.DateTimeField()
-    progress = models.PositiveSmallIntegerField()
-    objective_id = models.ForeignKey(
-        'Objective',
-        on_delete=models.CASCADE
-    )
-
-    def __str__(self):
-        return f'ObjectiveEntry(objective: {self.objective_id}, date: {self.date}, progress: {self.progress})'
-
-
-class Category(models.Model):
-    name = models.CharField(max_length=16)
-
-    def __str__(self):
-        return self.name
-
-
-class Settings(models.Model):
-    weekly_reset_day = models.PositiveSmallIntegerField()
-
-    # Singleton
-    def save(self, *args, **kwargs):
-        if self.__class__.objects.count():
-            self.pk = self.__class__.objects.first().pk
-        super().save(*args, **kwargs)
+        
