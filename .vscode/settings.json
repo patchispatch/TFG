@@ -1,4 +1,7 @@
 {
     "python.pythonPath": "/home/patchispatch/.local/share/virtualenvs/TFG-89aJblRE/bin/python",
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "python.analysis.extraPaths": [
+        "./backend"
+    ]
 }
