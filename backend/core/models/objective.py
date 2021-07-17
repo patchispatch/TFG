@@ -19,7 +19,7 @@ class Objective(models.Model):
         'Category',
         default=None,
         null=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.SET_NULL
     )
 
     @property
@@ -30,17 +30,17 @@ class Objective(models.Model):
     
     @property
     def current_streak(self):
-        streak = 0
-        completed = True if self.progress >= self.goal else False
+        streak = 1 if self.__is_complete() else 0
         reset_day = get_next_reset_day()
 
-        while completed:
-            streak += 1
-
+        while True:
             # Check past week
             reset_day = reset_day - timedelta(7)
             first_dow = reset_day - timedelta(7)
-            completed = True if self.__progress_between_dates(first_dow, reset_day) >= self.goal else False
+            if not self.__is_complete(first_dow, reset_day):
+                break
+            
+            streak += 1
         
         return streak
     

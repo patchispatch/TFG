@@ -35,7 +35,7 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
     @action(detail=True, serializer_class=ObjectiveEntrySerializerInput, methods=['get', 'post'])
     def entries(self, request, pk=None):
         if request.method == 'GET':
-            objective_entries = ObjectiveEntry.objects.select_related('objective_id').filter(objective_id=pk)
+            objective_entries = ObjectiveEntry.objects.select_related('objective').filter(objective_id=pk)
             serializer = ObjectiveEntrySerializer(objective_entries, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         
