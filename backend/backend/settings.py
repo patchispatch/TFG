@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'drf_yasg',
+    'drf_spectacular',
     'core',
     'rest_framework',
     'corsheaders'
@@ -126,7 +126,8 @@ STATIC_URL = '/static/'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
-    ]
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 # Frontend is served on localhost:3000
@@ -135,3 +136,10 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'TFG API',
+    'DESCRIPTION': 'Aplicación de objetivos y rutinas semanales',
+    'VERSION': '0.0.1',
+    # OTHER SETTINGS
+}

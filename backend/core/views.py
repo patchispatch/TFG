@@ -2,31 +2,12 @@ from django.utils.decorators import method_decorator
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import viewsets, status
-from drf_yasg.utils import swagger_auto_schema
 from .models import *
 from .serializers import *
 
 # Create your views here:
 
 # Objective endpoints
-@method_decorator(name='list', decorator=swagger_auto_schema(
-    operation_description="Get a list of all objectives"
-))
-@method_decorator(name='retrieve', decorator=swagger_auto_schema(
-    operation_description="Get an objective by ID"
-))
-@method_decorator(name='create', decorator=swagger_auto_schema(
-    operation_description="Create a new objective"
-))
-@method_decorator(name='update', decorator=swagger_auto_schema(
-    operation_description="Update an existing objective"
-))
-@method_decorator(name='partial_update', decorator=swagger_auto_schema(
-    operation_description="Partially update an existing objective"
-))
-@method_decorator(name='destroy', decorator=swagger_auto_schema(
-    operation_description="Delete an objective by ID"
-))
 class ObjectiveViewSet(viewsets.ModelViewSet):
     queryset = Objective.objects.all()
     serializer_class = ObjectiveSerializer
@@ -65,46 +46,55 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
 
 
 # ObjectiveEntry endpoints
-@method_decorator(name='list', decorator=swagger_auto_schema(
-    operation_description="Get a list of all objective entries"
+@method_decorator(name='list', decorator=extend_schema(
+    operation_description="Get a list of objective entries"
 ))
-@method_decorator(name='retrieve', decorator=swagger_auto_schema(
+@method_decorator(name='retrieve', decorator=extend_schema(
     operation_description="Get an objective entry by ID"
 ))
-@method_decorator(name='create', decorator=swagger_auto_schema(
+@method_decorator(name='create', decorator=extend_schema(
     operation_description="Create a new objective entry"
 ))
-@method_decorator(name='update', decorator=swagger_auto_schema(
+@method_decorator(name='update', decorator=extend_schema(
     operation_description="Update an existing objective entry"
 ))
-@method_decorator(name='partial_update', decorator=swagger_auto_schema(
+@method_decorator(name='partial_update', decorator=extend_schema(
     operation_description="Partially update an existing objective entry"
 ))
-@method_decorator(name='destroy', decorator=swagger_auto_schema(
+@method_decorator(name='destroy', decorator=extend_schema(
     operation_description="Delete an objective entry by ID"
 ))
 class ObjectiveEntryViewSet(viewsets.ModelViewSet):
     queryset = ObjectiveEntry.objects.all()
     serializer_class = ObjectiveEntrySerializer
 
+    def list(self, request):
+        if 'date' in request.query_params:
+            entries = ObjectiveEntry.objects.filter(date=request.query_params.get('date'))
+        else:
+            entries = ObjectiveEntry.objects.all()
+
+        serializer = ObjectiveEntrySerializer(entries, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 # Category endpoints
-@method_decorator(name='list', decorator=swagger_auto_schema(
+@method_decorator(name='list', decorator=extend_schema(
     operation_description="Get a list of all categories"
 ))
-@method_decorator(name='retrieve', decorator=swagger_auto_schema(
+@method_decorator(name='retrieve', decorator=extend_schema(
     operation_description="Get a category by ID"
 ))
-@method_decorator(name='create', decorator=swagger_auto_schema(
+@method_decorator(name='create', decorator=extend_schema(
     operation_description="Create a new category"
 ))
-@method_decorator(name='update', decorator=swagger_auto_schema(
+@method_decorator(name='update', decorator=extend_schema(
     operation_description="Update an existing category"
 ))
-@method_decorator(name='partial_update', decorator=swagger_auto_schema(
+@method_decorator(name='partial_update', decorator=extend_schema(
     operation_description="Partially update an existing category"
 ))
-@method_decorator(name='destroy', decorator=swagger_auto_schema(
+@method_decorator(name='destroy', decorator=extend_schema(
     operation_description="Delete a category by ID"
 ))
 class CategoryViewSet(viewsets.ModelViewSet):
