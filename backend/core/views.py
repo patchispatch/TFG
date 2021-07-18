@@ -46,24 +46,6 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
 
 
 # ObjectiveEntry endpoints
-@method_decorator(name='list', decorator=extend_schema(
-    operation_description="Get a list of objective entries"
-))
-@method_decorator(name='retrieve', decorator=extend_schema(
-    operation_description="Get an objective entry by ID"
-))
-@method_decorator(name='create', decorator=extend_schema(
-    operation_description="Create a new objective entry"
-))
-@method_decorator(name='update', decorator=extend_schema(
-    operation_description="Update an existing objective entry"
-))
-@method_decorator(name='partial_update', decorator=extend_schema(
-    operation_description="Partially update an existing objective entry"
-))
-@method_decorator(name='destroy', decorator=extend_schema(
-    operation_description="Delete an objective entry by ID"
-))
 class ObjectiveEntryViewSet(viewsets.ModelViewSet):
     queryset = ObjectiveEntry.objects.all()
     serializer_class = ObjectiveEntrySerializer
@@ -79,24 +61,6 @@ class ObjectiveEntryViewSet(viewsets.ModelViewSet):
 
 
 # Category endpoints
-@method_decorator(name='list', decorator=extend_schema(
-    operation_description="Get a list of all categories"
-))
-@method_decorator(name='retrieve', decorator=extend_schema(
-    operation_description="Get a category by ID"
-))
-@method_decorator(name='create', decorator=extend_schema(
-    operation_description="Create a new category"
-))
-@method_decorator(name='update', decorator=extend_schema(
-    operation_description="Update an existing category"
-))
-@method_decorator(name='partial_update', decorator=extend_schema(
-    operation_description="Partially update an existing category"
-))
-@method_decorator(name='destroy', decorator=extend_schema(
-    operation_description="Delete a category by ID"
-))
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
