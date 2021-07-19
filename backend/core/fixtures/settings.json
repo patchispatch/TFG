@@ -1,0 +1,9 @@
+[
+  {
+    "model": "core.settings",
+    "pk": 1,
+    "fields": {
+      "weekly_reset_day": 0
+    }
+  }
+]

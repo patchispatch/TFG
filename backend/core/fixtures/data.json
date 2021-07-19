@@ -1,24 +1,47 @@
 [
 {
-  "model": "core.objective",
+  "model": "core.settings",
   "pk": 1,
   "fields": {
-    "name": "Test objective 1",
-    "goal": 3,
-    "paused": false,
-    "best_streak": 0,
-    "category_id": null
+    "weekly_reset_day": 0
+  }
+},
+{
+  "model": "core.objectiveentry",
+  "pk": 36,
+  "fields": {
+    "date": "2021-07-02T11:36:00Z",
+    "progress": 1,
+    "objective_id": 28
+  }
+},
+{
+  "model": "core.objectiveentry",
+  "pk": 37,
+  "fields": {
+    "date": "2021-07-18T17:09:12.804Z",
+    "progress": 1,
+    "objective_id": 28
+  }
+},
+{
+  "model": "core.objectiveentry",
+  "pk": 38,
+  "fields": {
+    "date": "2021-07-18T17:09:27.790Z",
+    "progress": 1,
+    "objective_id": 28
   }
 },
 {
   "model": "core.objective",
-  "pk": 2,
+  "pk": 28,
   "fields": {
-    "name": "Test objective 2",
-    "goal": 0,
+    "name": "Prueba racha",
+    "goal": 1,
     "paused": false,
-    "best_streak": 0,
-    "category_id": 1
+    "best_streak": 2,
+    "category_id": null
   }
 },
 {
@@ -26,13 +49,6 @@
   "pk": 1,
   "fields": {
     "name": "Deporte"
-  }
-},
-{
-  "model": "core.settings",
-  "pk": 1,
-  "fields": {
-    "weekly_reset_day": 6
   }
 }
 ]

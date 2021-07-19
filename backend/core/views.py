@@ -2,6 +2,8 @@ from django.utils.decorators import method_decorator
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import viewsets, status
+from drf_spectacular.utils import extend_schema, OpenApiParameter
+from drf_spectacular.types import OpenApiTypes
 from .models import *
 from .serializers import *
 
@@ -31,11 +33,6 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
 
-    @action(detail=True, methods=['get'])
-    def progress(self, request, pk=None):
-        objective = Objective.objects.get(id=pk)
-        return Response({'progress': objective.progress()}, status=status.HTTP_200_OK)
-
     @action(detail=True, methods=['get'], url_path='pause-resume')
     def pause_resume(self, request, pk=None):
         objective = Objective.objects.get(id=pk)
@@ -50,9 +47,19 @@ class ObjectiveEntryViewSet(viewsets.ModelViewSet):
     queryset = ObjectiveEntry.objects.all()
     serializer_class = ObjectiveEntrySerializer
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name='date',
+                type=OpenApiTypes.DATE,
+                location=OpenApiParameter.QUERY,
+                description='Filter by entry date'
+            )
+        ]
+    )
     def list(self, request):
         if 'date' in request.query_params:
-            entries = ObjectiveEntry.objects.filter(date=request.query_params.get('date'))
+            entries = ObjectiveEntry.objects.filter(date__date=request.query_params.get('date'))
         else:
             entries = ObjectiveEntry.objects.all()
 

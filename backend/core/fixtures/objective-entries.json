@@ -1,0 +1,20 @@
+[
+  {
+    "model": "core.objectiveentry",
+    "pk": 1,
+    "fields": {
+      "date": "1998-09-21T11:36:00Z",
+      "progress": 1,
+      "objective_id": 1
+    }
+  },
+  {
+    "model": "core.objectiveentry",
+    "pk": 2,
+    "fields": {
+      "date": "2021-01-01T00:00:00Z",
+      "progress": 1,
+      "objective_id": 1
+    }
+  }
+]

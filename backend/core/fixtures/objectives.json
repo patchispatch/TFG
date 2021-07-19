@@ -1,0 +1,24 @@
+[
+  {
+    "model": "core.objective",
+    "pk": 1,
+    "fields": {
+      "name": "Test objective 1",
+      "goal": 1,
+      "paused": false,
+      "best_streak": 0,
+      "category_id": null
+    }
+  },
+  {
+    "model": "core.objective",
+    "pk": 2,
+    "fields": {
+      "name": "Test objective 2",
+      "goal": 1,
+      "paused": true,
+      "best_streak": 0,
+      "category_id": null
+    }
+  }
+]
