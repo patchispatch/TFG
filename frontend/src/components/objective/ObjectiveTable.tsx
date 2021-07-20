@@ -50,8 +50,8 @@ export function ObjectiveTable() {
 
   // On objective update
   function onUpdateObjective(objectiveId: number) {
-    setUpdateDialogState(true);
     setSelectedId(objectiveId);
+    setUpdateDialogState(true);
   }
 
   function handleUpdate(): void {

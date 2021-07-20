@@ -2,9 +2,13 @@ import axios from 'axios-observable';
 import { Deserialize, DeserializeArray, IJsonArray, IJsonObject, Serialize } from 'dcerialize';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { toISOLocal } from 'src/utils';
 import { ObjectiveEntry } from '../models/objective-entry';
 import { CRUDL } from './crudl';
 
+interface ObjectiveEntryParameters {
+  date: Date
+}
 
 export class ObjectiveEntryService implements CRUDL {
   // Base URL
@@ -13,8 +17,15 @@ export class ObjectiveEntryService implements CRUDL {
   /**
    * Returns a list of all the objectives
    */
-  list(): Observable<ObjectiveEntry[]> {
-    return axios.get<IJsonArray>(this.baseUrl)
+  list(params?: ObjectiveEntryParameters): Observable<ObjectiveEntry[]> {
+    // Format parameters
+    let sendParams: any = {};
+    if (params?.date) {
+      sendParams = {date: toISOLocal(params.date).split('T')[0]};
+      console.log(params.date)
+    }
+
+    return axios.get<IJsonArray>(this.baseUrl, {params: sendParams})
       .pipe(
         map(result => DeserializeArray(result.data, () => ObjectiveEntry)),
         catchError(err => of(err))

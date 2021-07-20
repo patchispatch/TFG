@@ -4,6 +4,7 @@ import { ObjectiveTable } from "./ObjectiveTable";
 import { Theme } from "@material-ui/core";
 import { ObjectiveForm } from "./ObjectiveForm";
 import { FormDialog } from "../utils/FormDialog";
+import { ObjectiveEntryCalendar } from "../objective-entry/ObjectiveEntryCalendar";
 
 
 // Styles
@@ -63,6 +64,8 @@ export function ObjectiveView() {
         </div>
 
         <ObjectiveTable />
+
+        <ObjectiveEntryCalendar />
 
         {/* Dialogs */}
         <FormDialog 

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './App.css';
+import 'react-calendar/dist/Calendar.css';
 import { createStyles, CssBaseline, Drawer, makeStyles, Theme, ThemeProvider } from '@material-ui/core';
 import {theme} from 'src/theme';
 import { ObjectiveView } from './components/objective/ObjectiveView';
