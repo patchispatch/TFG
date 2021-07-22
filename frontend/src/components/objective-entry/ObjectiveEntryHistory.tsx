@@ -113,8 +113,8 @@ export function ObjectiveEntryHistory({date}: EntryHistoryProps) {
                   {objectiveMap[entry.objective_id].name}
                 </Typography>
                 
-                <Typography variant='body1'>
-                  Progress: {entry.progress}/{objectiveMap[entry.objective_id].goal}
+                <Typography variant='body2'>
+                  Hour: {entry.date.toLocaleTimeString()} | Progress: {entry.progress}
                 </Typography>
 
                 {categoryOfEntry(entry) && 
