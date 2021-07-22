@@ -7,7 +7,7 @@ import { ObjectiveEntry } from '../models/objective-entry';
 import { CRUDL } from './crudl';
 
 interface ObjectiveEntryParameters {
-  date: Date
+  date?: Date
 }
 
 export class ObjectiveEntryService implements CRUDL {
@@ -22,7 +22,6 @@ export class ObjectiveEntryService implements CRUDL {
     let sendParams: any = {};
     if (params?.date) {
       sendParams = {date: toISOLocal(params.date).split('T')[0]};
-      console.log(params.date)
     }
 
     return axios.get<IJsonArray>(this.baseUrl, {params: sendParams})

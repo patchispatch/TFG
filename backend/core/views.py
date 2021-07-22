@@ -14,6 +14,27 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
     queryset = Objective.objects.all()
     serializer_class = ObjectiveSerializer
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name='idlist',
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.QUERY,
+                description='Filter by objective IDs, separated by commas'
+            )
+        ]
+    )
+    def list(self, request):
+        if 'idlist' in request.query_params:
+            id_list = list(map(int, request.query_params.get('idlist').split(',')))
+
+            objectives = Objective.objects.filter(id__in=id_list)
+        else:
+            objectives = Objective.objects.all()
+
+        serializer = ObjectiveSerializer(objectives, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     # ObjectiveEntry 'shortcut' endpoints
     @action(detail=True, serializer_class=ObjectiveEntrySerializerInput, methods=['get', 'post'])
     def entries(self, request, pk=None):

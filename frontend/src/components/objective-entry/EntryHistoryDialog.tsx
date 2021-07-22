@@ -31,7 +31,7 @@ interface HistoryDialogProps {
   onClose: () => void,
 }
 
-
+// TODO: Change into a generic dialog component
 export function EntryHistoryDialog({
   date,
   isOpen,
@@ -50,7 +50,7 @@ export function EntryHistoryDialog({
         aria-labelledby="create-objective-title"
       >
         <DialogTitle className={classes.headerFooter} id="create-objective-title">
-          Entries on {date.toDateString()}
+          Entries on {date.toLocaleDateString()}
 
           <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
             <CloseIcon />

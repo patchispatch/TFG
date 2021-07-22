@@ -7,6 +7,11 @@ import { Objective } from '../models/objective';
 import { CRUDL } from './crudl';
 
 
+interface ObjectiveListParams {
+  idlist?: number[],
+}
+
+
 export class ObjectiveService implements CRUDL {
   // Base URL
   baseUrl = '/objectives/'
@@ -14,8 +19,13 @@ export class ObjectiveService implements CRUDL {
   /**
    * Returns a list of all the objectives
    */
-  list(): Observable<Objective[]> {
-    return axios.get<IJsonArray>(this.baseUrl)
+  list(params?: ObjectiveListParams): Observable<Objective[]> {
+    let sendParams: any = {};
+    if (params?.idlist) {
+      sendParams = {id: params.idlist.map(String).toString()};
+    }
+
+    return axios.get<IJsonArray>(this.baseUrl, {params: sendParams})
       .pipe(
         map(result => DeserializeArray(result.data, () => Objective)),
         catchError(err => of(err))
