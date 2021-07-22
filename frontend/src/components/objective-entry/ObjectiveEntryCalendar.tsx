@@ -4,7 +4,12 @@ import Calendar, { DateCallback } from 'react-calendar'
 import { ObjectiveEntryService } from 'src/services/objective-entry-service';
 import { EntryHistoryDialog } from './EntryHistoryDialog';
 
-export function ObjectiveEntryCalendar() {
+// Props
+interface CalendarProps {
+  className?: string
+}
+
+export function ObjectiveEntryCalendar({className}: CalendarProps) {
   // State
   const [selectedDay, setSelectedDay] = useState<Date>(new Date());
   const [historyOpen, setHistoryOpen] = useState(false);
@@ -18,7 +23,7 @@ export function ObjectiveEntryCalendar() {
 
   // Render
   return (
-    <>
+    <div className={className}>
       <Calendar 
         onClickDay={showHistory}
         maxDate={new Date()}
@@ -30,6 +35,6 @@ export function ObjectiveEntryCalendar() {
         isOpen={historyOpen}
         onClose={() => setHistoryOpen(false)}
       />
-    </>
+    </div>
   )
 }

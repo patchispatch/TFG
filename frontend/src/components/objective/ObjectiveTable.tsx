@@ -34,6 +34,8 @@ export function ObjectiveTable() {
   // State
   const [objectiveList, setObjectiveList] = useState<Objective[]>([]);
   const [categoryMap, setCategoryMap] = useState<ModelMap<Category>>({});
+  const [catLoaded, setCatLoaded] = useState<boolean>(false);
+  const [objLoaded, setObjLoaded] = useState<boolean>(false);
 
   // Handle dialog state
   const [selectedId, setSelectedId] = useState<number>();
@@ -43,14 +45,19 @@ export function ObjectiveTable() {
 
   // Refresh table data
   function refreshTable(): void {
-    objectiveService.list().subscribe(response => setObjectiveList(response));
+    setObjLoaded(false);
+    objectiveService.list().subscribe(response => {
+      setObjectiveList(response);
+      setObjLoaded(true);
+    });
   }
-
 
   // On init
   useEffect(() => {
+    setCatLoaded(false);
     categoryService.list().subscribe(categories => {
       setCategoryMap(convertToMap(categories));
+      setCatLoaded(true);
     });
 
     refreshTable();
@@ -105,6 +112,13 @@ export function ObjectiveTable() {
     })
   }
 
+  /**
+   * Check if everything is loaded
+   */
+  function isLoaded() {
+    return catLoaded && objLoaded;
+  }
+
 
   // Render
   // If an objective is paused, show resume button. Else, show pause button
@@ -123,6 +137,7 @@ export function ObjectiveTable() {
   const classes = useStyles();
   return (
     <>
+    {isLoaded() ?
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -174,34 +189,35 @@ export function ObjectiveTable() {
           </TableBody>
         </Table>
       </TableContainer>
+      : <>{/* TODO: set loading indicator */}</>
+    }
       
+    {/* Dialogs */}
+    <FormDialog 
+      title="Add progress"
+      formId="objectiveEntryForm"
+      isOpen={updateDialogState}
+      onClose={() => setUpdateDialogState(false)}
+    >
+      <ObjectiveEntryForm objectiveId={selectedId!} postSubmit={handleUpdate}/>
+    </FormDialog>
 
-      {/* Dialogs */}
-      <FormDialog 
-        title="Add progress"
-        formId="objectiveEntryForm"
-        isOpen={updateDialogState}
-        onClose={() => setUpdateDialogState(false)}
-      >
-        <ObjectiveEntryForm objectiveId={selectedId!} postSubmit={handleUpdate}/>
-      </FormDialog>
+    <FormDialog 
+      title="Edit objective"
+      formId="objectiveForm"
+      isOpen={editDialogState}
+      onClose={() => setEditDialogState(false)}
+    >
+      <ObjectiveForm objectiveId={selectedId} postSubmit={handleEdit} />
+    </FormDialog>
 
-      <FormDialog 
-        title="Edit objective"
-        formId="objectiveForm"
-        isOpen={editDialogState}
-        onClose={() => setEditDialogState(false)}
-      >
-        <ObjectiveForm objectiveId={selectedId} postSubmit={handleEdit} />
-      </FormDialog>
-
-      <ConfirmDialog
-        title="Delete objective"
-        message={`Are you sure you want to delete Objective ${selectedId}?`}
-        isOpen={deleteDialogState}
-        onConfirm={() => deleteObjective(selectedId!)}
-        onClose={() => setDeleteDialogState(false)}
-      />
+    <ConfirmDialog
+      title="Delete objective"
+      message={`Are you sure you want to delete Objective ${selectedId}?`}
+      isOpen={deleteDialogState}
+      onConfirm={() => deleteObjective(selectedId!)}
+      onClose={() => setDeleteDialogState(false)}
+    />
     </>
   );
 }

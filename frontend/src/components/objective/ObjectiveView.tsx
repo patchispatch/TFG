@@ -22,6 +22,12 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'space-between',
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2),
+    },
+    historySection: {
+      marginTop: '3em',
+    },
+    calendar: {
+      marginTop: '1.5em',
     }
   }),
 );
@@ -65,7 +71,14 @@ export function ObjectiveView() {
 
         <ObjectiveTable />
 
-        <ObjectiveEntryCalendar />
+        <div className={classes.historySection}>
+          <Typography variant='h4'>
+            Entry history
+          </Typography>
+
+          <ObjectiveEntryCalendar className={classes.calendar} />
+        </div>
+        
 
         {/* Dialogs */}
         <FormDialog 

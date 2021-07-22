@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme: Theme) =>
     drawerPaper: {
       width: drawerWidth,
     },
+    clockContainer: {
+      margin: '2em',
+      background: '#eeeeee'
+    },
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
   }),
@@ -42,7 +46,9 @@ function App() {
           classes={{paper: classes.drawerPaper}}
           anchor="left"
         >
-          Drawer
+          <div className={classes.clockContainer}>
+
+          </div>
         </Drawer>
         <main className={classes.mainView}>
           <ObjectiveView />
