@@ -13,6 +13,9 @@ import { ObjectiveForm } from "./ObjectiveForm";
 import { ConfirmDialog } from "../utils/ConfirmDialog";
 import { ObjectiveEntryForm } from "../objective-entry/ObjectiveEntryForm";
 import { ObjectiveEntry } from "src/models/objective-entry";
+import { Category } from "src/models/category";
+import { convertToMap, ModelMap } from "src/models/shared";
+import { CategoryService } from "src/services/category-service";
 
 
 // Styles
@@ -26,9 +29,11 @@ const useStyles = makeStyles({
 export function ObjectiveTable() {
   // Services
   const objectiveService = useMemo(() => new ObjectiveService(), []);
+  const categoryService = useMemo(() => new CategoryService(), []);
 
   // State
-  const [objectiveList, setObjectiveList] = React.useState<Objective[]>([]);
+  const [objectiveList, setObjectiveList] = useState<Objective[]>([]);
+  const [categoryMap, setCategoryMap] = useState<ModelMap<Category>>({});
 
   // Handle dialog state
   const [selectedId, setSelectedId] = useState<number>();
@@ -44,6 +49,10 @@ export function ObjectiveTable() {
 
   // On init
   useEffect(() => {
+    categoryService.list().subscribe(categories => {
+      setCategoryMap(convertToMap(categories));
+    });
+
     refreshTable();
   }, [objectiveService])
 
@@ -119,7 +128,7 @@ export function ObjectiveTable() {
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
-              <TableCell align="right">Category</TableCell>
+              <TableCell align="left">Category</TableCell>
               <TableCell align="right">Progress</TableCell>
               <TableCell align="right">Current streak</TableCell>
               <TableCell align="right">Best streak</TableCell>
@@ -135,7 +144,7 @@ export function ObjectiveTable() {
                 <TableCell component="th" scope="row">
                   {objective.name}
                 </TableCell>
-                <TableCell align="right">{objective.categoryId}</TableCell>
+                <TableCell align="left">{objective.categoryId ? categoryMap[objective.categoryId].name : '-'}</TableCell>
                 <TableCell align="right">{objective.progress}/{objective.goal}</TableCell>
                 <TableCell align="right">{objective.currentStreak}</TableCell>
                 <TableCell align="right">{objective.bestStreak}</TableCell>
