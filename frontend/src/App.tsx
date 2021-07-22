@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     clockContainer: {
       margin: '2em',
-      background: '#eeeeee'
+      background: '#eee',
+      height: '12em',
     },
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
