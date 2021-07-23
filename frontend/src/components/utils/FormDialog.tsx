@@ -1,7 +1,6 @@
-import { Button, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, makeStyles, Theme } from '@material-ui/core';
+import { Button, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, LinearProgress, makeStyles, Theme } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import * as React from 'react'
-import { useState } from 'react'
 
 // Style
 const useStyles = makeStyles((theme: Theme) => 
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
       right: theme.spacing(1),
       top: theme.spacing(1),
       color: theme.palette.grey[500],
-    },
+    }
   })
 );
 
@@ -31,6 +30,7 @@ interface FormDialogProps {
   formId: string,
   isOpen: boolean,
   onClose: () => void,
+  loading?: boolean,
   submitButtonText?: string,
   cancelButtonText?: string
 }
@@ -42,6 +42,7 @@ export function FormDialog({
   formId,
   isOpen,
   onClose,
+  loading,
   submitButtonText, 
   cancelButtonText,
 }: FormDialogProps) {
@@ -76,6 +77,12 @@ export function FormDialog({
           </Button>
         </DialogActions>
       </Dialog>
+
+      {loading &&
+        <div>
+          <LinearProgress />
+        </div>
+      }
     </div>
   )
 }
