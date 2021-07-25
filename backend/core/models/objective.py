@@ -5,12 +5,6 @@ from .objective_entry import ObjectiveEntry
 
 
 class Objective(models.Model):
-    # Objective status
-    class ObjectiveStatus(models.TextChoices):
-        ACTIVE = 'active'
-        PAUSED = 'paused'
-    
-
     name = models.CharField(max_length=120)
     goal = models.PositiveSmallIntegerField()
     paused = models.BooleanField(default=False)
