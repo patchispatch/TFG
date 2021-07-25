@@ -7,6 +7,7 @@ import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pi
 import { ObjectiveEntry } from 'src/models/objective-entry';
 import { ObjectiveEntryService } from 'src/services/objective-entry-service';
 import DateFnsUtils from '@date-io/date-fns';
+import snackbar from 'src/SnackbarUtils';
 
 
 // Styles
@@ -66,17 +67,19 @@ export function ObjectiveEntryForm({objectiveId, entry, postSubmit}: ObjectiveEn
       entry.date = data.date;
 
       objectiveEntryService.update(entry).subscribe(response => {
-        if (postSubmit) {
+        if (postSubmit)
           postSubmit(response);
-        }
+
+        snackbar.success("Objective entry updated successfully");
       });
     }
     else {
       const new_entry = new ObjectiveEntry(objectiveId, data.date, data.progress);
       objectiveService.addEntry(objectiveId, new_entry).subscribe(response => {
-        if (postSubmit) {
+        if (postSubmit)
           postSubmit(response);
-        }
+
+        snackbar.success("Objective entry created successfully");
       });
     }
   }

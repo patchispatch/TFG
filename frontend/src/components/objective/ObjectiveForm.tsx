@@ -7,6 +7,8 @@ import { Category } from 'src/models/category';
 import { Objective } from 'src/models/objective';
 import { CircularProgress, createStyles, LinearProgress, makeStyles, MenuItem, TextField, Theme } from '@material-ui/core';
 import { delay } from 'rxjs/operators';
+import { useSnackbar } from 'notistack';
+import snackbar from 'src/SnackbarUtils';
 
 
 // Styles
@@ -59,6 +61,7 @@ export function ObjectiveForm({objectiveId, postSubmit}: ObjectiveFormProps) {
   // Services
   const objectiveService = useMemo(() => new ObjectiveService(), []);
   const categoryService = useMemo(() => new CategoryService(), []);
+  const { enqueueSnackbar } = useSnackbar();
 
   // State
   const [categoryList, setCategoryList] = useState<Category[]>([]);
@@ -84,7 +87,7 @@ export function ObjectiveForm({objectiveId, postSubmit}: ObjectiveFormProps) {
     // If an objective ID is provided, retrieve it
     if (objectiveId) {
       setLoaded(false);
-      objectiveService.get(objectiveId).pipe(delay(5000)).subscribe(response => {
+      objectiveService.get(objectiveId).subscribe(response => {
         setObjective(response);
         reset({
           name: response?.name,
@@ -107,9 +110,10 @@ export function ObjectiveForm({objectiveId, postSubmit}: ObjectiveFormProps) {
       data.categoryId !== -1 && (objective.categoryId = data.categoryId);
 
       objectiveService.update(objective).subscribe(response => {
-        if (postSubmit) {
+        if (postSubmit) 
           postSubmit(response, true);
-        }
+
+        snackbar.success('Objective updated successfully');
       });
     }
     else {
@@ -117,9 +121,10 @@ export function ObjectiveForm({objectiveId, postSubmit}: ObjectiveFormProps) {
       data.categoryId !== -1 && (new_objective.categoryId = data.categoryId);
 
       objectiveService.post(new_objective).subscribe(response => {
-        if (postSubmit) {
+        if (postSubmit) 
           postSubmit(response, true);
-        }
+
+        snackbar.success('Objective created successfully');
       });
     }
   }

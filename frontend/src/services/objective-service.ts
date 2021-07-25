@@ -1,10 +1,11 @@
 import axios from 'axios-observable';
 import { Deserialize, DeserializeArray, IJsonArray, IJsonObject, Serialize } from 'dcerialize';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { ObjectiveEntry } from 'src/models/objective-entry';
 import { Objective } from '../models/objective';
 import { CRUDL } from './crudl';
+import snackbar from 'src/SnackbarUtils';
 
 
 interface ObjectiveListParams {
@@ -28,7 +29,10 @@ export class ObjectiveService implements CRUDL {
     return axios.get<IJsonArray>(this.baseUrl, {params: sendParams})
       .pipe(
         map(result => DeserializeArray(result.data, () => Objective)),
-        catchError(err => of(err))
+        catchError(err => {
+          snackbar.error("Error retrieving objective list");
+          return throwError(err);
+        }),
       );
   }
 
@@ -39,7 +43,10 @@ export class ObjectiveService implements CRUDL {
     return axios.get<IJsonObject>(`${this.baseUrl}${id}`)
       .pipe(
         map(result => Deserialize(result.data, () => Objective)),
-        catchError(err => of(err))
+        catchError(err => {
+          snackbar.error("Error retrieving objective");
+          return throwError(err);
+        }),
       );
   }
 
@@ -50,7 +57,10 @@ export class ObjectiveService implements CRUDL {
     return axios.post<IJsonObject>(this.baseUrl, Serialize(data, () => Objective))
       .pipe(
         map(result => Deserialize(result.data, () => Objective)),
-        catchError(err => of(err))
+        catchError(err => {
+          snackbar.error("Error creating objective");
+          return throwError(err);
+        }),
       );
   }
 
@@ -61,17 +71,23 @@ export class ObjectiveService implements CRUDL {
     return axios.put<IJsonObject>(`${this.baseUrl}${data.id}/`, Serialize(data, () => Objective))
       .pipe(
         map(result => Deserialize(result.data, () => Objective)),
-        catchError(err => of(err))
+        catchError(err => {
+          snackbar.error("Error updateing objective");
+          return throwError(err);
+        }),
       );
   }
 
   /**
    * Delete an objective by ID
    */
-  delete(id: number): Observable<null> {
+  delete(id: number): Observable<any> {
     return axios.delete<null>(`${this.baseUrl}${id}`)
     .pipe(
-      catchError(err => of(err))
+      catchError(err => {
+        snackbar.error("Error deleting objective");
+        return throwError(err);
+      }),
     )
   }
 
@@ -84,7 +100,10 @@ export class ObjectiveService implements CRUDL {
     return axios.post<IJsonObject>(`${this.baseUrl}${id}/entries/`, Serialize(data, () => ObjectiveEntry))
     .pipe(
       map(result => Deserialize(result.data, () => ObjectiveEntry)),
-      catchError(err => of(err))
+      catchError(err => {
+        snackbar.error("Error creating objective entry");
+        return throwError(err);
+      }),
     );
   }
 
@@ -95,7 +114,10 @@ export class ObjectiveService implements CRUDL {
     return axios.get<IJsonArray>(`${this.baseUrl}${id}/entries/`)
     .pipe(
       map(result => DeserializeArray(result.data, () => ObjectiveEntry)),
-      catchError(err => of(err))
+      catchError(err => {
+        snackbar.error("Error retrieving objective entry list");
+        return throwError(err);
+      }),
     );
   }
 
@@ -106,7 +128,10 @@ export class ObjectiveService implements CRUDL {
     return axios.get<IJsonObject>(`${this.baseUrl}${id}/pause-resume/`)
     .pipe(
       map(result => Deserialize(result.data, () => Objective)),
-      catchError(err => of(err))
+      catchError(err => {
+        snackbar.error("Error changing objective status");
+        return throwError(err);
+      }),
     );
   }
 }

@@ -4,6 +4,9 @@ import 'react-calendar/dist/Calendar.css';
 import { createStyles, CssBaseline, Drawer, makeStyles, Theme, ThemeProvider } from '@material-ui/core';
 import {theme} from 'src/theme';
 import { ObjectiveView } from './components/objective/ObjectiveView';
+import { SnackbarProvider } from 'notistack';
+import Grow from '@material-ui/core/Grow';
+import { SnackbarUtilsConfigurator } from './SnackbarUtils';
 
 // Styles
 const drawerWidth = 400;
@@ -39,22 +42,31 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <Drawer
-          variant="permanent"
-          className={classes.drawer}
-          classes={{paper: classes.drawerPaper}}
-          anchor="left"
-        >
-          <div className={classes.clockContainer}>
+      <SnackbarProvider 
+        /* 
+        // @ts-ignore */
+        TransitionComponent={Grow}
+        maxSnack={1}
+        hideIconVariant={false}
+      >
+        <SnackbarUtilsConfigurator />
+        <div className={classes.root}>
+          <CssBaseline />
+          <Drawer
+            variant="permanent"
+            className={classes.drawer}
+            classes={{paper: classes.drawerPaper}}
+            anchor="left"
+          >
+            <div className={classes.clockContainer}>
 
-          </div>
-        </Drawer>
-        <main className={classes.mainView}>
-          <ObjectiveView />
-        </main>
-      </div>
+            </div>
+          </Drawer>
+          <main className={classes.mainView}>
+            <ObjectiveView />
+          </main>
+        </div>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }

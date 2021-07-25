@@ -73,7 +73,7 @@ export function FormDialog({
             {cancelButtonText ? cancelButtonText : "Cancel"}
           </Button>
           <Button variant="contained" disableElevation color="primary" type="submit" form={formId}>
-          {submitButtonText ? submitButtonText : "Submit"}
+            {submitButtonText ? submitButtonText : "Submit"}
           </Button>
         </DialogActions>
       </Dialog>
