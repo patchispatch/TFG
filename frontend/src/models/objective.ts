@@ -32,7 +32,7 @@ export class Objective {
     /**
      * Current streak
      */
-    @autoserializeAs(() => Number, 'current_streak') currentStreak: number;
+    @deserializeAs(() => Number, 'current_streak') currentStreak: number;
 
     /**
      * Best streak

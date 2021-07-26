@@ -1,9 +1,9 @@
 import { autoserializeAs, deserializeAs } from "dcerialize";
 
 /**
- * Objective model
+ * Activity instance model
  */
-export class Activity {
+export class ActivityInstance {
     /**
      * Instance day of week
      */

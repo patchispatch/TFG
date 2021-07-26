@@ -2,24 +2,24 @@ import axios from 'axios-observable';
 import { Deserialize, DeserializeArray, IJsonArray, IJsonObject } from 'dcerialize';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Activity } from '../models/activity';
+import { ActivityInstance } from '../models/activity-instance';
 import { CRUDL } from './crudl';
 import snackbar from 'src/SnackbarUtils';
 
 
-export class ActivityService implements CRUDL {
+export class ActivityInstanceService implements CRUDL {
   // Base URL
   baseUrl = '/categories'
 
   /**
    * Returns a list of all the categories
    */
-  list(): Observable<Activity[]> {
+  list(): Observable<ActivityInstance[]> {
     return axios.get<IJsonArray>(this.baseUrl)
       .pipe(
-        map(result => DeserializeArray(result.data, () => Activity)),
+        map(result => DeserializeArray(result.data, () => ActivityInstance)),
         catchError(err => {
-          snackbar.error("Error retrieving Activity list");
+          snackbar.error("Error retrieving ActivityInstance list");
           return throwError(err);
         }),
       );
@@ -28,26 +28,26 @@ export class ActivityService implements CRUDL {
   /**
    * Get a resource by ID
    */
-  get(id: number): Observable<Activity> {
+  get(id: number): Observable<ActivityInstance> {
     return axios.get<IJsonObject>(`${this.baseUrl}/${id}`)
       .pipe(
-        map(result => Deserialize(result.data, () => Activity)),
+        map(result => Deserialize(result.data, () => ActivityInstance)),
         catchError(err => {
-          snackbar.error("Error retrieving Activity");
+          snackbar.error("Error retrieving ActivityInstance");
           return throwError(err);
         }),
       );
   }
 
   /**
-   * Add a new Activity
+   * Add a new ActivityInstance
    */
-  post(data: Activity): Observable<Activity> {
+  post(data: ActivityInstance): Observable<ActivityInstance> {
     return axios.post<IJsonObject>(this.baseUrl, data)
       .pipe(
-        map(result => Deserialize(result.data, () => Activity)),
+        map(result => Deserialize(result.data, () => ActivityInstance)),
         catchError(err => {
-          snackbar.error("Error creating Activity");
+          snackbar.error("Error creating ActivityInstance");
           return throwError(err);
         }),
       );
@@ -56,25 +56,25 @@ export class ActivityService implements CRUDL {
   /**
    * Update a resource
    */
-  update(data: Activity): Observable<Activity> {
+  update(data: ActivityInstance): Observable<ActivityInstance> {
     return axios.put<IJsonObject>(`${this.baseUrl}/${data.id}`, data)
       .pipe(
-        map(result => Deserialize(result.data, () => Activity)),
+        map(result => Deserialize(result.data, () => ActivityInstance)),
         catchError(err => {
-          snackbar.error("Error updating Activity");
+          snackbar.error("Error updating ActivityInstance");
           return throwError(err);
         }),
       );
   }
 
   /**
-   * Delete an Activity by ID
+   * Delete an ActivityInstance by ID
    */
   delete(id: number): Observable<any> {
     return axios.delete<null>(`${this.baseUrl}/${id}`)
     .pipe(
       catchError(err => {
-        snackbar.error("Error deleting Activity");
+        snackbar.error("Error deleting ActivityInstance");
         return throwError(err);
       }),
     )

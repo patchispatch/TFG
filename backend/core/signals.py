@@ -30,7 +30,8 @@ def reset_best_streak_in_goal_change(sender, instance, **kwargs):
     # and I would like to avoid that
 
     # Check previous goal value
-    obj = Objective.objects.get(id=instance.id)
+    if instance.id:
+        obj = Objective.objects.get(id=instance.id)
 
-    if obj.goal != instance.goal:
-        instance.best_streak = 0
+        if obj.goal != instance.goal:
+            instance.best_streak = 0
