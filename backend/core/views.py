@@ -94,3 +94,14 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
 
 
+# Activity endpoints
+class ActivityViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = ActivitySerializer
+
+
+# Activity endpoints
+class ActivityInstanceViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = ActivityInstanceSerializer
+

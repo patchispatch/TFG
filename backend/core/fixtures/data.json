@@ -7,48 +7,19 @@
   }
 },
 {
-  "model": "core.objectiveentry",
-  "pk": 36,
-  "fields": {
-    "date": "2021-07-02T11:36:00Z",
-    "progress": 1,
-    "objective_id": 28
-  }
-},
-{
-  "model": "core.objectiveentry",
-  "pk": 37,
-  "fields": {
-    "date": "2021-07-18T17:09:12.804Z",
-    "progress": 1,
-    "objective_id": 28
-  }
-},
-{
-  "model": "core.objectiveentry",
-  "pk": 38,
-  "fields": {
-    "date": "2021-07-18T17:09:27.790Z",
-    "progress": 1,
-    "objective_id": 28
-  }
-},
-{
-  "model": "core.objective",
-  "pk": 28,
-  "fields": {
-    "name": "Prueba racha",
-    "goal": 1,
-    "paused": false,
-    "best_streak": 2,
-    "category_id": null
-  }
-},
-{
   "model": "core.category",
   "pk": 1,
   "fields": {
     "name": "Deporte"
+  }
+},
+{
+  "model": "core.activity",
+  "pk": 1,
+  "fields": {
+    "name": "Actividad de prueba",
+    "description": "Prueba prueba aaa",
+    "category": null
   }
 }
 ]

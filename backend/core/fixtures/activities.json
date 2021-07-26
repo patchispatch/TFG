@@ -1,0 +1,11 @@
+[
+  {
+    "model": "core.activity",
+    "pk": 1,
+    "fields": {
+      "name": "Test activity",
+      "description": "Test test test",
+      "category": null
+    }
+  }
+]

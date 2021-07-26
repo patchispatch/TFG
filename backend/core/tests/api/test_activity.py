@@ -2,12 +2,12 @@ from django.test.testcases import TestCase
 from rest_framework.test import APIClient
 
 
-class ObjectiveAPITestCase(TestCase):
+class ActivityAPITestCase(TestCase):
     """
-    Unit tests of Objective API
+    Unit tests of Activity API
     """
     client = APIClient()
-    fixtures = ['settings', 'objectives', 'objective-entries']
+    fixtures = ['settings', 'activities']
 
     # TODO: make API tests
 
@@ -24,13 +24,4 @@ class ObjectiveAPITestCase(TestCase):
         pass
 
     def test_delete(self):
-        pass
-    
-    def test_create_entry(self):
-        pass
-
-    def test_list_entries(self):
-        pass
-
-    def test_pause_resume(self):
         pass

@@ -7,7 +7,7 @@ class ObjectiveEntryAPITestCase(TestCase):
     Unit tests of ObjectiveEntry API
     """
     client = APIClient()
-    fixtures = ['objective-entries']
+    fixtures = ['settings', 'objectives', 'objective-entries']
 
     # TODO: make API tests
 

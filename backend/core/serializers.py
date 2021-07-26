@@ -1,7 +1,10 @@
 from rest_framework import serializers
+
+from .models.activity_instance import ActivityInstance
 from .models.objective import Objective
 from .models.category import Category
 from .models.objective_entry import ObjectiveEntry
+from .models.activity import Activity
 
 
 class ObjectiveSerializer(serializers.ModelSerializer):
@@ -32,4 +35,16 @@ class ObjectiveEntrySerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
+        fields = '__all__'
+
+
+class ActivitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Activity
+        fields = '__all__'
+
+
+class ActivityInstanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ActivityInstance
         fields = '__all__'

@@ -7,7 +7,7 @@ class CategoryAPITestCase(TestCase):
     Unit tests of Category API
     """
     client = APIClient()
-    fixtures = ['objectives', 'objective-entries']
+    fixtures = ['categories']
 
     # TODO: make API tests
 

@@ -1,0 +1,9 @@
+[
+  {
+    "model": "core.category",
+    "pk": 1,
+    "fields": {
+      "name": "Sport"
+    }
+  }
+]

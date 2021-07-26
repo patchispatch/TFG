@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from rest_framework import permissions
 from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
 
 from core import views
@@ -11,6 +10,8 @@ router = DefaultRouter()
 router.register(r'objectives', views.ObjectiveViewSet)
 router.register(r'categories', views.CategoryViewSet)
 router.register(r'objective-entries', views.ObjectiveEntryViewSet)
+router.register(r'activities', views.ActivityViewSet)
+router.register(r'activity-instances', views.ActivityInstanceViewSet)
 
 urlpatterns = [
     # Docs
