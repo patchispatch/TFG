@@ -1,7 +1,7 @@
 import { autoserializeAs, deserializeAs } from "dcerialize";
 
 /**
- * Objective model
+ * Activity model
  */
 export class Activity {
     /**
