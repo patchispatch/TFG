@@ -14,6 +14,16 @@
                 "core"
             ],
             "django": true
+        },
+        {
+            "name": "Django run",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/backend/manage.py",
+            "args": [
+                "runserver"
+            ],
+            "django": true
         }
     ]
 }

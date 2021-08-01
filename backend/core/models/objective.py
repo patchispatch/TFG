@@ -45,10 +45,43 @@ class Objective(models.Model):
         self.paused = not self.paused
         self.save()
 
-    def __is_complete(self, first_date=None, last_date=None):
+    def calculate_best_streak(self, goal=None, save=False):
         """
-        Returns whether the objective is completed between the selected dates
+        Calculates the best streak of an objective.
+        If a goal is provided, overrides the actual goal defined in the objective.
+        If save is set to True, saves the results in the current instance.
         """
+        current_goal = goal if goal else self.goal
+        entries = ObjectiveEntry.objects.filter(objective_id=self).order_by('date')
+        best_streak = 0
+        past_weeks = 0
+        
+        while True:
+            first_date, last_date = get_week(-past_weeks)
+
+            if self.__is_complete(first_date, last_date, current_goal):
+                best_streak += 1
+            else:
+                best_streak = 0
+            
+            if first_date < entries.first().date.date():
+                break
+            else:
+                past_weeks += 1
+
+        if save:
+            self.best_streak = best_streak
+            self.save()
+
+        return best_streak
+
+    def __is_complete(self, first_date=None, last_date=None, goal=None):
+        """
+        Returns whether the objective is completed between the selected dates.
+        If a goal is provided, overrides the defined one.
+        """
+        current_goal = goal if goal else self.goal
+
         if not first_date and not last_date:
             # Use current week start and end
             first_date, last_date = get_week()
@@ -57,7 +90,7 @@ class Objective(models.Model):
             # If only a date is passed, throw error
             raise ValueError('Must pass two dates as arguments')
           
-        return True if self.__progress_between_dates(first_date, last_date) >= self.goal else False
+        return True if self.__progress_between_dates(first_date, last_date) >= current_goal else False
 
     def __progress_between_dates(self, first_date, last_date):
         """

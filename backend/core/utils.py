@@ -3,12 +3,17 @@ from .models.settings import Settings
 from datetime import date, datetime, timedelta
 
 
-def get_week():
+def get_week(offset=0):
     """
-    Returns first and last day of current week
+    Returns first and last day of current week. If specified, returns week with an offset.
     """
     last_date = get_next_reset_day()
     first_date = last_date - timedelta(7)
+
+    if offset != 0:
+        offset *= 7
+        first_date += timedelta(offset)
+        last_date += timedelta(offset)
     
     return first_date, last_date
 

@@ -21,17 +21,12 @@ def update_best_streak_in_new_entry(sender, instance, **kwargs):
 @receiver(pre_save, sender=Objective)
 def reset_best_streak_in_goal_change(sender, instance, **kwargs):
     """
-    Sets best streak to zero when the objective goal is modified.
+    Calculate the best streak with the new goal when it is modified.
     """
-
-    # FIXME: it changes to 0, but when adding an entry, changes its value to current streak
-    # Can't update to current streak here since it's pre_update
-    # Could add a post_update receiver, but it's another database access 
-    # and I would like to avoid that
 
     # Check previous goal value
     if instance.id:
         obj = Objective.objects.get(id=instance.id)
 
         if obj.goal != instance.goal:
-            instance.best_streak = 0
+            instance.best_streak = obj.calculate_best_streak(goal=instance.goal)
