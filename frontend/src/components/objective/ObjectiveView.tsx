@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { AppBar, Button, createStyles, makeStyles, Toolbar, Typography } from "@material-ui/core";
 import { ObjectiveTable } from "./ObjectiveTable";
 import { Theme } from "@material-ui/core";
 import { ObjectiveForm } from "./ObjectiveForm";
 import { FormDialog } from "../utils/FormDialog";
 import { ObjectiveEntryCalendar } from "../objective-entry/ObjectiveEntryCalendar";
+import { ObjectiveService } from "src/services/objective-service";
+import { Objective } from "src/models/objective";
 
 
 // Styles
@@ -35,8 +37,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 // Component
 export function ObjectiveView() {
+  // Services
+  const objectiveService = useMemo(() => new ObjectiveService(), []);
 
   // State
+  const [objLoaded, setObjLoaded] = useState<boolean>(false);
+  const [objectiveList, setObjectiveList] = useState<Objective[]>([]);
+
   
 
   // Handle dialog state
@@ -48,7 +55,22 @@ export function ObjectiveView() {
 
   function handleClose(): void {
     setDialogState(false);
+    refreshList();
   }
+
+  // Refresh objective list
+  function refreshList(): void {
+    setObjLoaded(false);
+    objectiveService.list().subscribe(response => {
+      setObjectiveList(response);
+      setObjLoaded(true);
+    });
+  }
+
+  // On init
+  useEffect(() => {
+    refreshList();
+  }, [])
 
   // Render
   const classes = useStyles();
@@ -69,7 +91,11 @@ export function ObjectiveView() {
           <Button onClick={handleOpen} variant="contained" color="primary">New objective</Button>
         </div>
 
-        <ObjectiveTable />
+        <ObjectiveTable 
+          objectives={objectiveList} 
+          loaded={objLoaded}
+          refresh={refreshList}
+        />
 
         <div className={classes.historySection}>
           <Typography variant='h4'>

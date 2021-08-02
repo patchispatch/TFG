@@ -25,17 +25,24 @@ const useStyles = makeStyles({
   },
 });
 
+// Props
+interface ObjectiveTableProps {
+  objectives: Objective[];
+  loaded?: boolean;
+  refresh?: () => void;
+}
+
 // Component
-export function ObjectiveTable() {
+export function ObjectiveTable({objectives, loaded=true, refresh=() => {}}: ObjectiveTableProps) {
   // Services
   const objectiveService = useMemo(() => new ObjectiveService(), []);
   const categoryService = useMemo(() => new CategoryService(), []);
 
   // State
-  const [objectiveList, setObjectiveList] = useState<Objective[]>([]);
+  
   const [categoryMap, setCategoryMap] = useState<ModelMap<Category>>({});
   const [catLoaded, setCatLoaded] = useState<boolean>(false);
-  const [objLoaded, setObjLoaded] = useState<boolean>(false);
+  
 
   // Handle dialog state
   const [selectedId, setSelectedId] = useState<number>();
@@ -43,14 +50,7 @@ export function ObjectiveTable() {
   const [editDialogState, setEditDialogState] = useState(false);
   const [deleteDialogState, setDeleteDialogState] = useState(false);
 
-  // Refresh table data
-  function refreshTable(): void {
-    setObjLoaded(false);
-    objectiveService.list().subscribe(response => {
-      setObjectiveList(response);
-      setObjLoaded(true);
-    });
-  }
+
 
   // On init
   useEffect(() => {
@@ -60,8 +60,8 @@ export function ObjectiveTable() {
       setCatLoaded(true);
     });
 
-    refreshTable();
-  }, [objectiveService])
+    refresh();
+  }, [categoryService])
 
 
   // On objective update
@@ -72,7 +72,7 @@ export function ObjectiveTable() {
 
   function handleUpdate(): void {
     setUpdateDialogState(false);
-    refreshTable();
+    refresh();
   }
 
 
@@ -86,7 +86,7 @@ export function ObjectiveTable() {
     setEditDialogState(false);
 
     if (updated) {
-      refreshTable();
+      refresh();
     }
   }
 
@@ -100,7 +100,7 @@ export function ObjectiveTable() {
   function deleteObjective(objectiveId: number): void {
     objectiveService.delete(objectiveId).subscribe(() => {
       setDeleteDialogState(false);
-      refreshTable();
+      refresh();
     });
   }
 
@@ -108,7 +108,7 @@ export function ObjectiveTable() {
   // On objective pause/resume
   function onPauseResume(objectiveId: number) {
     objectiveService.pauseResume(objectiveId).subscribe(() => {
-      refreshTable();
+      refresh();
     })
   }
 
@@ -116,7 +116,7 @@ export function ObjectiveTable() {
    * Check if everything is loaded
    */
   function isLoaded() {
-    return catLoaded && objLoaded;
+    return catLoaded && loaded;
   }
 
 
@@ -154,7 +154,7 @@ export function ObjectiveTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {objectiveList.map((objective) => (
+            {objectives.map((objective) => (
               <TableRow key={objective.id}>
                 <TableCell component="th" scope="row">
                   {objective.name}
