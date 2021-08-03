@@ -6,10 +6,12 @@ import { ObjectiveEntry } from 'src/models/objective-entry';
 import { Objective } from '../models/objective';
 import { CRUDL } from './crudl';
 import snackbar from 'src/SnackbarUtils';
+import { ObjectiveFilter } from 'src/models/shared';
 
 
 interface ObjectiveListParams {
   idlist?: number[],
+  filter?: string
 }
 
 
@@ -23,7 +25,11 @@ export class ObjectiveService implements CRUDL {
   list(params?: ObjectiveListParams): Observable<Objective[]> {
     let sendParams: any = {};
     if (params?.idlist) {
-      sendParams = {id: params.idlist.map(String).toString()};
+      sendParams.id = params.idlist.map(String).toString();
+    }
+
+    if (params?.filter && params.filter !== ObjectiveFilter.NONE) {
+      sendParams.filter = params.filter;
     }
 
     return axios.get<IJsonArray>(this.baseUrl, {params: sendParams})
