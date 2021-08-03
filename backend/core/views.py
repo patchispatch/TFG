@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from drf_spectacular.types import OpenApiTypes
+
+from core.types import ObjectiveFilter
 from .models import *
 from .serializers import *
 
@@ -21,7 +23,17 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
                 type=OpenApiTypes.STR,
                 location=OpenApiParameter.QUERY,
                 description='Filter by objective IDs, separated by commas'
-            )
+            ),
+            OpenApiParameter(
+                name='filter',
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.QUERY,
+                description='''Filter by one of the following values:
+                - "active": returns active objectives
+                - "paused": returns paused objectives
+                - "in-progress": returns the objectives that are in progress
+                - "completed": returns the objectives that are completed'''
+            ),
         ]
     )
     def list(self, request):
@@ -31,6 +43,21 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
             objectives = Objective.objects.filter(id__in=id_list)
         else:
             objectives = Objective.objects.all()
+        
+        if 'filter' in request.query_params:
+            filter = request.query_params.get('filter')
+            
+            if filter in set(item.value for item in ObjectiveFilter):
+                if filter == 'active':
+                    objectives = objectives.filter(paused=False)
+                elif filter == 'paused':
+                    objectives = objectives.filter(paused=True)
+                elif filter == 'in-progress':
+                    objectives = [obj for obj in objectives if not obj.is_complete()]
+                elif filter == 'completed':
+                    objectives = [obj for obj in objectives if obj.is_complete()]
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
 
         serializer = ObjectiveSerializer(objectives, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

@@ -24,14 +24,14 @@ class Objective(models.Model):
     
     @property
     def current_streak(self):
-        streak = 1 if self.__is_complete() else 0
+        streak = 1 if self.is_complete() else 0
         reset_day = get_next_reset_day()
 
         while True:
             # Check past week
             reset_day = reset_day - timedelta(7)
             first_dow = reset_day - timedelta(7)
-            if not self.__is_complete(first_dow, reset_day):
+            if not self.is_complete(first_dow, reset_day):
                 break
             
             streak += 1
@@ -59,7 +59,7 @@ class Objective(models.Model):
         while True:
             first_date, last_date = get_week(-past_weeks)
 
-            if self.__is_complete(first_date, last_date, current_goal):
+            if self.is_complete(first_date, last_date, current_goal):
                 best_streak += 1
             else:
                 best_streak = 0
@@ -75,7 +75,7 @@ class Objective(models.Model):
 
         return best_streak
 
-    def __is_complete(self, first_date=None, last_date=None, goal=None):
+    def is_complete(self, first_date=None, last_date=None, goal=None):
         """
         Returns whether the objective is completed between the selected dates.
         If a goal is provided, overrides the defined one.
