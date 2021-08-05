@@ -48,3 +48,7 @@ class ActivityInstanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = ActivityInstance
         fields = '__all__'
+
+
+class ObjectiveEntryDaysSerializer(serializers.Serializer):
+    days = serializers.ListField(child=serializers.IntegerField())

@@ -1,4 +1,4 @@
-from django.utils.decorators import method_decorator
+from datetime import date
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import viewsets, status
@@ -112,6 +112,37 @@ class ObjectiveEntryViewSet(viewsets.ModelViewSet):
             entries = ObjectiveEntry.objects.all()
 
         serializer = ObjectiveEntrySerializer(entries, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name='month',
+                required=False,
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.QUERY,
+                description='Get the days which have entries for the specified month in number format, from 1 to 12).\
+                    If not specified, selects the current month.'
+            )
+        ],
+        responses={201: ObjectiveEntryDaysSerializer, 400: None}
+    )
+    @action(detail=False, methods=['get'], url_path='days')
+    def entry_days(self, request):
+        if 'month' not in request.query_params:
+            month = date.today().month
+        elif 1 <= int(request.query_params['month']) <= 12:
+            month = request.query_params['month']
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        entries = ObjectiveEntry.objects.filter(date__month=month)
+
+        days = []
+        for entry in entries:
+            days.append(entry.date.day)
+
+        serializer = ObjectiveEntryDaysSerializer({'days': days})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

@@ -1,8 +1,21 @@
 import * as React from 'react';
+import { makeStyles, Theme, createStyles } from '@material-ui/core';
 import { useMemo, useState } from 'react';
-import Calendar, { DateCallback } from 'react-calendar'
-import { ObjectiveEntryService } from 'src/services/objective-entry-service';
+import Calendar from 'react-calendar'
 import { EntryHistoryDialog } from './EntryHistoryDialog';
+
+
+// Styles
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    hasEntries: {
+      background: theme.palette.primary.light,
+      color: theme.palette.primary.contrastText,
+    },
+  }),
+);
+
+
 
 // Props
 interface CalendarProps {
@@ -22,11 +35,13 @@ export function ObjectiveEntryCalendar({className}: CalendarProps) {
   }
 
   // Render
+  const classes = useStyles();
   return (
     <div className={className}>
       <Calendar 
         onClickDay={showHistory}
         maxDate={new Date()}
+        tileClassName={({date, view}) => date.getDate() === 3 ? classes.hasEntries : null}
       />
 
       {/* Dialogs */}

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
-import { AppBar, Button, createStyles, Fab, FormControl, InputLabel, makeStyles, Select, Toolbar, Typography, MenuItem } from "@material-ui/core";
+import { AppBar, createStyles, Fab, FormControl, InputLabel, makeStyles, Select, Toolbar, Typography, MenuItem } from "@material-ui/core";
 import { ObjectiveTable } from "./ObjectiveTable";
 import { Theme } from "@material-ui/core";
 import { ObjectiveForm } from "./ObjectiveForm";
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     fab: {
-      position: 'absolute',
+      position: 'fixed',
       right: '2em',
       bottom: '2em',
     },
@@ -52,7 +52,7 @@ export function ObjectiveView() {
   // State
   const [objLoaded, setObjLoaded] = useState<boolean>(false);
   const [objectiveList, setObjectiveList] = useState<Objective[]>([]);
-  const [filter, setFilter] = useState<string>(ObjectiveFilter.NONE);
+  const [filter, setFilter] = useState<string>('');
 
   // Handle dialog state
   let [dialogState, setDialogState] = useState(false);
@@ -113,7 +113,7 @@ export function ObjectiveView() {
               onChange={handleFilter}
             >
               {Object.values(ObjectiveFilter).map(filt => (
-                <MenuItem key={filt} value={filt}>{filt}</MenuItem>
+                <MenuItem key={filt} value={filt}>{filt !== ObjectiveFilter.NONE ? filt : 'None'}</MenuItem>
               ))}
             </Select>
           </FormControl>

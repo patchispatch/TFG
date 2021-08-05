@@ -16,7 +16,7 @@ export interface ModelMap<M extends ModelWithID> {
  * Objective filter to list
  */
 export enum ObjectiveFilter {
-  NONE = 'none',
+  NONE = '',
   ACTIVE = 'active',
   PAUSED = 'paused',
   IN_PROGRESS = 'in-progress',
