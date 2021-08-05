@@ -1,4 +1,4 @@
-import { autoserializeAs, deserializeAs, IJsonObject } from "dcerialize";
+import { autoserializeAs, deserializeAs, deserializeAsArray, IJsonObject } from "dcerialize";
 
 
 /**
@@ -46,5 +46,22 @@ export class ObjectiveEntry {
     this.date = date;
     this.progress = progress;
     this.id = id;
+  }
+}
+
+/**
+ * Objective entry days list
+ */
+export class ObjectiveEntryDaysList {
+  /**
+   * Day list
+   */
+  @deserializeAsArray(() => Number) days: number[];
+
+  /**
+   * Constructor
+   */
+  constructor(days: number[]) {
+    this.days = days;
   }
 }

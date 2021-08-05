@@ -3,12 +3,16 @@ import { Deserialize, DeserializeArray, IJsonArray, IJsonObject, Serialize } fro
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { toISOLocal } from 'src/utils';
-import { ObjectiveEntry } from '../models/objective-entry';
+import { ObjectiveEntry, ObjectiveEntryDaysList } from '../models/objective-entry';
 import { CRUDL } from './crudl';
 import snackbar from 'src/SnackbarUtils';
 
 interface ObjectiveEntryParameters {
   date?: Date
+}
+
+interface ObjectiveEntryDaysParameters {
+  month: number
 }
 
 export class ObjectiveEntryService implements CRUDL {
@@ -19,11 +23,7 @@ export class ObjectiveEntryService implements CRUDL {
    * Returns a list of all the objectives
    */
   list(params?: ObjectiveEntryParameters): Observable<ObjectiveEntry[]> {
-    // Format parameters
-    let sendParams: any = {};
-    if (params?.date) {
-      sendParams = {date: toISOLocal(params.date).split('T')[0]};
-    }
+    const sendParams = params?.date ? {date: toISOLocal(params.date).split('T')[0]} : {};
 
     return axios.get<IJsonArray>(this.baseUrl, {params: sendParams})
       .pipe(
@@ -88,5 +88,21 @@ export class ObjectiveEntryService implements CRUDL {
         return throwError(err);
       }),
     );
+  }
+
+  /**
+   * Get list of days which have entries in a month
+   */
+  days(params?: ObjectiveEntryDaysParameters): Observable<ObjectiveEntryDaysList> {
+    const sendParams = params ? params : {};
+
+    return axios.get<IJsonObject>(`${this.baseUrl}days`, {params: sendParams})
+      .pipe(
+        map(result => Deserialize(result.data, () => ObjectiveEntryDaysList)),
+        catchError(err => {
+          snackbar.error("Error retrieving objective entry days list");
+          return throwError(err);
+        }),
+      ); 
   }
 }   
