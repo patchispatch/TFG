@@ -1,4 +1,12 @@
 /**
+ * Application views
+ */
+export enum AppView {
+  OBJECTIVES = 'objectives',
+  ACTIVITIES = 'activities'
+}
+
+/**
  * Object with ID property
  */
 interface ModelWithID {

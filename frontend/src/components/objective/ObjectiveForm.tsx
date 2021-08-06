@@ -6,7 +6,6 @@ import {CategoryService} from 'src/services/category-service';
 import { Category } from 'src/models/category';
 import { Objective } from 'src/models/objective';
 import { CircularProgress, createStyles, LinearProgress, makeStyles, MenuItem, TextField, Theme } from '@material-ui/core';
-import { delay } from 'rxjs/operators';
 import { useSnackbar } from 'notistack';
 import snackbar from 'src/SnackbarUtils';
 
