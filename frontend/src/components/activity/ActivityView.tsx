@@ -6,6 +6,7 @@ import { Activity } from "src/models/activity";
 import { FormDialog } from "../utils/FormDialog";
 import { ActivityForm } from "./ActivityForm";
 import { Add } from "@material-ui/icons";
+import { ActivityTable } from "./ActivityTable";
 
 
 // Styles
@@ -93,6 +94,12 @@ export function ActivityView() {
           <Typography variant='h4'>
             Activities
           </Typography>
+
+          <ActivityTable 
+            activities={activityList} 
+            loaded={activityLoaded}
+            refresh={refreshList}
+          />
         </div>
 
         <div className={classes.fab}>
