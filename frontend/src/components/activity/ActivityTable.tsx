@@ -1,9 +1,10 @@
-import { Grid, makeStyles, Paper } from "@material-ui/core";
+import { Divider, Grid, makeStyles, Paper, Typography } from "@material-ui/core";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Activity } from "src/models/activity";
-import { theme } from "src/theme";
+import { ActivityInstance } from "src/models/activity-instance";
+import { convertToMap, DaysOfWeek, ModelMap } from "src/models/shared";
 
 
-// Styles
 // Styles
 const useStyles = makeStyles({
   activityGrid: {
@@ -15,7 +16,6 @@ const useStyles = makeStyles({
     marginBottom: '1em',
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   activityContainer: {
     padding: '0',
@@ -31,70 +31,47 @@ const useStyles = makeStyles({
 // Props
 interface ActivityTableProps {
   activities: Activity[];
+  instances: ActivityInstance[];
   loaded?: boolean;
   refresh?: () => void;
 }
 
+
 // Component
-export function ActivityTable({activities}: ActivityTableProps) {
+export function ActivityTable({activities, instances}: ActivityTableProps) {
+  // State
+  const [activityMap, setActivityMap] = useState<ModelMap<Activity>>({})
+
+  // On activities change
+  useEffect(() => {
+    setActivityMap(convertToMap(activities));
+  }, [activities]);
 
   // Render
   const classes = useStyles();
   return (
     <div className={classes.activityGrid}>
       <Grid container spacing={2} direction='row' wrap='nowrap'>
-        <Grid container item spacing={1} direction='column' justify='flex-start'>
-          <Paper className={classes.dayHeader}>MONDAY</Paper>
-          <div className={classes.activityContainer}>
-            <Paper className={classes.exampleActivity}>Activity title</Paper>
-          </div>
 
-          <div className={classes.activityContainer}>
-            <Paper className={classes.exampleActivity}>Activity title</Paper>
-          </div>
-        </Grid>
 
-        <Grid container item spacing={1} direction='column'>
-          <Paper className={classes.dayHeader}>TUESDAY</Paper>
-          <div className={classes.activityContainer}>
-          <Paper className={classes.exampleActivity}>Activity title</Paper>
-          </div>
-        </Grid>
+        {[...Array(7).keys()].map((day: number) => (<Fragment key={day}>
+          <Grid container item spacing={1} direction='column' justify='flex-start'>
+            <div className={classes.dayHeader}>{DaysOfWeek[day]}</div>
 
-        <Grid container item spacing={1} direction='column'>
-          <Paper className={classes.dayHeader}>TUESDAY</Paper>
-          <div className={classes.activityContainer}>
-          <Paper className={classes.exampleActivity}>Activity title</Paper>
-          </div>
-        </Grid>
+            <Divider orientation="horizontal" flexItem />
 
-        <Grid container item spacing={1} direction='column'>
-          <Paper className={classes.dayHeader}>TUESDAY</Paper>
-          <div className={classes.activityContainer}>
-          <Paper className={classes.exampleActivity}>Activity title</Paper>
-          </div>
-        </Grid>
+            {instances.filter((ins: ActivityInstance) => (ins.day === day)).map(ins => (
+              <div key={ins.id} className={classes.activityContainer}>
+                <Paper className={classes.exampleActivity}>
+                  <Typography variant="h6">{activityMap[ins.activity].name}</Typography>
+                  <Typography variant="overline">{ins.startHour.toTimeString()} - {ins.endHour.toTimeString()}</Typography>
+                </Paper>
+              </div>
+            ))}
+          </Grid>
 
-        <Grid container item spacing={1} direction='column'>
-          <Paper className={classes.dayHeader}>TUESDAY</Paper>
-          <div className={classes.activityContainer}>
-          <Paper className={classes.exampleActivity}>Activity title</Paper>
-          </div>
-        </Grid>
-
-        <Grid container item spacing={1} direction='column'>
-          <Paper className={classes.dayHeader}>TUESDAY</Paper>
-          <div className={classes.activityContainer}>
-          <Paper className={classes.exampleActivity}>Activity title</Paper>
-          </div>
-        </Grid>
-
-        <Grid container item spacing={1} direction='column'>
-          <Paper className={classes.dayHeader}>TUESDAY</Paper>
-          <div className={classes.activityContainer}>
-          <Paper className={classes.exampleActivity}>Activity title</Paper>
-          </div>
-        </Grid>
+          <Divider orientation="vertical" flexItem />
+        </Fragment>))}
       </Grid>
     </div>
   );

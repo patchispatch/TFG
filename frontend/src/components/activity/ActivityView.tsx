@@ -7,6 +7,9 @@ import { FormDialog } from "../utils/FormDialog";
 import { ActivityForm } from "./ActivityForm";
 import { Add } from "@material-ui/icons";
 import { ActivityTable } from "./ActivityTable";
+import { forkJoin } from "rxjs";
+import { ActivityInstanceService } from "src/services/activity-instance-service";
+import { ActivityInstance } from "src/models/activity-instance";
 
 
 // Styles
@@ -46,10 +49,12 @@ const useStyles = makeStyles((theme: Theme) =>
 export function ActivityView() {
   // Services
   const activityService = useMemo(() => new ActivityService(), []);
+  const instanceService = useMemo(() => new ActivityInstanceService(), []);
 
   // State
   const [activityLoaded, setActivityLoaded] = useState<boolean>(false);
   const [activityList, setActivityList] = useState<Activity[]>([]);
+  const [instanceList, setInstanceList] = useState<ActivityInstance[]>([]);
 
   // Handle dialog state
   let [dialogState, setDialogState] = useState(false);
@@ -63,11 +68,15 @@ export function ActivityView() {
     refreshList();
   }
 
-  // Refresh objective list
+  // Refresh activity and instance list
   function refreshList(): void {
     setActivityLoaded(false);
-    activityService.list().subscribe(response => {
-      setActivityList(response);
+    forkJoin({
+      activities: activityService.list(),
+      instances: instanceService.list()
+    }).subscribe(({activities, instances}) => {
+      setActivityList(activities);
+      setInstanceList(instances);
       setActivityLoaded(true);
     });
   }
@@ -96,7 +105,8 @@ export function ActivityView() {
           </Typography>
 
           <ActivityTable 
-            activities={activityList} 
+            activities={activityList}
+            instances={instanceList}
             loaded={activityLoaded}
             refresh={refreshList}
           />

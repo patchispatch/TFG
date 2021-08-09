@@ -12,7 +12,6 @@ import { FormDialog } from "../utils/FormDialog";
 import { ObjectiveForm } from "./ObjectiveForm";
 import { ConfirmDialog } from "../utils/ConfirmDialog";
 import { ObjectiveEntryForm } from "../objective-entry/ObjectiveEntryForm";
-import { ObjectiveEntry } from "src/models/objective-entry";
 import { Category } from "src/models/category";
 import { convertToMap, ModelMap } from "src/models/shared";
 import { CategoryService } from "src/services/category-service";
@@ -39,7 +38,6 @@ export function ObjectiveTable({objectives, loaded=true, refresh=() => {}}: Obje
   const categoryService = useMemo(() => new CategoryService(), []);
 
   // State
-  
   const [categoryMap, setCategoryMap] = useState<ModelMap<Category>>({});
   const [catLoaded, setCatLoaded] = useState<boolean>(false);
   

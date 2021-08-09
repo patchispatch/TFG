@@ -41,7 +41,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class ActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Activity
-        fields = '__all__'
+        fields = ('id', 'name', 'description', 'category')
 
 
 class ActivityInstanceSerializer(serializers.ModelSerializer):

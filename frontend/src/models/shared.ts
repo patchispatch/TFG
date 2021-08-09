@@ -43,3 +43,16 @@ export function convertToMap<M extends ModelWithID>(array: M[]): ModelMap<M> {
 
   return objMap;
 }
+
+/**
+ * Days of week indexed by number
+ */
+export const DaysOfWeek: {[key: number]: string} = {
+  0: 'Monday',
+  1: 'Tuesday',
+  2: 'Wednesday',
+  3: 'Thursday',
+  4: 'Friday',
+  5: 'Saturday',
+  6: 'Sunday',
+}

@@ -1,6 +1,6 @@
 import axios from 'axios-observable';
 import { Deserialize, DeserializeArray, IJsonArray, IJsonObject } from 'dcerialize';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ActivityInstance } from '../models/activity-instance';
 import { CRUDL } from './crudl';
@@ -9,7 +9,7 @@ import snackbar from 'src/SnackbarUtils';
 
 export class ActivityInstanceService implements CRUDL {
   // Base URL
-  baseUrl = '/categories'
+  baseUrl = '/activity-instances'
 
   /**
    * Returns a list of all the categories
