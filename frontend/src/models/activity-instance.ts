@@ -1,4 +1,4 @@
-import { autoserializeAs, deserializeAs } from "dcerialize";
+import { autoserializeAs, deserializeAs, onDeserialized, serializeAs } from "dcerialize";
 
 /**
  * Activity instance model
@@ -12,12 +12,12 @@ export class ActivityInstance {
     /**
      * Instance start hour
      */
-    @autoserializeAs(() => Date, 'start_hour') startHour: Date;
+    @autoserializeAs(() => String, 'start_hour') startHour: string;
 
     /**
      * Instance end hour
      */
-    @deserializeAs(() => Date, 'end_hour') endHour: Date;
+    @autoserializeAs(() => String, 'end_hour') endHour: string;
 
     /**
      * instance activity
@@ -34,15 +34,22 @@ export class ActivityInstance {
      */
     constructor(
         day: number,
-        startHour: Date,
-        endHour: Date,
+        startHour: string,
+        endHour: string,
         activity: number,
         id?: number
     ) {
+        console.log(startHour);
         this.day = day;
         this.startHour = startHour;
         this.endHour = endHour;
         this.activity = activity;
         this.id = id;
+    }
+
+    @onDeserialized
+    sliceHours() {
+        this.startHour = this.startHour.slice(0, -3);
+        this.endHour = this.endHour.slice(0, -3);
     }
 }
