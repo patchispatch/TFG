@@ -1,5 +1,5 @@
 import axios from 'axios-observable';
-import { Deserialize, DeserializeArray, IJsonArray, IJsonObject } from 'dcerialize';
+import { Deserialize, DeserializeArray, IJsonArray, IJsonObject, Serialize } from 'dcerialize';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Category } from '../models/category';
@@ -9,7 +9,7 @@ import snackbar from 'src/SnackbarUtils';
 
 export class CategoryService implements CRUDL {
   // Base URL
-  baseUrl = '/categories'
+  baseUrl = '/categories/'
 
   /**
    * Returns a list of all the categories
@@ -29,7 +29,7 @@ export class CategoryService implements CRUDL {
    * Get a resource by ID
    */
   get(id: number): Observable<Category> {
-    return axios.get<IJsonObject>(`${this.baseUrl}/${id}`)
+    return axios.get<IJsonObject>(`${this.baseUrl}${id}`)
       .pipe(
         map(result => Deserialize(result.data, () => Category)),
         catchError(err => {
@@ -43,7 +43,7 @@ export class CategoryService implements CRUDL {
    * Add a new Category
    */
   post(data: Category): Observable<Category> {
-    return axios.post<IJsonObject>(this.baseUrl, data)
+    return axios.post<IJsonObject>(this.baseUrl, Serialize(data, () => Category))
       .pipe(
         map(result => Deserialize(result.data, () => Category)),
         catchError(err => {
@@ -57,7 +57,7 @@ export class CategoryService implements CRUDL {
    * Update a resource
    */
   update(data: Category): Observable<Category> {
-    return axios.put<IJsonObject>(`${this.baseUrl}/${data.id}`, data)
+    return axios.put<IJsonObject>(`${this.baseUrl}${data.id}`, data)
       .pipe(
         map(result => Deserialize(result.data, () => Category)),
         catchError(err => {
@@ -71,7 +71,7 @@ export class CategoryService implements CRUDL {
    * Delete an Category by ID
    */
   delete(id: number): Observable<any> {
-    return axios.delete<null>(`${this.baseUrl}/${id}`)
+    return axios.delete<null>(`${this.baseUrl}${id}`)
     .pipe(
       catchError(err => {
         snackbar.error("Error deleting category");

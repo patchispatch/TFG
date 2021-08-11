@@ -4,7 +4,7 @@ import { Theme } from "@material-ui/core";
 import { ActivityService } from "src/services/activity-service";
 import { Activity } from "src/models/activity";
 import { FormDialog } from "../utils/FormDialog";
-import { ActivityForm } from "./ActivityForm";
+import { ActivityForm } from "./ActivityCreateForm";
 import { Add } from "@material-ui/icons";
 import { ActivityTable } from "./ActivityTable";
 import { forkJoin } from "rxjs";

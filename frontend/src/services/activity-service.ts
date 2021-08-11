@@ -1,5 +1,5 @@
 import axios from 'axios-observable';
-import { Deserialize, DeserializeArray, IJsonArray, IJsonObject } from 'dcerialize';
+import { Deserialize, DeserializeArray, IJsonArray, IJsonObject, Serialize } from 'dcerialize';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Activity } from '../models/activity';
@@ -9,7 +9,7 @@ import snackbar from 'src/SnackbarUtils';
 
 export class ActivityService implements CRUDL {
   // Base URL
-  baseUrl = '/activities'
+  baseUrl = '/activities/'
 
   /**
    * Returns a list of all the categories
@@ -29,7 +29,7 @@ export class ActivityService implements CRUDL {
    * Get a resource by ID
    */
   get(id: number): Observable<Activity> {
-    return axios.get<IJsonObject>(`${this.baseUrl}/${id}`)
+    return axios.get<IJsonObject>(`${this.baseUrl}${id}`)
       .pipe(
         map(result => Deserialize(result.data, () => Activity)),
         catchError(err => {
@@ -43,7 +43,7 @@ export class ActivityService implements CRUDL {
    * Add a new Activity
    */
   post(data: Activity): Observable<Activity> {
-    return axios.post<IJsonObject>(this.baseUrl, data)
+    return axios.post<IJsonObject>(this.baseUrl, Serialize(data, () => Activity))
       .pipe(
         map(result => Deserialize(result.data, () => Activity)),
         catchError(err => {
@@ -57,7 +57,7 @@ export class ActivityService implements CRUDL {
    * Update a resource
    */
   update(data: Activity): Observable<Activity> {
-    return axios.put<IJsonObject>(`${this.baseUrl}/${data.id}`, data)
+    return axios.put<IJsonObject>(`${this.baseUrl}${data.id}`, data)
       .pipe(
         map(result => Deserialize(result.data, () => Activity)),
         catchError(err => {
@@ -71,7 +71,7 @@ export class ActivityService implements CRUDL {
    * Delete an Activity by ID
    */
   delete(id: number): Observable<any> {
-    return axios.delete<null>(`${this.baseUrl}/${id}`)
+    return axios.delete<null>(`${this.baseUrl}${id}`)
     .pipe(
       catchError(err => {
         snackbar.error("Error deleting Activity");

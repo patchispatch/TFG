@@ -1,5 +1,5 @@
 import axios from 'axios-observable';
-import { Deserialize, DeserializeArray, IJsonArray, IJsonObject } from 'dcerialize';
+import { Deserialize, DeserializeArray, IJsonArray, IJsonObject, Serialize } from 'dcerialize';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ActivityInstance } from '../models/activity-instance';
@@ -9,7 +9,7 @@ import snackbar from 'src/SnackbarUtils';
 
 export class ActivityInstanceService implements CRUDL {
   // Base URL
-  baseUrl = '/activity-instances'
+  baseUrl = '/activity-instances/'
 
   /**
    * Returns a list of all the categories
@@ -29,7 +29,7 @@ export class ActivityInstanceService implements CRUDL {
    * Get a resource by ID
    */
   get(id: number): Observable<ActivityInstance> {
-    return axios.get<IJsonObject>(`${this.baseUrl}/${id}`)
+    return axios.get<IJsonObject>(`${this.baseUrl}${id}`)
       .pipe(
         map(result => Deserialize(result.data, () => ActivityInstance)),
         catchError(err => {
@@ -43,7 +43,7 @@ export class ActivityInstanceService implements CRUDL {
    * Add a new ActivityInstance
    */
   post(data: ActivityInstance): Observable<ActivityInstance> {
-    return axios.post<IJsonObject>(this.baseUrl, data)
+    return axios.post<IJsonObject>(this.baseUrl, Serialize(data, () => ActivityInstance))
       .pipe(
         map(result => Deserialize(result.data, () => ActivityInstance)),
         catchError(err => {
@@ -57,7 +57,7 @@ export class ActivityInstanceService implements CRUDL {
    * Update a resource
    */
   update(data: ActivityInstance): Observable<ActivityInstance> {
-    return axios.put<IJsonObject>(`${this.baseUrl}/${data.id}`, data)
+    return axios.put<IJsonObject>(`${this.baseUrl}${data.id}`, data)
       .pipe(
         map(result => Deserialize(result.data, () => ActivityInstance)),
         catchError(err => {
@@ -71,7 +71,7 @@ export class ActivityInstanceService implements CRUDL {
    * Delete an ActivityInstance by ID
    */
   delete(id: number): Observable<any> {
-    return axios.delete<null>(`${this.baseUrl}/${id}`)
+    return axios.delete<null>(`${this.baseUrl}${id}`)
     .pipe(
       catchError(err => {
         snackbar.error("Error deleting ActivityInstance");

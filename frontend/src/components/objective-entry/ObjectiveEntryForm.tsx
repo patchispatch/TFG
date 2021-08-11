@@ -74,8 +74,8 @@ export function ObjectiveEntryForm({objectiveId, entry, postSubmit}: ObjectiveEn
       });
     }
     else {
-      const new_entry = new ObjectiveEntry(objectiveId, data.date, data.progress);
-      objectiveService.addEntry(objectiveId, new_entry).subscribe(response => {
+      const newEntry = new ObjectiveEntry(objectiveId, data.date, data.progress);
+      objectiveService.addEntry(objectiveId, newEntry).subscribe(response => {
         if (postSubmit)
           postSubmit(response);
 
