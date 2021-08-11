@@ -121,7 +121,9 @@ export function ActivityForm({postSubmit}: ActivityFormProps) {
   function onSubmit(data: InstanceFormValues) {
     // If new activity is selected, create, then create instance
     if (selectedActivity === -1) {
-      const newActivity = new Activity(data.activityName!, data.activityDescription!, data.activityCategory!);
+      const newActivity = new Activity(data.activityName!);
+      newActivity.description = data.activityDescription ? data.activityDescription : undefined;
+      newActivity.category = (data.activityCategory !== -1) ? data.activityCategory : undefined;
 
       activityService.post(newActivity).subscribe(response => {
         const newInstance = new ActivityInstance(data.day, new Date(data.startHour).toLocaleTimeString(), 
