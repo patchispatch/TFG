@@ -119,15 +119,34 @@ export function ActivityForm({postSubmit}: ActivityFormProps) {
 
   // On submit
   function onSubmit(data: InstanceFormValues) {
-    // Submit instance
-    const newInstance = new ActivityInstance(data.day, new Date(data.startHour).toLocaleTimeString(), 
-                                             new Date(data.endHour).toLocaleTimeString(), data.activity);
-    instanceService.post(newInstance).subscribe(response => {
-      if (postSubmit)
-        postSubmit(response);
+    // If new activity is selected, create, then create instance
+    if (selectedActivity === -1) {
+      const newActivity = new Activity(data.activityName!, data.activityDescription!, data.activityCategory!);
 
-      snackbar.success("Objective entry created successfully");
-    });
+      activityService.post(newActivity).subscribe(response => {
+        const newInstance = new ActivityInstance(data.day, new Date(data.startHour).toLocaleTimeString(), 
+          new Date(data.endHour).toLocaleTimeString(), response.id!);
+        
+          instanceService.post(newInstance).subscribe(response => {
+            if (postSubmit)
+              postSubmit(response);
+      
+            snackbar.success("Activity and instance created successfully");
+          });
+      })
+    }
+    // Else, submit instance
+    else {
+      const newInstance = new ActivityInstance(data.day, new Date(data.startHour).toLocaleTimeString(), 
+        new Date(data.endHour).toLocaleTimeString(), data.activity);
+
+      instanceService.post(newInstance).subscribe(response => {
+        if (postSubmit)
+          postSubmit(response);
+
+        snackbar.success("Activity instance created successfully");
+      });
+    }
   }
 
 

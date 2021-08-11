@@ -39,7 +39,6 @@ export class ActivityInstance {
         activity: number,
         id?: number
     ) {
-        console.log(startHour);
         this.day = day;
         this.startHour = startHour;
         this.endHour = endHour;
