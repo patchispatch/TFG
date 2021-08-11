@@ -1,10 +1,12 @@
-import { Chip, Divider, Grid, makeStyles, Paper, Typography } from "@material-ui/core";
+import { Chip, Divider, Grid, IconButton, makeStyles, Menu, MenuItem, Paper, Typography } from "@material-ui/core";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { Activity } from "src/models/activity";
 import { ActivityInstance } from "src/models/activity-instance";
 import { Category } from "src/models/category";
 import { convertToMap, DaysOfWeek, ModelMap } from "src/models/shared";
 import { CategoryService } from "src/services/category-service";
+import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 
 // Styles
@@ -25,6 +27,7 @@ const useStyles = makeStyles({
     }
   },
   activityContainer: {
+    position: 'relative',
     padding: '0',
   },
   activityCard: {
@@ -37,6 +40,12 @@ const useStyles = makeStyles({
   },
   cardText: {
     margin: '0 !important'
+  },
+  cardMenuIcon: {
+    scale: 0.75,
+    position: 'absolute',
+    right: '0.01em',
+    top: '0.01em'
   },
   chip: {
     marginTop: '1.5em',
@@ -61,6 +70,7 @@ export function ActivityTable({activities, instances}: ActivityTableProps) {
   // State
   const [activityMap, setActivityMap] = useState<ModelMap<Activity>>({})
   const [categoryMap, setCategoryMap] = useState<ModelMap<Category>>({});
+  const activityMenu = usePopupState({ variant: 'popover', popupId: 'activityMenu' });
 
   // On init
   useEffect(() => {
@@ -97,8 +107,8 @@ export function ActivityTable({activities, instances}: ActivityTableProps) {
             {day === new Date().getDay() 
             ?
               <Chip 
-                classes={{root: classes.dayHeader}} 
-                label={DaysOfWeek[day]} 
+                classes={{root: classes.dayHeader}}
+                label={DaysOfWeek[day]}
                 color="secondary"
               />
             :
@@ -110,6 +120,15 @@ export function ActivityTable({activities, instances}: ActivityTableProps) {
 
             {instances.filter((ins: ActivityInstance) => (ins.day === day)).map(ins => (
               <div key={ins.id} className={classes.activityContainer}>
+                <IconButton className={classes.cardMenuIcon} {...bindTrigger(activityMenu)} aria-label="activity menu">
+                  <MoreVertIcon />
+                </IconButton>
+
+                <Menu {...bindMenu(activityMenu)}>
+                  <MenuItem onClick={activityMenu.close}>Edit</MenuItem>
+                  <MenuItem onClick={activityMenu.close}>Delete</MenuItem>
+                </Menu>
+
                 <Paper className={classes.activityCard}>
                   <Typography variant="body1" className={classes.cardText}>{activityMap[ins.activity].name}</Typography>
                   <Typography variant="caption" className={classes.cardText}>{ins.startHour} - {ins.endHour}</Typography>

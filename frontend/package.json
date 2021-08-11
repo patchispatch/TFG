@@ -23,6 +23,7 @@
     "carbon-icons": "^7.0.7",
     "date-fns": "^2.22.1",
     "dcerialize": "^3.6.7",
+    "material-ui-popup-state": "^1.9.0",
     "notistack": "^1.0.9",
     "react": "^17.0.2",
     "react-calendar": "^3.4.0",
