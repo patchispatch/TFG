@@ -10,6 +10,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { SyntheticEvent } from "react";
 import { ActivityInstanceService } from "src/services/activity-instance-service";
 import { ConfirmDialog } from "../utils/ConfirmDialog";
+import { FormDialog } from "../utils/FormDialog";
+import { ActivityInstanceEditForm } from "./ActivityInstanceEditForm";
 
 
 // Styles
@@ -122,6 +124,14 @@ export function ActivityTable({activities, instances, refresh=() => {}}: Activit
     activityMenu.setOpen(false);
   }
 
+  function handleEdit(response?: ActivityInstance, updated = false): void {
+    setEditDialogState(false);
+
+    if (updated) {
+      refresh();
+    }
+  }
+
   function onMenuDelete(): void {
     setDeleteDialogState(true);
     activityMenu.setOpen(false);
@@ -184,22 +194,31 @@ export function ActivityTable({activities, instances, refresh=() => {}}: Activit
 
       {selectedInstance &&
         <Menu {...bindMenu(activityMenu)}>
-          <MenuItem onClick={() => {}}>Edit</MenuItem>
+          <MenuItem onClick={onMenuEdit}>Edit</MenuItem>
           <MenuItem onClick={onMenuDelete}>Delete</MenuItem>
         </Menu>
       }
 
       {/* DIALOGS */}
-      {selectedInstance &&
+      {selectedInstance && <>
         <ConfirmDialog
-          title="Delete objective"
+          title="Delete activity instance"
           message={`Are you sure you want to delete \
           ${activityMap[selectedInstance!.id!].name}: ${selectedInstance!.startHour} - ${selectedInstance!.endHour}?`}
           isOpen={deleteDialogState}
           onConfirm={() => deleteInstance(selectedInstance!.id!)}
           onClose={() => setDeleteDialogState(false)}
         />
-      }
+
+      <FormDialog 
+        title="Edit activity instance"
+        formId="activityInstanceEditForm"
+        isOpen={editDialogState}
+        onClose={() => setEditDialogState(false)}
+      >
+        <ActivityInstanceEditForm instance={selectedInstance} postSubmit={handleEdit} />
+      </FormDialog>
+      </>}
     </div>
   );
 }
