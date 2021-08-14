@@ -81,18 +81,18 @@ export function ActivityInstanceEditForm({instance, postSubmit}: InstanceEditFor
   const [loaded, setLoaded] = useState<boolean>(true);
 
   // Form control
-  const {handleSubmit, control, watch, reset} = useForm({
+  const {handleSubmit, control} = useForm({
     defaultValues: {
       day: instance.day,
-      startHour: instance.startHour,
-      endHour: instance.endHour
+      startHour: new Date(`01/01/1970 ${instance.startHour}`),
+      endHour: new Date(`01/01/1970 ${instance.endHour}`)
     }
   });
 
   // On submit
   function onSubmit(data: InstanceFormValues) {
-    instance.startHour = toISOLocal(data.startHour);
-    instance.endHour = toISOLocal(data.endHour);
+    instance.startHour = data.startHour.toLocaleTimeString();
+    instance.endHour = data.endHour.toLocaleTimeString();
     instance.day = data.day;
 
     instanceService.update(instance).subscribe(response => {

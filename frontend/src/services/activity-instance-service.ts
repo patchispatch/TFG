@@ -57,7 +57,7 @@ export class ActivityInstanceService implements CRUDL {
    * Update a resource
    */
   update(data: ActivityInstance): Observable<ActivityInstance> {
-    return axios.put<IJsonObject>(`${this.baseUrl}${data.id}`, data)
+    return axios.put<IJsonObject>(`${this.baseUrl}${data.id}/`, Serialize(data, () => ActivityInstance))
       .pipe(
         map(result => Deserialize(result.data, () => ActivityInstance)),
         catchError(err => {
