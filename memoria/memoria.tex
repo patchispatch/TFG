@@ -19,6 +19,10 @@
 
 % Document settings
 
+% Nest enumeration as numbers
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+
 \author{Juan Ocaña Valenzuela}
 \title{Trabajo Fin de Grado}
 
@@ -358,13 +362,12 @@ Al ser \textit{Kanban} un marco flexible, se han definido estados o columnas aco
 Los estados definidos para este proyecto son los siguientes:
 
 \begin{itemize}
-	\item \textbf{TO DO}
-	\item \textbf{MAKING TESTS}
-	\item \textbf{IN PROGRESS}
-	\item \textbf{DONE} 
+	\item \textbf{PENDIENTE}
+	\item \textbf{DISEÑO}
+	\item \textbf{ELABORACIÓN DE TESTS}
+	\item \textbf{IMPLEMENTACIÓN}
+	\item \textbf{HECHO}
 \end{itemize}
-
-El estado \textbf{MAKING TESTS} determina que que los \textit{tests} unitarios de una tarea están en desarrollo.
 
 
 \subsection*{Desarrollo iterativo e incremental}
@@ -393,8 +396,96 @@ La planificación que se hubiese seguido en condiciones ideales
 
 \subsection{Planificación final}
 
-La planificación seguida finalmente dados los distintos factores externos
+Debido a diversos factores, principalmente externos al proyecto, la planificación inicial no pudo llevarse a cabo. Se analizó el estado del proyecto, y se decidió reiniciar la fase de desarrollo con una nueva planificación, ajustada esta vez a una fecha de entrega posterior.
 
+\subsubsection*{Distribución de etapas del proyecto en el tiempo}
+
+Con tal de evitar los posibles imprevistos ---algo que, como ya se ha podido observar, ha afectado con severidad al proyecto anteriormente---, la nueva planificación se ha realizado de forma exhaustiva, presentando un mayor número de iteraciones, ajustadas de antemano con un listado de funcionalidades concretas a implementar.
+
+Las etapas del proyecto quedaron distribuidas de la siguiente manera:
+
+\begin{enumerate}
+	\item Investigación previa: elección de tecnologías a utilizar, revisión del estado actual del proyecto y estimación del coste de los cambios necesarios.
+	
+	\textbf{Plazo:} del 1 al 31 de mayo. 
+	
+	\item Configuración inicial del proyecto: preparación de las tecnologías elegidas y todo lo necesario para comenzar a implementar la aplicación.
+	
+	\textbf{Plazo:} del 22 de mayo al 7 de junio.
+	
+	\item Iteraciones de desarrollo o \textit{sprints}: 
+	\begin{enumerate}
+		\item Iteración 1: del 8 al 22 de junio.
+		
+		\item Iteración 2: del 23 de junio al  7 de julio.
+		
+		\item Iteración 3: del 7 al 21 de julio.
+		
+		\item Iteración 4: del 22 de julio al 5 de agosto.
+		
+		\item Iteración 5: del 6 al 20 de agosto.
+		
+		\item Iteración 6:del 21 al 31 de agosto.
+	\end{enumerate}
+\end{enumerate}
+
+La distribución de las etapas en el tiempo se puede consultar en el siguiente diagrama de Gantt:
+
+\medskip
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{img/gantt\ sprints.png}
+	\caption{Diagrama de Gantt de las etapas del proyecto}
+\end{figure}
+
+
+\subsubsection*{Distribución de las tareas a realizar en las etapas propuestas}
+
+A la hora de distribuir las tareas en las distintas iteraciones, se realizó una estimación de la complejidad y relevancia de cada una de las épicas del proyecto, y se planteó su implementación de forma mayormente secuencial. No obstante, la dependencia entre algunas funcionalidades obligó a adelantar el desarrollo de historias de usuario pertenecientes a épicas menos prioritarias. La última iteración se ha dedicado a realizar ajustes menores, por lo que presenta tareas de todas las épicas.
+
+La distribución aproximada de las épicas en las iteraciones de desarrollo se puede ver en este diagrama de Gantt:
+
+\medskip
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{img/gantt\ epicas.png}
+	\caption{Diagrama de Gantt de las épicas del proyecto}
+\end{figure}
+
+
+\subsubsection*{Distribución final de las historias de usuario en las iteraciones de desarrollo}
+
+\textbf{Iteración 1}
+\begin{itemize}
+	\item \textbf{{[}TFG-1{]}} Ejemplo
+\end{itemize}
+
+\textbf{Iteración 2}
+\begin{itemize}
+	\item Ejemplo
+\end{itemize}
+
+\textbf{Iteración 3}
+\begin{itemize}
+	\item Ejemplo
+\end{itemize}
+
+\textbf{Iteración 4}
+\begin{itemize}
+	\item Ejemplo
+\end{itemize}
+
+\textbf{Iteración 5}
+\begin{itemize}
+	\item Ejemplo
+\end{itemize}
+
+\textbf{Iteración 6}
+\begin{itemize}
+	\item Ejemplo
+\end{itemize}
 
 
 \section{Presupuesto}

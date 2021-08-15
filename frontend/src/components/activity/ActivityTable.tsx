@@ -12,6 +12,7 @@ import { ActivityInstanceService } from "src/services/activity-instance-service"
 import { ConfirmDialog } from "../utils/ConfirmDialog";
 import { FormDialog } from "../utils/FormDialog";
 import { ActivityInstanceEditForm } from "./ActivityInstanceEditForm";
+import snackbar from 'src/SnackbarUtils';
 
 
 // Styles
@@ -102,6 +103,8 @@ export function ActivityTable({activities, instances, refresh=() => {}}: Activit
     instanceService.delete(instanceId).subscribe(() => {
       setDeleteDialogState(false);
       refresh();
+
+      snackbar.success('Activity instance deleted successfully');
     });
   }
 
@@ -204,20 +207,20 @@ export function ActivityTable({activities, instances, refresh=() => {}}: Activit
         <ConfirmDialog
           title="Delete activity instance"
           message={`Are you sure you want to delete \
-          ${activityMap[selectedInstance!.id!].name}: ${selectedInstance!.startHour} - ${selectedInstance!.endHour}?`}
+          ${activityMap[selectedInstance!.activity].name}: ${selectedInstance!.startHour} - ${selectedInstance!.endHour}?`}
           isOpen={deleteDialogState}
           onConfirm={() => deleteInstance(selectedInstance!.id!)}
           onClose={() => setDeleteDialogState(false)}
         />
 
-      <FormDialog 
-        title="Edit activity instance"
-        formId="activityInstanceEditForm"
-        isOpen={editDialogState}
-        onClose={() => setEditDialogState(false)}
-      >
-        <ActivityInstanceEditForm instance={selectedInstance} postSubmit={handleEdit} />
-      </FormDialog>
+        <FormDialog 
+          title="Edit activity instance"
+          formId="activityInstanceEditForm"
+          isOpen={editDialogState}
+          onClose={() => setEditDialogState(false)}
+        >
+          <ActivityInstanceEditForm instance={selectedInstance} postSubmit={handleEdit} />
+        </FormDialog>
       </>}
     </div>
   );
