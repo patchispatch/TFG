@@ -343,6 +343,8 @@ Se plantean los siguientes objetivos para la aplicación propuesta. Pueden divid
 
 \section{Metodología de desarrollo}
 
+\subsection{Elementos utilizados}
+
 Para la elaboración del proyecto se ha planteado utilizar aspectos sólidos de diversas metodologías ágiles, como \textit{SCRUM} \cite{schwaber2017scrum} o \textit{Kanban} \cite{kanban}. Al estar planteadas originalmente para equipos ---generalmente pequeños---, ha sido necesario adaptarlas a un modelo de desarrollo individual. Se han seguido los principios del Manifiesto Ágil \cite{beck2001agile}.
 
 \medskip
@@ -381,7 +383,84 @@ Al tratarse de un proyecto centrado en el aprendizaje de nuevas tecnologías, es
 
 \subsection*{Historias de Usuario}
 
-Las historias de usuario
+Las historias de usuario describen la funcionalidad de la aplicación desde el punto de vista del usuario final, sin detalles de implementación o conocimiento sobre la arquitectura del proyecto. Se describen según la siguiente plantilla:
+
+\medskip
+
+\begin{figure}[h]
+	\centering
+	\textit{Como <<usuario>>, quiero <<algo de la aplicación>> para <<cumplir un propósito>>}
+\end{figure}
+
+Dada su sencillez y la abstracción que presentan con respecto al desarrollo, las historias de usuario se utilizan con frecuencia en metodologías de desarrollo ágil, en las que el cliente suele formar parte del proceso. Además, al representar funcionalidades desde un punto de vista final, son fácilmente extensibles.
+
+Las historias de usuario pueden agruparse en las llamadas \textit{épicas}, que permiten agregar un contexto común y estructurar el proyecto en torno a funcionalidades o necesidades globales.
+
+\subsection{Listado de historias de usuario}
+
+Para este proyecto, se han definido historias de usuario basadas en los objetivos de la aplicación descritos anteriormente, distribuidas en épicas.
+
+Dado que se ha utilizado la herramienta \textit{Jira Software} a lo largo del desarrollo, se ha asignado un identificador único a cada historia de usuario, con el formato \textit{TFG-n}.
+
+\subsubsection*{Sección de objetivos}
+
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-9}] Como usuario, quiero crear un objetivo para poder seguirlo.
+	
+	Prioridad: muy alta.
+	
+	\item [\textbf{TFG-10}] Como usuario, quiero editar un objetivo para corregirlo o actualizarlo.
+	
+	Prioridad: muy alta.
+	
+	\item [\textbf{TFG-11}] Como usuario, quiero actualizar el progreso de un objetivo para registrar mis hábitos.
+	
+	Prioridad: muy alta.
+	
+	\item [\textbf{TFG-12}] Como usuario, quiero eliminar un objetivo cuando lo necesite.
+	
+	Prioridad: muy alta.
+	
+	\item [\textbf{TFG-14}] Como usuario, quiero poder ver una racha de cumplimiento de cada objetivo para mantener mi motivación.
+	
+	Prioridad: alta.
+	
+	\item [\textbf{TFG-17}] Como usuario, quiero poder ver una lista de mis objetivos actuales para tenerlos en cuenta.
+	
+	Prioridad: alta.
+	
+	\item [\textbf{TFG-18}] Como usuario, quiero que el progreso de mis objetivos se reinicie una vez pasado el plazo, para poder seguirlos correctamente.
+	
+	Prioridad: alta.
+	
+	\item [\textbf{TFG-20}] Como usuario, quiero poder ver un historial de registro de mis objetivos para poder analizarlos y ver mi progreso.
+	
+	Prioridad: media.
+	
+	\item [\textbf{TFG-22}] Como usuario, quiero poder ver una página de resumen de mis objetivos para ver mi progreso general.
+	
+	Prioridad: media.
+	
+	\item [\textbf{TFG-67}] Como usuario, quiero ver el progreso de un objetivo para seguir mi esfuerzo.
+	
+	Prioridad: media.
+	
+	\item [\textbf{TFG-84}] Como usuario, quiero ver la mayor racha que he alcanzado en cada objetivo para poder tener presentes mis logros.
+	
+	Prioridad: media.
+	
+	\item [\textbf{TFG-13}] Como usuario, quiero crear un objetivo para poder seguirlo.
+	
+	Prioridad: baja.
+	
+	\item [\textbf{TFG-19}] Como usuario, quiero poder pausar objetivos indefinidamente sin eliminarlos, para poder retomarlos en un futuro sin eliminar mis datos.
+	
+	Prioridad: baja.
+	
+	\item [\textbf{TFG-21}] Como usuario, quiero ver indicadores visuales de que un objetivo se ha actualizado correctamente, o si ha habido un error, para poder actuar en consecuencia.
+	
+	Prioridad: baja.
+\end{itemize}
 
 
 \section{Análisis de requisitos}
