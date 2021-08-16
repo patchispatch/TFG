@@ -335,7 +335,7 @@ Se plantean los siguientes objetivos para la aplicación propuesta. Pueden divid
 \subsubsection*{Fundamentales}
 
 \begin{enumerate}[resume]
-	\item Se debe cumplir el estándar WCAG nivel ... (investigar)
+	\item Se debe garantizar la navegabilidad de la aplicación utilizando lectores de pantalla.
 \end{enumerate}
 
 
@@ -396,7 +396,8 @@ Dada su sencillez y la abstracción que presentan con respecto al desarrollo, la
 
 Las historias de usuario pueden agruparse en las llamadas \textit{épicas}, que permiten agregar un contexto común y estructurar el proyecto en torno a funcionalidades o necesidades globales.
 
-\subsection{Listado de historias de usuario}
+
+\section{Análisis de requisitos}
 
 Para este proyecto, se han definido historias de usuario basadas en los objetivos de la aplicación descritos anteriormente, distribuidas en épicas.
 
@@ -463,9 +464,135 @@ Dado que se ha utilizado la herramienta \textit{Jira Software} a lo largo del de
 \end{itemize}
 
 
-\section{Análisis de requisitos}
+\subsubsection*{Sección de actividades}
 
-Listado de las historias de usuario
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-24}] Como usuario, quiero poder crear una actividad para tenerla en cuenta al organizarme 
+	
+	Prioridad: muy alta.
+	
+	\item [\textbf{TFG-25}] Como usuario, quiero poder editar una actividad para actualizar sus condiciones.
+	
+	Prioridad: muy alta.
+	
+	\item [\textbf{TFG-26}] Como usuario, quiero poder eliminar una actividad en caso de que ya no sea de mi interés.
+	
+	Prioridad: muy alta.
+	
+	\item [\textbf{TFG-23}] Como usuario, quiero poder acceder a una vista semanal de mis actividades para poder visualizar mi tiempo.
+	
+	Prioridad: alta.
+	
+	\item [\textbf{TFG-87}] Como usuario, quiero poder añadir los momentos en los que practico una actividad para poder organizarme.
+	
+	Prioridad: alta.
+	
+	\item [\textbf{TFG-88}] Como usuario, quiero poder editar los momentos en los que practico una actividad para poder ajustarlos a mi situación.
+	
+	Prioridad: media.
+	
+	\item [\textbf{TFG-89}] Como usuario, quiero poder eliminar los momentos en los que practico una actividad para poder ajustarlos a mi situación.
+	
+	Prioridad: media.
+	
+	\item [\textbf{TFG-28}] Como usuario, quiero ver las actividades asociadas a una categoría en la vista de esa categoría para poder verlas fácilmente.
+	
+	Prioridad: muy baja.
+	
+	\item [\textbf{TFG-91}] Como usuario, quiero que la vista de actividades empiece en el día de la semana configurado como inicio de semana.
+	
+	Prioridad: muy baja.
+\end{itemize}
+
+\subsubsection*{Sección de categorías}
+
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-15}] Como usuario, quiero poder agrupar mis objetivos en categorías, para poder ordenarlos y observarlos por separado.
+	
+	Prioridad: media.
+	
+	\item [\textbf{TFG-16}] Como usuario, quiero poder ver un resumen de cada categoría de objetivos, para saber mi progreso con la misma.
+	
+	Prioridad: media.
+	
+	\item [\textbf{TFG-43}] Como usuario, quiero poder crear una categoría para organizar mis actividades y objetivos.
+	
+	Prioridad: media.
+	
+	
+	\item [\textbf{TFG-44}] Como usuario, quiero poder editar una categoría si es necesario.
+	
+	Prioridad: baja.
+	
+	\item [\textbf{TFG-45}] Como usuario, quiero poder asignar objetivos a una categoría, para poder ver mi progreso de forma ordenada.
+	
+	Prioridad: media.
+	
+	\item [\textbf{TFG-46}] Como usuario, quiero poder asignar actividades a una categoría, para poder ver mi semana de forma clara.
+	
+	Prioridad: media.
+\end{itemize}
+
+\subsubsection*{Sección de panel de navegación o \textit{Vista rápida}}
+
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-32}] Como usuario, quiero disponer de un menú de navegación por las diferentes vistas de la aplicación para acceder a ellas cómodamente.
+	
+	Prioridad: alta.
+	
+	\item [\textbf{TFG-31}] Como usuario, quiero ver un menú con las categorías que he creado, para poder acceder a la vista de categoría de cada una.
+	
+	Prioridad: media.
+	
+	\item [\textbf{TFG-29}] Como usuario, quiero ver la fecha y hora actual para poder tenerla presente.
+	
+	Prioridad: baja.
+	
+	\item [\textbf{TFG-30}] Como usuario, quiero ver algunos objetivos pendientes que podría completar hoy, como sugerencia por si no se me ocurre qué hacer ahora.
+	
+	Prioridad: baja.
+	
+	\item [\textbf{TFG-81}] Como usuario, quiero poder ocultar el panel lateral para poder ver con mayor tamaño el resto de la aplicación.
+	
+	Prioridad: muy baja.
+\end{itemize}
+
+\subsubsection*{Sección de configuración}
+
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-34}] Como usuario, quiero poder ajustar qué día y hora se reinician mis objetivos para establecer mis rutinas.
+	
+	Prioridad: alta.
+	
+	\item [\textbf{TFG-33}] Como usuario, quiero poder acceder a la configuración general de la aplicación desde cualquier parte de la misma, para poder ajustar mi experiencia de forma cómoda.
+	
+	Prioridad: media.
+	
+	\item [\textbf{TFG-36}] Como usuario, quiero poder acceder a la configuración de mis categorías desde la configuración general para poder tenerlo todo en el mismo sitio
+	
+	Prioridad: baja.
+	
+	\item [\textbf{TFG-37}] Como usuario, quiero poder fijar una vista por defecto para que al abrir la aplicación se muestre.
+	
+	Prioridad: baja.
+	
+	\item [\textbf{TFG-35}] Como usuario, quiero poder establecer mi zona horaria para que el reloj y el progreso funcionen adecuadamente.
+
+	Prioridad: muy baja.
+	
+	\item [\textbf{TFG-37}] Como usuario, quiero poder seleccionar el tema de la aplicación para acomodarla a mis gustos y necesidades 
+	
+	Prioridad: muy baja.
+\end{itemize}
+
+\subsubsection*{Sección de accesibilidad}
+
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-40}] Como usuario con problemas de visión, quiero que la aplicación sea navegable con lectores de pantalla para poder usarla cómodamente.
+	
+	Prioridad: muy baja. 
+\end{itemize}
+
 
 \section{Planificación temporal}
 
@@ -537,51 +664,115 @@ La distribución aproximada de las épicas en las iteraciones de desarrollo se p
 \subsubsection*{Distribución final de las historias de usuario en las iteraciones de desarrollo}
 
 \textbf{Iteración 1}
-\begin{itemize}
-	\item \textbf{{[}TFG-1{]}} Ejemplo
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-9}] Como usuario, quiero crear un objetivo para poder seguirlo.
+	
+	\item [\textbf{TFG-10}] Como usuario, quiero poder editar un objetivo.
+	
+	\item [\textbf{TFG-11}] Como usuario, quiero poder actualizar el progreso de un objetivo para registrar mis hábitos.
+	
+	\item [\textbf{TFG-12}] Como usuario, quiero poder eliminar un objetivo de forma permanente.
+	
+	\item [\textbf{TFG-15}] Como usuario, quiero poder agrupar mis objetivos en categorías, para poder ordenarlos y observarlos por separado.
+	
+	\item [\textbf{TFG-17}] Como usuario, quiero poder ver una lista de mis objetivos actuales para tenerlos en cuenta.
+	
+	\item [\textbf{TFG-18}] Como usuario, quiero que el progreso de mis objetivos se reinicie una vez pasado el plazo, para poder seguirlos correctamente.
+
+	
+	\item [\textbf{TFG-19}] Como usuario, quiero poder pausar objetivos indefinidamente sin eliminarlos, para poder retomarlos en un futuro sin eliminar mis datos.
+	
+	\item [\textbf{TFG-67}] Como usuario, quiero ver el progreso de un objetivo para seguir mi esfuerzo.
 \end{itemize}
 
 \textbf{Iteración 2}
-\begin{itemize}
-	\item Ejemplo
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-14}] Como usuario, quiero poder ver una racha de cumplimiento de cada objetivo, para mantener mi motivación.
+
+	\item [\textbf{TFG-20}] Como usuario, quiero poder ver un historial de registro de mis objetivos para poder analizarlos y ver mi progreso.
+	
+	\item [\textbf{TFG-21}] Como usuario, quiero ver indicadores visuales de que un objetivo se ha actualizado correctamente, o si ha habido un error, para poder actuar en consecuencia.
+	
+	\item [\textbf{TFG-22}] Como usuario, quiero poder ver un resumen global de mis objetivos para ver mi progreso general.
+	
+	\item [\textbf{TFG-24}] Como usuario, quiero poder crear una actividad para tenerla en cuenta al organizarme.
+	
+	\item [\textbf{TFG-25}] Como usuario, quiero poder editar una actividad para actualizar sus condiciones.
+	
+	\item [\textbf{TFG-26}] Como usuario, quiero poder eliminar una actividad en caso de que ya no sea de mi interés.
+	
+	\item [\textbf{TFG-84}] Como usuario, quiero ver la mayor racha que he alcanzado en cada objetivo para poder tener presentes mis logros.
 \end{itemize}
 
 \textbf{Iteración 3}
-\begin{itemize}
-	\item Ejemplo
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-16}] Como usuario, quiero poder ver un resumen de cada categoría de objetivos, para saber mi progreso con la misma.
+	
+	\item [\textbf{TFG-23}] Como usuario, quiero poder acceder a una vista semanal de mis actividades para poder visualizar mi tiempo.
+	
+	\item [\textbf{TFG-43}] Como usuario, quiero poder crear una categoría para organizar mis actividades y objetivos.
+	
+	\item [\textbf{TFG-44}] Como usuario, quiero poder editar una categoría si es necesario.
+	
+	\item [\textbf{TFG-45}] Como usuario, quiero poder asignar objetivos a una categoría, para poder ver mi progreso de forma ordenada.
+	
+	\item [\textbf{TFG-46}] Como usuario, quiero poder asignar actividades a una categoría, para poder ver mi semana de forma clara.
+	
+	\item [\textbf{TFG-87}] Como usuario, quiero poder añadir los momentos en los que practico una actividad para poder organizarme.
+	
+	
+	\item [\textbf{TFG-88}] Como usuario, quiero poder editar los momentos en los que practico una actividad para poder ajustarlos a mi situación.
+	
+	\item [\textbf{TFG-89}] Como usuario, quiero poder eliminar los momentos en los que practico una actividad para poder ajustarlos a mi situación.
 \end{itemize}
 
 \textbf{Iteración 4}
-\begin{itemize}
-	\item Ejemplo
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-29}] Como usuario, quiero ver la fecha y hora actual para poder tenerla presente .
+
+	\item [\textbf{TFG-30}] Como usuario, quiero ver algunos objetivos pendientes que podría completar hoy, como sugerencia por si no se me ocurre qué hacer ahora.
+	
+	\item [\textbf{TFG-31}] Como usuario, quiero ver un menú con las categorías que he creado, para poder acceder a la vista de categoría de cada una.
+	
+	\item [\textbf{TFG-32}] Como usuario, quiero disponer de un menú de navegación por las diferentes vistas de la aplicación para acceder a ellas cómodamente.
+	
+	\item [\textbf{TFG-33}] Como usuario, quiero poder acceder a la configuración general de la aplicación desde cualquier parte de la misma, para poder ajustar mi experiencia de forma cómoda.
+	
+	\item [\textbf{TFG-34}] Como usuario, quiero poder ajustar qué día y hora se reinician mis objetivos para establecer mis rutinas.
 \end{itemize}
 
 \textbf{Iteración 5}
-\begin{itemize}
-	\item Ejemplo
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-36}] Como usuario, quiero poder acceder a la configuración de mis categorías desde la configuración general para poder tenerlo todo en el mismo sitio.
+
+	\item [\textbf{TFG-38}] Como usuario, quiero poder fijar una vista por defecto para que al abrir la aplicación se muestre.
+	
+	\item [\textbf{TFG-40}] Como usuario con problemas visuales, quiero que la aplicación sea navegable con lectores de pantalla para poder usarla cómodamente .
+	
+	\item [\textbf{TFG-91}] Como usuario, quiero que la vista de actividades empiece en el día de la semana configurado como inicio de semana.
 \end{itemize}
 
 \textbf{Iteración 6}
-\begin{itemize}
-	\item Ejemplo
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-13}]  	
+	
+	Como usuario, quiero poder definir objetivos con varios tipos de progreso, para poder flexibilizar mis objetivos .
+	
+	\item [\textbf{TFG-28}] Como usuario, quiero ver las actividades asociadas a una categoría en la vista de esa categoría para poder ver fácilmente cuáles son.
+	
+	\item [\textbf{TFG-35}] Como usuario, quiero poder establecer mi zona horaria para que el reloj y el progreso funcionen adecuadamente.
+	
+	\item [\textbf{TFG-37}] Como usuario, quiero poder seleccionar el tema de la aplicación para acomodarla a mis gustos y necesidades.
+	
+	\item [\textbf{TFG-81}] Como usuario, quiero poder ocultar el panel lateral para poder ver con mayor tamaño el resto de la aplicación.
 \end{itemize}
 
 
 \section{Presupuesto}
 
-\subsection*{Material requerido}
-
-\begin{table}[h!]
-	\begin{center}
-		\begin{tabular}{|l|l|l|l|}
-			\hline
-			\rowcolor[HTML]{EFEFEF} 
-			\textbf{Material} & \textbf{Cantidad} & \textbf{Precio/unidad} & \textbf{Total} \\ \hline
-			&                   &                        &                \\ \hline
-		\end{tabular}
-	\end{center}
-\end{table}
-
+Se asume que el encargo ha sido realizado a una empresa especializada, que dispone de su propio material y 
+hace frente a los costes energéticos y logísticos necesarios. Por tanto, el presupuesto aproximado que se ofrece cubre únicamente los costes
+de desarrollo basados en horas de trabajo. Tampoco se tienen en cuenta impuestos aplicados.
 
 \subsection*{Recursos humanos}
 
@@ -591,20 +782,20 @@ La distribución aproximada de las épicas en las iteraciones de desarrollo se p
 			\hline
 			\rowcolor[HTML]{EFEFEF} 
 			\textbf{Servicio}                   & \textbf{Tarifa (€/mes)} & \textbf{Duración (meses)} & \textbf{Total}              \\ \hline
-			Salario de ingeniero informático junior a jornada completa & 1450       & 3          & \multicolumn{1}{r|}{4.350€} \\ \hline
+			Salario de ingeniero informático junior a jornada completa & 1500       & 4          & \multicolumn{1}{r|}{6.000€} \\ \hline
 		\end{tabular}
 	\end{center}
 \end{table}
 
-Se ofrece además un presupuesto aproximado del coste de un año de mantenimiento de la aplicación por parte del equipo de desarrollo trabajando a media jornada (veinte horas semanales).
+Se ofrece además un presupuesto aproximado del coste de mantenimiento de la aplicación por parte del equipo de desarrollo.
 
 \begin{table}[h!]
 	\begin{center}
 		\begin{tabular}{|l|l|l|l|}
 			\hline
 			\rowcolor[HTML]{EFEFEF} 
-			\textbf{Servicio}                   & \textbf{Tarifa (€/mes)} & \textbf{Duración (meses)} & \textbf{Total}              \\ \hline
-			Salario de ingeniero informático junior a media jornada & 725     & 12         & \multicolumn{1}{r|}{8.700€} \\ \hline
+			\textbf{Servicio}                   & \textbf{Tarifa (€/hora)} \\ \hline
+			Salario de ingeniero informático junior a media jornada & 16   \\ \hline
 		\end{tabular}
 	\end{center}
 \end{table}
@@ -634,8 +825,8 @@ Se ofrece además un presupuesto orientativo sobre el coste de desplegar y mante
 		\begin{tabular}{|
 				>{\columncolor[HTML]{EFEFEF}}l |l|}
 			\hline
-			\textbf{Total}                                          & 4.350€    \\ \hline
-			\textbf{Total, con servicios opcionales durante un año} & 9.646,08€ \\ \hline
+			\textbf{Total}                                          & 6.000€    \\ \hline
+			\textbf{Total, con servicios opcionales durante un año} & 5.296,08€ \\ \hline
 		\end{tabular}
 	\end{center}
 \end{table}
