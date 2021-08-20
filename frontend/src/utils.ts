@@ -14,3 +14,22 @@ export function toISOLocal(d: Date) {
          zz(d.getMilliseconds()) +
          sign + z(off/60|0) + ':' + z(off%60); 
 }
+
+export function toTitleCase(original: string): string {
+  return original
+    .split('')
+    .map((letter, index) => {
+      if (/[A-Z]/.test(letter)) {
+        return ` ${letter.toLowerCase()}`
+      }
+      return letter
+    })
+    .join('')
+    .trim()
+    .replace(/[_\s]+/g, '-')
+    .split('-')
+    .map(word => {
+      return word.slice(0, 1).toUpperCase() + word.slice(1)
+    })
+    .join(' ');
+}

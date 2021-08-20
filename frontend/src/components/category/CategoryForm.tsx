@@ -7,6 +7,7 @@ import { Category, CategoryColor, ColorDataMap } from 'src/models/category';
 import { Objective } from 'src/models/objective';
 import { CircularProgress, createStyles, makeStyles, MenuItem, TextField, Theme } from '@material-ui/core';
 import snackbar from 'src/SnackbarUtils';
+import { toTitleCase } from 'src/utils';
 
 
 // Styles
@@ -81,7 +82,7 @@ export function CategoryForm({categoryId, postSubmit}: CategoryFormProps) {
         setCategory(response);
         reset({
           name: response.name,
-          color: response?.color ? response?.color : CategoryColor.DEFAULT
+          color: response.color
         });
 
         setLoaded(true);
@@ -95,7 +96,7 @@ export function CategoryForm({categoryId, postSubmit}: CategoryFormProps) {
     // If a category is provided, edit
     if (category) {
       category.name = data.name;
-      category.color = ColorDataMap[data.color].storageName;
+      category.color = data.color;
 
       categoryService.update(category).subscribe(response => {
         if (postSubmit) 
@@ -141,39 +142,21 @@ export function CategoryForm({categoryId, postSubmit}: CategoryFormProps) {
         <Controller
           name="color"
           control={control}
-          rules={{required: 'Goal required', min: 1}}
+          rules={{required: 'Color required'}}
           render={({field: {onChange, value}, fieldState: {error}}) => (
             <TextField
-              label="Goal"
-              type="number"
+              select
+              label="Color"
               value={value}
               onChange={onChange}
-              inputProps={{min: 1}}
               error={!!error}
               helperText={error ? error.message : null}
-            />
-          )}
-        />
-
-        <Controller
-          name="categoryId"
-          control={control}
-          render={({field: {onChange, value}}) => (
-            <TextField
-              select
-              label="Category"
-              value={value}
-              onChange={onChange}
               inputProps={{displayEmpty: true}}
               InputLabelProps={{shrink: true}}
-            >
-              <MenuItem key={-1} value={-1}>
-                <em>None</em>
-              </MenuItem>
-              
-              {categoryList.map((option) => (
-                <MenuItem key={option.id} value={option.id}>
-                  {option.name}
+            > 
+              {Object.values(CategoryColor).map((option) => (
+                <MenuItem key={option} value={option}>
+                  {toTitleCase(option)}
                 </MenuItem>
               ))}
             </TextField>

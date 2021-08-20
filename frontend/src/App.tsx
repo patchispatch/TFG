@@ -10,6 +10,8 @@ import { SnackbarUtilsConfigurator } from './SnackbarUtils';
 import { AppView } from './models/shared';
 import { useState } from 'react';
 import { ActivityView } from './components/activity/ActivityView';
+import { CategoryForm } from './components/category/CategoryForm';
+import { FormDialog } from './components/utils/FormDialog';
 
 // Styles
 const drawerWidth = 400;
@@ -55,6 +57,17 @@ function App() {
     view === AppView.OBJECTIVES ? setView(AppView.ACTIVITIES) : setView(AppView.OBJECTIVES);
   }
 
+  // Category things
+  let [dialogState, setDialogState] = useState(false);
+
+  function handleOpen(): void {
+    setDialogState(true);
+  }
+
+  function handleClose(): void {
+    setDialogState(false);
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <SnackbarProvider 
@@ -78,6 +91,8 @@ function App() {
 
             <div className={classes.buttons}>
               <Button variant="contained" color="secondary" onClick={switchView}>Switch view</Button>
+
+              <Button variant="contained" color="primary" onClick={handleOpen}>New category</Button>
             </div>
             
           </Drawer>
@@ -85,6 +100,17 @@ function App() {
           <main className={classes.mainView}>
             {view === AppView.OBJECTIVES ? <ObjectiveView /> : <ActivityView />}
           </main>
+
+
+          {/* Dialogs */}
+          <FormDialog 
+              title="New objective"
+              formId="objectiveForm"
+              isOpen={dialogState}
+              onClose={handleClose}
+          >
+            <CategoryForm postSubmit={handleClose} />
+          </FormDialog>
         </div>
       </SnackbarProvider>
     </ThemeProvider>
