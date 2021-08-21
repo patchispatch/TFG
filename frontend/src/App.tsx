@@ -2,7 +2,7 @@ import * as React from 'react';
 import './App.css';
 import 'react-calendar/dist/Calendar.css';
 import { Button, createStyles, CssBaseline, Drawer, makeStyles, Theme, ThemeProvider } from '@material-ui/core';
-import {theme} from 'src/theme';
+import { defaultTheme } from 'src/theme';
 import { ObjectiveView } from './components/objective/ObjectiveView';
 import { SnackbarProvider } from 'notistack';
 import Grow from '@material-ui/core/Grow';
@@ -69,7 +69,7 @@ function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={defaultTheme}>
       <SnackbarProvider 
         /* 
         // @ts-ignore */

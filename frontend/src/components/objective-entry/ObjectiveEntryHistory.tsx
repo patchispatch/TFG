@@ -9,6 +9,7 @@ import { convertToMap, ModelMap } from 'src/models/shared';
 import { CategoryService } from 'src/services/category-service';
 import { ObjectiveEntryService } from 'src/services/objective-entry-service';
 import { ObjectiveService } from 'src/services/objective-service';
+import { CategoryChip } from '../category/CategoryChip';
 
 // Style
 const useStyles = makeStyles({
@@ -118,9 +119,9 @@ export function ObjectiveEntryHistory({date}: EntryHistoryProps) {
                 </Typography>
 
                 {categoryOfEntry(entry) && 
-                  <Chip
+                  <CategoryChip
+                    category={categoryOfEntry(entry)!}
                     classes={{root: classes.chip}}
-                    label={categoryOfEntry(entry)!.name}
                     size="small"
                   />
                 }

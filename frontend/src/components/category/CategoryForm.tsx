@@ -3,11 +3,12 @@ import {useMemo, useState, useEffect} from 'react';
 import { useForm, Controller } from 'react-hook-form'
 import {ObjectiveService} from 'src/services/objective-service';
 import {CategoryService} from 'src/services/category-service';
-import { Category, CategoryColor, ColorDataMap } from 'src/models/category';
+import { Category } from 'src/models/category';
 import { Objective } from 'src/models/objective';
 import { CircularProgress, createStyles, makeStyles, MenuItem, TextField, Theme } from '@material-ui/core';
 import snackbar from 'src/SnackbarUtils';
 import { toTitleCase } from 'src/utils';
+import { Color } from 'src/theme';
 
 
 // Styles
@@ -47,7 +48,7 @@ interface CategoryFormProps {
 // Form values
 interface FormValues {
   name: string,
-  color: CategoryColor
+  color: Color
 }
 
 
@@ -68,7 +69,7 @@ export function CategoryForm({categoryId, postSubmit}: CategoryFormProps) {
   const {handleSubmit, control, reset} = useForm({
     defaultValues: {
       name: "",
-      color: CategoryColor.DEFAULT
+      color: Color.DEFAULT
     }
   });
 
@@ -154,7 +155,7 @@ export function CategoryForm({categoryId, postSubmit}: CategoryFormProps) {
               inputProps={{displayEmpty: true}}
               InputLabelProps={{shrink: true}}
             > 
-              {Object.values(CategoryColor).map((option) => (
+              {Object.values(Color).map((option) => (
                 <MenuItem key={option} value={option}>
                   {toTitleCase(option)}
                 </MenuItem>
