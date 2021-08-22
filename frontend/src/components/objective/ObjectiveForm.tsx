@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useMemo, useState, useEffect} from 'react';
+import {useMemo, useState, useEffect, useContext} from 'react';
 import { useForm, Controller } from 'react-hook-form'
 import {ObjectiveService} from 'src/services/objective-service';
 import {CategoryService} from 'src/services/category-service';
@@ -8,6 +8,7 @@ import { Objective } from 'src/models/objective';
 import { CircularProgress, createStyles, LinearProgress, makeStyles, MenuItem, TextField, Theme } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import snackbar from 'src/SnackbarUtils';
+import { AppContext } from 'src/contexts/AppContext';
 
 
 // Styles
@@ -59,13 +60,11 @@ interface FormValues {
 export function ObjectiveForm({objectiveId, postSubmit}: ObjectiveFormProps) {
   // Services
   const objectiveService = useMemo(() => new ObjectiveService(), []);
-  const categoryService = useMemo(() => new CategoryService(), []);
-  const { enqueueSnackbar } = useSnackbar();
 
   // State
-  const [categoryList, setCategoryList] = useState<Category[]>([]);
   const [objective, setObjective] = useState<Objective>();
   const [loaded, setLoaded] = useState<boolean>(true);
+  const {categoryList, setCategoryList} = useContext(AppContext);
 
 
   // Form control
@@ -80,9 +79,6 @@ export function ObjectiveForm({objectiveId, postSubmit}: ObjectiveFormProps) {
 
   // On init
   useEffect(() => {
-    // Populate category list
-    categoryService.list().subscribe(response => setCategoryList(response));
-
     // If an objective ID is provided, retrieve it
     if (objectiveId) {
       setLoaded(false);
@@ -97,7 +93,7 @@ export function ObjectiveForm({objectiveId, postSubmit}: ObjectiveFormProps) {
         setLoaded(true);
       });
     }
-  }, [categoryService, objectiveId, objectiveService, reset])
+  }, [objectiveId, objectiveService, reset])
 
 
   // On submit

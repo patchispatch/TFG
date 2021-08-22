@@ -1,7 +1,9 @@
 import { Card, CardContent, Chip, makeStyles, Typography } from '@material-ui/core';
 import * as React from 'react';
+import { useContext } from 'react';
 import { useCallback, useEffect } from 'react';
 import { useMemo, useState } from 'react';
+import { AppContext } from 'src/contexts/AppContext';
 import { Category } from 'src/models/category';
 import { Objective } from 'src/models/objective';
 import { ObjectiveEntry } from 'src/models/objective-entry';
@@ -45,13 +47,13 @@ export function ObjectiveEntryHistory({date}: EntryHistoryProps) {
   // Services
   const objectiveEntryService = useMemo(() => new ObjectiveEntryService(), []);
   const objectiveService = useMemo(() => new ObjectiveService(), []);
-  const categoryService = useMemo(() => new CategoryService(), []);
 
   // State
   const [entryList, setEntryList] = useState<ObjectiveEntry[]>([]);
   const [objectiveMap, setObjectiveMap] = useState<ModelMap<Objective>>({});
   const [categoryMap, setCategoryMap] = useState<ModelMap<Category>>({});
   const [loaded, setLoaded] = useState<boolean>(false);
+  const {categoryList} = useContext(AppContext);
 
   /**
    * Load entries and related objectives on the selected date
@@ -77,14 +79,12 @@ export function ObjectiveEntryHistory({date}: EntryHistoryProps) {
 
   // On init
   useEffect(() => {
-    // Load category list
-    categoryService.list().subscribe(categories =>  {
-      setCategoryMap(convertToMap(categories));
-    });
+    // Create category map
+    setCategoryMap(convertToMap(categoryList));
 
     // Load entry info
     loadEntryInfo();
-  }, [categoryService, loadEntryInfo]);
+  }, [loadEntryInfo]);
 
   // On day change
   useEffect(() => {

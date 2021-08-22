@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './App.css';
 import 'react-calendar/dist/Calendar.css';
-import { Button, createStyles, CssBaseline, Drawer, makeStyles, Theme, ThemeProvider } from '@material-ui/core';
+import { Button, CircularProgress, createStyles, CssBaseline, Drawer, makeStyles, Theme, ThemeProvider } from '@material-ui/core';
 import { defaultTheme } from 'src/theme';
 import { ObjectiveView } from './components/objective/ObjectiveView';
 import { SnackbarProvider } from 'notistack';
@@ -12,6 +12,12 @@ import { useState } from 'react';
 import { ActivityView } from './components/activity/ActivityView';
 import { CategoryForm } from './components/category/CategoryForm';
 import { FormDialog } from './components/utils/FormDialog';
+import { AppContext, AppContextTypes } from './contexts/AppContext';
+import { useEffect } from 'react';
+import { useMemo } from 'react';
+import { CategoryService } from './services/category-service';
+import { Category } from './models/category';
+import { delay } from 'rxjs/operators';
 
 // Styles
 const drawerWidth = 400;
@@ -20,6 +26,14 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
+
+    },
+    globalLoading: {
+      display: 'flex',
+      width: '100vw',
+      height: '100vh',
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     mainView: {
       width: `calc(100% - ${drawerWidth}px)`,
@@ -49,16 +63,40 @@ const useStyles = makeStyles((theme: Theme) =>
 function App() {
   const classes = useStyles();
 
+  // Services
+  const categoryService = useMemo(() => new CategoryService(), []);
+
   // State
   const [view, setView] = useState<AppView>(AppView.OBJECTIVES);
+  const [loaded, setLoaded] = useState(false);
 
   // Switch view
   function switchView(): void {
     view === AppView.OBJECTIVES ? setView(AppView.ACTIVITIES) : setView(AppView.OBJECTIVES);
   }
 
-  // Category things
+  // Category form things
+  // TODO: move drawer to separate component
   let [dialogState, setDialogState] = useState(false);
+
+  // Initialize app context
+  // TODO: settings
+
+  function reloadContext() {
+    setLoaded(false);
+    categoryService.list().subscribe(response => {
+      setCategoryList(response);
+      setLoaded(true);
+    });
+  }
+
+  const [categoryList, setCategoryList] = useState<Category[]>([]);
+  const appContext: AppContextTypes = {categoryList, setCategoryList, reloadContext};
+
+  useEffect(() => {
+    reloadContext();
+  }, [])
+
 
   function handleOpen(): void {
     setDialogState(true);
@@ -78,40 +116,52 @@ function App() {
         hideIconVariant={false}
       >
         <SnackbarUtilsConfigurator />
-        <div className={classes.root}>
-          <CssBaseline />
-          <Drawer
-            variant="permanent"
-            className={classes.drawer}
-            classes={{paper: classes.drawerPaper}}
-            anchor="left"
-          >
-            <div className={classes.clockContainer}>
+        <AppContext.Provider value={appContext}>
+
+          <div className={classes.root}>
+            <CssBaseline />
+
+            {loaded ?
+            <>
+              <Drawer
+                variant="permanent"
+                className={classes.drawer}
+                classes={{paper: classes.drawerPaper}}
+                anchor="left"
+              >
+                <div className={classes.clockContainer}>
+                </div>
+
+                <div className={classes.buttons}>
+                  <Button variant="contained" color="secondary" onClick={switchView}>Switch view</Button>
+
+                  <Button variant="contained" color="primary" onClick={handleOpen}>New category</Button>
+                </div>
+                
+              </Drawer>
+
+              <main className={classes.mainView}>
+                {view === AppView.OBJECTIVES ? <ObjectiveView /> : <ActivityView />}
+              </main>
+
+              {/* Dialogs */}
+              <FormDialog 
+                  title="New category"
+                  formId="categoryForm"
+                  isOpen={dialogState}
+                  onClose={handleClose}
+              >
+                <CategoryForm postSubmit={handleClose} />
+              </FormDialog>
+            </>
+            :
+            <div className={classes.globalLoading}>
+              <CircularProgress />
             </div>
+            }
+          </div>
 
-            <div className={classes.buttons}>
-              <Button variant="contained" color="secondary" onClick={switchView}>Switch view</Button>
-
-              <Button variant="contained" color="primary" onClick={handleOpen}>New category</Button>
-            </div>
-            
-          </Drawer>
-
-          <main className={classes.mainView}>
-            {view === AppView.OBJECTIVES ? <ObjectiveView /> : <ActivityView />}
-          </main>
-
-
-          {/* Dialogs */}
-          <FormDialog 
-              title="New objective"
-              formId="objectiveForm"
-              isOpen={dialogState}
-              onClose={handleClose}
-          >
-            <CategoryForm postSubmit={handleClose} />
-          </FormDialog>
-        </div>
+        </AppContext.Provider>
       </SnackbarProvider>
     </ThemeProvider>
   );

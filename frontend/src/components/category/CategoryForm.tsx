@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useMemo, useState, useEffect} from 'react';
+import {useMemo, useState, useEffect, useContext} from 'react';
 import { useForm, Controller } from 'react-hook-form'
 import {ObjectiveService} from 'src/services/objective-service';
 import {CategoryService} from 'src/services/category-service';
@@ -9,6 +9,7 @@ import { CircularProgress, createStyles, makeStyles, MenuItem, TextField, Theme 
 import snackbar from 'src/SnackbarUtils';
 import { toTitleCase } from 'src/utils';
 import { Color } from 'src/theme';
+import { AppContext } from 'src/contexts/AppContext';
 
 
 // Styles
@@ -63,6 +64,7 @@ export function CategoryForm({categoryId, postSubmit}: CategoryFormProps) {
   // State
   const [category, setCategory] = useState<Category>();
   const [loaded, setLoaded] = useState<boolean>(true);
+  const {reloadContext} = useContext(AppContext);
 
 
   // Form control
@@ -103,6 +105,7 @@ export function CategoryForm({categoryId, postSubmit}: CategoryFormProps) {
         if (postSubmit) 
           postSubmit(response, true);
 
+        reloadContext();
         snackbar.success('Category updated successfully');
       });
     }
@@ -113,6 +116,7 @@ export function CategoryForm({categoryId, postSubmit}: CategoryFormProps) {
         if (postSubmit) 
           postSubmit(response, true);
 
+        reloadContext();
         snackbar.success('Category created successfully');
       });
     }
@@ -124,7 +128,7 @@ export function CategoryForm({categoryId, postSubmit}: CategoryFormProps) {
   return (
     <div className={classes.content}>
     {loaded ?
-      <form id="objectiveForm" className={classes.root} onSubmit={handleSubmit(onSubmit)}>
+      <form id="categoryForm" className={classes.root} onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="name"
           control={control}

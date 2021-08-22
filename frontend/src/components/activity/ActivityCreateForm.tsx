@@ -1,19 +1,17 @@
 import * as React from 'react';
 import {useMemo, useState, useEffect} from 'react';
 import { useForm, Controller } from 'react-hook-form'
-import {CategoryService} from 'src/services/category-service';
-import { Category } from 'src/models/category';
-import { Objective } from 'src/models/objective';
-import { CircularProgress, createStyles, Divider, LinearProgress, makeStyles, MenuItem, TextField, Theme } from '@material-ui/core';
+import { CircularProgress, createStyles, Divider, makeStyles, MenuItem, TextField, Theme } from '@material-ui/core';
 import { ActivityService } from 'src/services/activity-service';
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDateTimePicker, KeyboardTimePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 import { Activity } from 'src/models/activity';
-import { forkJoin } from 'rxjs';
 import { ActivityInstanceService } from 'src/services/activity-instance-service';
 import { ActivityInstance } from 'src/models/activity-instance';
 import { DaysOfWeek } from 'src/models/shared';
 import snackbar from 'src/SnackbarUtils';
+import { useContext } from 'react';
+import { AppContext } from 'src/contexts/AppContext';
 
 
 // Styles
@@ -79,12 +77,11 @@ export function ActivityForm({postSubmit}: ActivityFormProps) {
   // Services
   const activityService = useMemo(() => new ActivityService(), []);
   const instanceService = useMemo(() => new ActivityInstanceService(), []);
-  const categoryService = useMemo(() => new CategoryService(), []);
 
   // State
   const [activityList, setActivityList] = useState<Activity[]>([]);
-  const [categoryList, setCategoryList] = useState<Category[]>([]);
   const [loaded, setLoaded] = useState<boolean>(true);
+  const {categoryList} = useContext(AppContext);
 
 
   // Form control
@@ -106,15 +103,11 @@ export function ActivityForm({postSubmit}: ActivityFormProps) {
   useEffect(() => {
     // Load data
     setLoaded(false);
-    forkJoin({
-      activities: activityService.list(),
-      categories: categoryService.list()
-    }).subscribe(({activities, categories}) => {
+    activityService.list().subscribe(activities => {
       setActivityList(activities);
-      setCategoryList(categories);
       setLoaded(true);
     });
-  }, [categoryService, activityService, reset])
+  }, [activityService, reset])
 
 
   // On submit

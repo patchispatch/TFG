@@ -13,6 +13,7 @@ import { ConfirmDialog } from "../utils/ConfirmDialog";
 import { FormDialog } from "../utils/FormDialog";
 import { ActivityInstanceEditForm } from "./ActivityInstanceEditForm";
 import snackbar from 'src/SnackbarUtils';
+import { CategoryChip } from "../category/CategoryChip";
 
 
 // Styles
@@ -180,9 +181,9 @@ export function ActivityTable({activities, instances, refresh=() => {}}: Activit
                   <Typography variant="body1" className={classes.cardText}>{activityMap[ins.activity].name}</Typography>
                   <Typography variant="caption" className={classes.cardText}>{ins.startHour} - {ins.endHour}</Typography>
                   {categoryOfActivity(activityMap[ins.activity]) && 
-                    <Chip
+                    <CategoryChip
                       classes={{root: classes.chip}}
-                      label={categoryOfActivity(activityMap[ins.activity])!.name}
+                      category={categoryOfActivity(activityMap[ins.activity])!}
                       size="small"
                     />
                   }
