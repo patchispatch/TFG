@@ -18,6 +18,7 @@ import { useMemo } from 'react';
 import { CategoryService } from './services/category-service';
 import { Category } from './models/category';
 import { delay } from 'rxjs/operators';
+import { Sidebar } from './components/view/Sidebar';
 
 // Styles
 const drawerWidth = 400;
@@ -45,14 +46,6 @@ const useStyles = makeStyles((theme: Theme) =>
     drawerPaper: {
       width: drawerWidth,
       padding: '2em'
-    },
-    clockContainer: {
-      marginBottom: '2em',
-      background: '#eee',
-      height: '12em',
-    },
-    buttons: {
-      display: 'block',
     },
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
@@ -129,15 +122,7 @@ function App() {
                 classes={{paper: classes.drawerPaper}}
                 anchor="left"
               >
-                <div className={classes.clockContainer}>
-                </div>
-
-                <div className={classes.buttons}>
-                  <Button variant="contained" color="secondary" onClick={switchView}>Switch view</Button>
-
-                  <Button variant="contained" color="primary" onClick={handleOpen}>New category</Button>
-                </div>
-                
+                <Sidebar switchView={switchView} handleOpen={handleOpen}/>
               </Drawer>
 
               <main className={classes.mainView}>
