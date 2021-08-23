@@ -7,11 +7,13 @@ import { Objective } from '../models/objective';
 import { CRUDL } from './crudl';
 import snackbar from 'src/SnackbarUtils';
 import { ObjectiveFilter } from 'src/models/shared';
+import { Category } from 'src/models/category';
 
 
-interface ObjectiveListParams {
+export interface ObjectiveListParams {
   idlist?: number[],
-  filter?: string
+  filter?: string,
+  category?: Category
 }
 
 
@@ -31,6 +33,9 @@ export class ObjectiveService implements CRUDL {
     if (params?.filter && params.filter !== ObjectiveFilter.NONE) {
       sendParams.filter = params.filter;
     }
+
+    if (params?.category)
+      sendParams.category = params.category.id;
 
     return axios.get<IJsonArray>(this.baseUrl, {params: sendParams})
       .pipe(

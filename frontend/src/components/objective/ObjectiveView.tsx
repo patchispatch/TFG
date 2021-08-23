@@ -5,10 +5,11 @@ import { Theme } from "@material-ui/core";
 import { ObjectiveForm } from "./ObjectiveForm";
 import { FormDialog } from "../utils/FormDialog";
 import { ObjectiveEntryCalendar } from "../objective-entry/ObjectiveEntryCalendar";
-import { ObjectiveService } from "src/services/objective-service";
+import { ObjectiveListParams, ObjectiveService } from "src/services/objective-service";
 import { Objective } from "src/models/objective";
 import { ObjectiveFilter } from "src/models/shared";
 import { Add } from "@material-ui/icons";
+import { Category } from "src/models/category";
 
 
 // Styles
@@ -43,9 +44,14 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+// Props
+interface ObjectiveViewProps {
+  category?: Category
+}
+
 
 // Component
-export function ObjectiveView() {
+export function ObjectiveView({category}: ObjectiveViewProps) {
   // Services
   const objectiveService = useMemo(() => new ObjectiveService(), []);
 
@@ -69,7 +75,11 @@ export function ObjectiveView() {
   // Refresh objective list
   function refreshList(): void {
     setObjLoaded(false);
-    objectiveService.list({filter: filter}).subscribe(response => {
+    let listFilters: ObjectiveListParams = {filter: filter};
+    if (category)
+      listFilters.category = category;
+
+    objectiveService.list(listFilters).subscribe(response => {
       setObjectiveList(response);
       setObjLoaded(true);
     });

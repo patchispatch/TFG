@@ -22,7 +22,7 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
                 name='idlist',
                 type=OpenApiTypes.STR,
                 location=OpenApiParameter.QUERY,
-                description='Filter by objective IDs, separated by commas'
+                description='''Filter by objective IDs, separated by commas'''
             ),
             OpenApiParameter(
                 name='filter',
@@ -34,6 +34,12 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
                 - "in-progress": returns the objectives that are in progress
                 - "completed": returns the objectives that are completed'''
             ),
+            OpenApiParameter(
+                name='category',
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.QUERY,
+                description='''Filter by category ID'''
+            ),
         ]
     )
     def list(self, request):
@@ -43,6 +49,9 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
             objectives = Objective.objects.filter(id__in=id_list)
         else:
             objectives = Objective.objects.all()
+
+        if 'category' in request.query_params:
+            objectives = objectives.filter(category_id__id=request.query_params.get('category'))
         
         if 'filter' in request.query_params:
             filter = request.query_params.get('filter')
