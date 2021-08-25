@@ -9,7 +9,7 @@ import { Objective } from 'src/models/objective';
 import { ObjectiveEntry } from 'src/models/objective-entry';
 import { convertToMap, ModelMap } from 'src/models/shared';
 import { CategoryService } from 'src/services/category-service';
-import { ObjectiveEntryService } from 'src/services/objective-entry-service';
+import { ObjectiveEntryParameters, ObjectiveEntryService } from 'src/services/objective-entry-service';
 import { ObjectiveService } from 'src/services/objective-service';
 import { CategoryChip } from '../category/CategoryChip';
 
@@ -40,10 +40,11 @@ const useStyles = makeStyles({
 
 // Props
 interface EntryHistoryProps {
-  date: Date
+  date: Date,
+  category?: Category
 }
 
-export function ObjectiveEntryHistory({date}: EntryHistoryProps) {
+export function ObjectiveEntryHistory({date, category}: EntryHistoryProps) {
   // Services
   const objectiveEntryService = useMemo(() => new ObjectiveEntryService(), []);
   const objectiveService = useMemo(() => new ObjectiveService(), []);
@@ -61,7 +62,12 @@ export function ObjectiveEntryHistory({date}: EntryHistoryProps) {
   const loadEntryInfo = useCallback(() => {
     // Load entry list
     setLoaded(false);
-    objectiveEntryService.list({date: date}).subscribe(entries => {
+
+    const historyFilters: ObjectiveEntryParameters = {date: date};
+    if (category)
+      historyFilters.category = category;
+
+    objectiveEntryService.list(historyFilters).subscribe(entries => {
       setEntryList(entries);
 
       // Load objectives to show data

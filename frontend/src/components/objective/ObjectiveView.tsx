@@ -15,8 +15,8 @@ import { Category } from "src/models/category";
 // Styles
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    formControl: {
-      margin: '1em 0 1em 0',
+    filterControl: {
+      marginBottom: '1em',
       minWidth: 120,
     },
     content: {
@@ -75,7 +75,7 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
   // Refresh objective list
   function refreshList(): void {
     setObjLoaded(false);
-    let listFilters: ObjectiveListParams = {filter: filter};
+    const listFilters: ObjectiveListParams = {filter: filter};
     if (category)
       listFilters.category = category;
 
@@ -103,18 +103,14 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
       <AppBar elevation={0} position="sticky">
         <Toolbar>
           <Typography variant="h6">
-            Home
+            {category ? `Objectives in category [${category.name}]`: "Objectives"}
           </Typography>
         </Toolbar>
       </AppBar>
 
       <div className={classes.content}>
         <div className={classes.section}>
-          <Typography variant='h4'>
-            Objectives
-          </Typography>
-
-          <FormControl className={classes.formControl}>
+          <FormControl className={classes.filterControl}>
             <InputLabel id="filter-label">Filter</InputLabel>
             <Select 
               labelId="filter-label"
@@ -140,7 +136,7 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
             Entry history
           </Typography>
 
-          <ObjectiveEntryCalendar className={classes.calendar} />
+          <ObjectiveEntryCalendar className={classes.calendar} category={category ? category : undefined}/>
         </div>
 
         <div className={classes.fab}>

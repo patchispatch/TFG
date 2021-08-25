@@ -3,9 +3,9 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core';
 import { useEffect, useMemo, useState } from 'react';
 import Calendar from 'react-calendar'
 import { EntryHistoryDialog } from './EntryHistoryDialog';
-import { ObjectiveEntryService } from 'src/services/objective-entry-service';
-import { ObjectiveEntryDaysList } from 'src/models/objective-entry';
-import { FindValueOperator } from 'rxjs/internal/operators/find';
+import { ObjectiveEntryDaysParameters, ObjectiveEntryService } from 'src/services/objective-entry-service';
+import { Category } from 'src/models/category';
+import { isUndefined } from 'util';
 
 
 // Styles
@@ -21,15 +21,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 // Props
 interface CalendarProps {
-  className?: string
+  className?: string,
+  category?: Category
 }
 
-export function ObjectiveEntryCalendar({className}: CalendarProps) {
+export function ObjectiveEntryCalendar({className, category}: CalendarProps) {
   // Services
   const objectiveEntryService = useMemo(() => new ObjectiveEntryService(), []);
 
   // State
-  const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth());
+  const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth() + 1);
   const [entryDayList, setEntryDayList] = useState<number[]>([]);
   const [selectedDay, setSelectedDay] = useState<Date>(new Date());
   const [historyOpen, setHistoryOpen] = useState(false);
@@ -41,7 +42,6 @@ export function ObjectiveEntryCalendar({className}: CalendarProps) {
   }
 
   function onMonthChange(activeStartDate: Date) {
-    
     const newMonth = activeStartDate.getMonth() + 1;
     if (currentMonth !== newMonth) 
       setCurrentMonth(newMonth);
@@ -49,7 +49,11 @@ export function ObjectiveEntryCalendar({className}: CalendarProps) {
 
   // On month change
   useEffect(() => {
-    objectiveEntryService.days({month: currentMonth}).subscribe(response => setEntryDayList(response.days))
+    const daysFilters: ObjectiveEntryDaysParameters = {month: currentMonth}; 
+    if (category)
+      daysFilters.category = category;
+
+    objectiveEntryService.days(daysFilters).subscribe(response => setEntryDayList(response.days))
   }, [currentMonth])
 
   // Render
@@ -69,6 +73,7 @@ export function ObjectiveEntryCalendar({className}: CalendarProps) {
         date={selectedDay}
         isOpen={historyOpen}
         onClose={() => setHistoryOpen(false)}
+        category={category ? category : undefined}
       />
     </div>
   )

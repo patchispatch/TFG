@@ -6,13 +6,16 @@ import { toISOLocal } from 'src/utils';
 import { ObjectiveEntry, ObjectiveEntryDaysList } from '../models/objective-entry';
 import { CRUDL } from './crudl';
 import snackbar from 'src/SnackbarUtils';
+import { Category } from 'src/models/category';
 
-interface ObjectiveEntryParameters {
-  date?: Date
+export interface ObjectiveEntryParameters {
+  date?: Date,
+  category?: Category
 }
 
-interface ObjectiveEntryDaysParameters {
-  month: number
+export interface ObjectiveEntryDaysParameters {
+  month?: number,
+  category?: Category
 }
 
 export class ObjectiveEntryService implements CRUDL {
@@ -23,7 +26,15 @@ export class ObjectiveEntryService implements CRUDL {
    * Returns a list of all the objectives
    */
   list(params?: ObjectiveEntryParameters): Observable<ObjectiveEntry[]> {
-    const sendParams = params?.date ? {date: toISOLocal(params.date).split('T')[0]} : {};
+    const sendParams: any = {};
+    if (params?.date)
+      sendParams.date = toISOLocal(params.date).split('T')[0];
+
+    if (params?.category)
+      sendParams.category = params.category.id;
+    
+    if (params?.category)
+      sendParams.category = params.category.id;
 
     return axios.get<IJsonArray>(this.baseUrl, {params: sendParams})
       .pipe(
@@ -94,7 +105,13 @@ export class ObjectiveEntryService implements CRUDL {
    * Get list of days which have entries in a month
    */
   days(params?: ObjectiveEntryDaysParameters): Observable<ObjectiveEntryDaysList> {
-    const sendParams = params ? params : {};
+    const sendParams: any = {};
+    
+    if (params?.category)
+      sendParams.category = params.category.id;
+
+    if (params?.month)
+      sendParams.month = params.month;
 
     return axios.get<IJsonObject>(`${this.baseUrl}days`, {params: sendParams})
       .pipe(

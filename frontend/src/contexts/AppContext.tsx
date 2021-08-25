@@ -15,4 +15,3 @@ const appDefaultContext: AppContextTypes = {
 }
 
 export const AppContext = createContext(appDefaultContext);
-

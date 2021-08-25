@@ -111,6 +111,13 @@ class ObjectiveEntryViewSet(viewsets.ModelViewSet):
                 type=OpenApiTypes.DATE,
                 location=OpenApiParameter.QUERY,
                 description='Filter by entry date'
+            ),
+            OpenApiParameter(
+                name='category',
+                required=False,
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.QUERY,
+                description='Filter results by category.'
             )
         ]
     )
@@ -119,6 +126,9 @@ class ObjectiveEntryViewSet(viewsets.ModelViewSet):
             entries = ObjectiveEntry.objects.filter(date__date=request.query_params.get('date'))
         else:
             entries = ObjectiveEntry.objects.all()
+
+        if 'category' in request.query_params:
+            entries = entries.filter(objective_id__category_id_id=request.query_params['category'])
 
         serializer = ObjectiveEntrySerializer(entries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -132,8 +142,16 @@ class ObjectiveEntryViewSet(viewsets.ModelViewSet):
                 location=OpenApiParameter.QUERY,
                 description='Get the days which have entries for the specified month in number format, from 1 to 12).\
                     If not specified, selects the current month.'
+            ),
+            OpenApiParameter(
+                name='category',
+                required=False,
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.QUERY,
+                description='Filter results by category.'
             )
         ],
+        
         responses={201: ObjectiveEntryDaysSerializer, 400: None}
     )
     @action(detail=False, methods=['get'], url_path='days')
@@ -147,9 +165,15 @@ class ObjectiveEntryViewSet(viewsets.ModelViewSet):
         
         entries = ObjectiveEntry.objects.filter(date__month=month)
 
+        if 'category' in request.query_params:
+            entries = entries.filter(objective_id__category_id_id=request.query_params['category'])
+
         days = []
         for entry in entries:
             days.append(entry.date.day)
+        
+        # Remove duplicates
+        days = list(dict.fromkeys(days))
 
         serializer = ObjectiveEntryDaysSerializer({'days': days})
         return Response(serializer.data, status=status.HTTP_200_OK)

@@ -126,7 +126,7 @@ function App() {
               </Drawer>
 
               <main className={classes.mainView}>
-                {view === AppView.OBJECTIVES ? <ObjectiveView /> : <ActivityView />}
+                {view === AppView.OBJECTIVES ? <ObjectiveView category={categoryList[0]} /> : <ActivityView />}
               </main>
 
               {/* Dialogs */}

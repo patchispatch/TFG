@@ -1,6 +1,7 @@
 import { Button, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, makeStyles, Theme } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import * as React from 'react';
+import { Category } from 'src/models/category';
 import {ObjectiveEntryHistory} from './ObjectiveEntryHistory';
 
 // Style
@@ -29,6 +30,7 @@ interface HistoryDialogProps {
   date: Date,
   isOpen: boolean,
   onClose: () => void,
+  category?: Category
 }
 
 // TODO: Change into a generic dialog component
@@ -36,6 +38,7 @@ export function EntryHistoryDialog({
   date,
   isOpen,
   onClose,
+  category
 }: HistoryDialogProps) {
   
   // Render
@@ -60,7 +63,7 @@ export function EntryHistoryDialog({
         <Divider />
 
         <DialogContent>
-          <ObjectiveEntryHistory date={date} />
+          <ObjectiveEntryHistory date={date} category={category ? category : undefined} />
         </DialogContent>
 
         <Divider />
