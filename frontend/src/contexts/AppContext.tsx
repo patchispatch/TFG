@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createContext, Dispatch } from 'react';
+import { createContext } from 'react';
 import { Category } from 'src/models/category';
 
 export interface AppContextTypes {

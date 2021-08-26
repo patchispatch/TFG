@@ -2,6 +2,7 @@ import { Button, createStyles, Divider, List, ListItem, ListItemText, makeStyles
 import { useContext } from "react";
 import { AppContext } from "src/contexts/AppContext";
 import SettingsIcon from '@material-ui/icons/Settings';
+import { Category } from "src/models/category";
 
 // Styles
 const useStyles = makeStyles((theme: Theme) => 
@@ -42,8 +43,18 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+/**
+ * Props
+ */
+interface SidebarProps {
+  switchView: () => void,
+  handleOpen: () => void,
+  handleCategoryChange: (category: Category) => void,
+  selectedCategory?: Category,
+}
 
-export function Sidebar({switchView, handleOpen}: any) {
+
+export function Sidebar({switchView, handleOpen, selectedCategory, handleCategoryChange}: any) {
   // State
   const context = useContext(AppContext);
 
@@ -69,7 +80,11 @@ export function Sidebar({switchView, handleOpen}: any) {
 
         <List component="nav" aria-label="Category menu">
           {context.categoryList.map(category => (
-            <ListItem key={category.id} button>
+            <ListItem 
+              key={category.id} 
+              selected={category === selectedCategory} 
+              button 
+              onClick={() => handleCategoryChange(category)}>
               <ListItemText primary={category.name} />
             </ListItem>
           ))}

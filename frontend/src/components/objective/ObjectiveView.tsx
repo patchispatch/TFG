@@ -60,6 +60,10 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
   const [objectiveList, setObjectiveList] = useState<Objective[]>([]);
   const [filter, setFilter] = useState<string>('');
 
+  // Calendar state
+  const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth() + 1);
+  const [entryDayList, setEntryDayList] = useState<number[]>([]);
+
   // Handle dialog state
   let [dialogState, setDialogState] = useState(false);
 
@@ -70,6 +74,13 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
   function handleClose(): void {
     setDialogState(false);
     refreshList();
+  }
+
+  // Calendar
+  function onMonthChange(activeStartDate: Date) {
+    const newMonth = activeStartDate.getMonth() + 1;
+    if (currentMonth !== newMonth) 
+      setCurrentMonth(newMonth);
   }
 
   // Refresh objective list
@@ -91,10 +102,10 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
       setFilter(filter);
   }
 
-  // On init and filter change
+  // On init, filter and category change
   useEffect(() => {
     refreshList();
-  }, [filter])
+  }, [filter, category])
 
   // Render
   const classes = useStyles();
@@ -136,7 +147,14 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
             Entry history
           </Typography>
 
-          <ObjectiveEntryCalendar className={classes.calendar} category={category ? category : undefined}/>
+          <ObjectiveEntryCalendar
+            currentMonth={currentMonth}
+            entryDayList={entryDayList}
+            setEntryDayList={setEntryDayList}
+            onMonthChange={onMonthChange}
+            className={classes.calendar} 
+            category={category ? category : undefined}
+          />
         </div>
 
         <div className={classes.fab}>

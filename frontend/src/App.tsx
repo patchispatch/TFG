@@ -19,6 +19,7 @@ import { CategoryService } from './services/category-service';
 import { Category } from './models/category';
 import { delay } from 'rxjs/operators';
 import { Sidebar } from './components/view/Sidebar';
+import { useContext } from 'react';
 
 // Styles
 const drawerWidth = 400;
@@ -60,13 +61,20 @@ function App() {
   const categoryService = useMemo(() => new CategoryService(), []);
 
   // State
+  /**
+   * Selected application view
+   */
   const [view, setView] = useState<AppView>(AppView.OBJECTIVES);
+
+  /**
+   * Loading status of the application context
+   */
   const [loaded, setLoaded] = useState(false);
 
-  // Switch view
-  function switchView(): void {
-    view === AppView.OBJECTIVES ? setView(AppView.ACTIVITIES) : setView(AppView.OBJECTIVES);
-  }
+  /**
+   * Selected category, if any
+   */
+  const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(undefined);
 
   // Category form things
   // TODO: move drawer to separate component
@@ -75,6 +83,9 @@ function App() {
   // Initialize app context
   // TODO: settings
 
+  /**
+   * Refreshes the application context content
+   */
   function reloadContext() {
     setLoaded(false);
     categoryService.list().subscribe(response => {
@@ -86,6 +97,9 @@ function App() {
   const [categoryList, setCategoryList] = useState<Category[]>([]);
   const appContext: AppContextTypes = {categoryList, setCategoryList, reloadContext};
 
+  /**
+   * Load context on app render
+   */
   useEffect(() => {
     reloadContext();
   }, [])
@@ -97,6 +111,26 @@ function App() {
 
   function handleClose(): void {
     setDialogState(false);
+  }
+
+  /**
+   * Handle view change
+   */
+  function handleViewChange(view: AppView): void {
+    setSelectedCategory(undefined);
+    setView(view);
+  }
+
+  // Switch view
+  function switchView(): void {
+    view === AppView.OBJECTIVES ? handleViewChange(AppView.ACTIVITIES) : handleViewChange(AppView.OBJECTIVES);
+  }
+
+  /**
+   * Handle category filter change (for objective view)
+   */
+  function handleCategoryChange(category: Category) {
+    setSelectedCategory(category);
   }
 
   return (
@@ -122,11 +156,19 @@ function App() {
                 classes={{paper: classes.drawerPaper}}
                 anchor="left"
               >
-                <Sidebar switchView={switchView} handleOpen={handleOpen}/>
+                <Sidebar 
+                  switchView={switchView} 
+                  handleOpen={handleOpen}
+                  selectedCategory={selectedCategory}
+                  handleCategoryChange={handleCategoryChange}
+                />
               </Drawer>
 
               <main className={classes.mainView}>
-                {view === AppView.OBJECTIVES ? <ObjectiveView category={categoryList[0]} /> : <ActivityView />}
+                {view === AppView.OBJECTIVES 
+                ? <ObjectiveView category={selectedCategory} /> 
+                : <ActivityView />
+                }
               </main>
 
               {/* Dialogs */}
