@@ -57,7 +57,7 @@ export class CategoryService implements CRUDL {
    * Update a resource
    */
   update(data: Category): Observable<Category> {
-    return axios.put<IJsonObject>(`${this.baseUrl}${data.id}`, data)
+    return axios.put<IJsonObject>(`${this.baseUrl}${data.id}/`, data)
       .pipe(
         map(result => Deserialize(result.data, () => Category)),
         catchError(err => {

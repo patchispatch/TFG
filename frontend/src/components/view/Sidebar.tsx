@@ -1,8 +1,15 @@
-import { Button, createStyles, Divider, List, ListItem, ListItemText, makeStyles, Theme, Typography } from "@material-ui/core"
-import { useContext } from "react";
+import { Button, createStyles, Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, Menu, MenuItem, Theme, Typography } from "@material-ui/core"
+import { SyntheticEvent, useContext, useMemo, useState } from "react";
 import { AppContext } from "src/contexts/AppContext";
+import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { Category } from "src/models/category";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { ConfirmDialog } from "../utils/ConfirmDialog";
+import { FormDialog } from "../utils/FormDialog";
+import snackbar from 'src/SnackbarUtils';
+import { CategoryService } from "src/services/category-service";
+import { CategoryForm } from "../category/CategoryForm";
 
 // Styles
 const useStyles = makeStyles((theme: Theme) => 
@@ -39,6 +46,14 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '100%',
         justifyContent: 'space-between'
       }
+    },
+    listItemSecondaryAction: {
+      visibility: 'hidden'
+    },
+    listItem: {
+      '&:hover $listItemSecondaryAction': {
+        visibility: "inherit"
+      }
     }
   })
 );
@@ -51,12 +66,64 @@ interface SidebarProps {
   handleOpen: () => void,
   handleCategoryChange: (category: Category) => void,
   selectedCategory?: Category,
+  refresh: () => void
 }
 
 
-export function Sidebar({switchView, handleOpen, selectedCategory, handleCategoryChange}: any) {
+export function Sidebar({
+  switchView, 
+  handleOpen, 
+  selectedCategory, 
+  handleCategoryChange, 
+  refresh=() => {}
+}: SidebarProps) {
+  // Services
+  const categoryService = useMemo(() => new CategoryService(), []);
+
   // State
   const context = useContext(AppContext);
+  const categoryMenu = usePopupState({ variant: 'popover', popupId: 'activityMenu' });
+  const [categoryActiveMenu, setCategoryActiveMenu] = useState<Category | undefined>(undefined);
+  const [editDialogState, setEditDialogState] = useState(false);
+  const [deleteDialogState, setDeleteDialogState] = useState(false);
+
+
+  // Extend onClick menu event
+  function onMenuClick(cat: Category, event: SyntheticEvent): void {
+    setCategoryActiveMenu(cat);
+    bindTrigger(categoryMenu).onClick(event);
+  }
+
+  function onMenuEdit(): void {
+    setEditDialogState(true);
+    categoryMenu.setOpen(false);
+  }
+
+  function onMenuDelete(): void {
+    setDeleteDialogState(true);
+    categoryMenu.setOpen(false);
+  }
+
+  function handleEdit(response?: Category, updated = false): void {
+    setEditDialogState(false);
+
+    if (updated) {
+      refresh();
+    }
+  }
+
+  /**
+   * Deletes an activity instance
+   */
+  function deleteCategory(categoryId: number): void {
+    categoryService.delete(categoryId).subscribe(() => {
+      setDeleteDialogState(false);
+      refresh();
+
+      snackbar.success('Activity instance deleted successfully');
+    });
+  }
+
 
   // Render
   const classes = useStyles();
@@ -84,8 +151,22 @@ export function Sidebar({switchView, handleOpen, selectedCategory, handleCategor
               key={category.id} 
               selected={category === selectedCategory} 
               button 
-              onClick={() => handleCategoryChange(category)}>
+              onClick={() => handleCategoryChange(category)}
+              classes={{
+                container: classes.listItem
+              }}
+            >
               <ListItemText primary={category.name} />
+
+              <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
+                <IconButton
+                  aria-label="Category menu"
+                  {...bindTrigger(categoryMenu)}
+                  onClick={(event) => onMenuClick(category, event)}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
             </ListItem>
           ))}
         </List>
@@ -97,6 +178,33 @@ export function Sidebar({switchView, handleOpen, selectedCategory, handleCategor
           <SettingsIcon />
         </Button>
       </div>
+
+      {categoryActiveMenu &&
+        <Menu {...bindMenu(categoryMenu)}>
+          <MenuItem onClick={onMenuEdit}>Edit</MenuItem>
+          <MenuItem onClick={onMenuDelete}>Delete</MenuItem>
+        </Menu>
+      }
+
+      {/* DIALOGS */}
+      {categoryActiveMenu && <>
+        <ConfirmDialog
+          title="Delete activity instance"
+          message={`Are you sure you want to delete category ${categoryActiveMenu.name}?`}
+          isOpen={deleteDialogState}
+          onConfirm={() => deleteCategory(categoryActiveMenu!.id!)}
+          onClose={() => setDeleteDialogState(false)}
+        />
+
+        <FormDialog 
+          title="Edit category"
+          formId="categoryForm"
+          isOpen={editDialogState}
+          onClose={() => setEditDialogState(false)}
+        >
+          <CategoryForm categoryId={categoryActiveMenu.id} postSubmit={handleEdit} />
+        </FormDialog>
+      </>}
     </div>
-)
+  )
 }

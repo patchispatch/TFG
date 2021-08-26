@@ -89,6 +89,7 @@ function App() {
   function reloadContext() {
     setLoaded(false);
     categoryService.list().subscribe(response => {
+      setSelectedCategory(undefined);
       setCategoryList(response);
       setLoaded(true);
     });
@@ -161,6 +162,7 @@ function App() {
                   handleOpen={handleOpen}
                   selectedCategory={selectedCategory}
                   handleCategoryChange={handleCategoryChange}
+                  refresh={reloadContext}
                 />
               </Drawer>
 
