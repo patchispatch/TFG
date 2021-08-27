@@ -151,7 +151,7 @@ export function ActivityTable({activities, instances, refresh=() => {}}: Activit
         <Divider orientation="vertical" flexItem />
 
         {[...Array(7).keys()].map((day: number) => (<Fragment key={day}>
-          <Grid container item spacing={1} direction='column' justify='flex-start'>
+          <Grid container item spacing={1} direction='column' justifyContent='flex-start'>
 
             {day === new Date().getDay() 
             ?

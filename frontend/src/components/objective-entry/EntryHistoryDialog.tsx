@@ -1,4 +1,4 @@
-import { Button, createStyles, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, makeStyles, Theme } from '@material-ui/core';
+import { createStyles, Dialog, DialogContent, DialogTitle, Divider, IconButton, makeStyles, Theme } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import * as React from 'react';
 import { Category } from 'src/models/category';

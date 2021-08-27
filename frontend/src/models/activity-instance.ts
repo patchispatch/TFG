@@ -1,4 +1,4 @@
-import { autoserializeAs, deserializeAs, onDeserialized, serializeAs } from "dcerialize";
+import { autoserializeAs, onDeserialized } from "dcerialize";
 
 /**
  * Activity instance model

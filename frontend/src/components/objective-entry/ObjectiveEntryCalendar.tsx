@@ -56,7 +56,7 @@ export function ObjectiveEntryCalendar({
       daysFilters.category = category;
 
     objectiveEntryService.days(daysFilters).subscribe(response => setEntryDayList(response.days))
-  }, [currentMonth, category])
+  }, [currentMonth, category, objectiveEntryService, setEntryDayList])
 
   // Render
   const classes = useStyles();

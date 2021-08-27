@@ -2,11 +2,8 @@ import * as React from 'react';
 import {useMemo, useState, useEffect, useContext} from 'react';
 import { useForm, Controller } from 'react-hook-form'
 import {ObjectiveService} from 'src/services/objective-service';
-import {CategoryService} from 'src/services/category-service';
-import { Category } from 'src/models/category';
 import { Objective } from 'src/models/objective';
-import { CircularProgress, createStyles, LinearProgress, makeStyles, MenuItem, TextField, Theme } from '@material-ui/core';
-import { useSnackbar } from 'notistack';
+import { CircularProgress, createStyles, makeStyles, MenuItem, TextField, Theme } from '@material-ui/core';
 import snackbar from 'src/SnackbarUtils';
 import { AppContext } from 'src/contexts/AppContext';
 
@@ -64,7 +61,7 @@ export function ObjectiveForm({objectiveId, postSubmit}: ObjectiveFormProps) {
   // State
   const [objective, setObjective] = useState<Objective>();
   const [loaded, setLoaded] = useState<boolean>(true);
-  const {categoryList, setCategoryList} = useContext(AppContext);
+  const {categoryList} = useContext(AppContext);
 
 
   // Form control

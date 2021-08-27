@@ -8,9 +8,9 @@ export const SnackbarUtilsConfigurator: React.FC = () => {
   return null
 }
 
-// Export no-named default so consumer can name as desired/requirer
+// Export default so consumer can name as desired/requirer
 
-export default {
+const snackbars = {
   success(msg: string, options: OptionsObject = {}): void {
     this.toast(msg, { ...options, variant: "success" })
   },
@@ -31,3 +31,5 @@ export default {
     snackbarRef.enqueueSnackbar(msg, options)
   },
 }
+
+export default snackbars;

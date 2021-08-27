@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useMemo, useState, useEffect} from 'react';
+import {useMemo} from 'react';
 import { useForm, Controller } from 'react-hook-form'
 import {ObjectiveService} from 'src/services/objective-service';
 import { createStyles, makeStyles, TextField, Theme } from '@material-ui/core';

@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { AppBar, createStyles, Fab, FormControl, InputLabel, makeStyles, Select, Toolbar, Typography, MenuItem } from "@material-ui/core";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { AppBar, createStyles, Fab, makeStyles, Toolbar, Typography} from "@material-ui/core";
 import { Theme } from "@material-ui/core";
 import { ActivityService } from "src/services/activity-service";
 import { Activity } from "src/models/activity";
@@ -69,7 +69,7 @@ export function ActivityView() {
   }
 
   // Refresh activity and instance list
-  function refreshList(): void {
+  const refreshList = useCallback(() => {
     setActivityLoaded(false);
     forkJoin({
       activities: activityService.list(),
@@ -79,12 +79,12 @@ export function ActivityView() {
       setInstanceList(instances);
       setActivityLoaded(true);
     });
-  }
+  },[activityService, instanceService]);
 
   // On init
   useEffect(() => {
     refreshList();
-  }, [])
+  }, [refreshList])
 
   // Render
   const classes = useStyles();

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './App.css';
 import 'react-calendar/dist/Calendar.css';
-import { Button, CircularProgress, createStyles, CssBaseline, Drawer, makeStyles, Theme, ThemeProvider } from '@material-ui/core';
+import { CircularProgress, createStyles, CssBaseline, Drawer, makeStyles, Theme, ThemeProvider } from '@material-ui/core';
 import { defaultTheme } from 'src/theme';
 import { ObjectiveView } from './components/objective/ObjectiveView';
 import { SnackbarProvider } from 'notistack';
@@ -17,9 +17,8 @@ import { useEffect } from 'react';
 import { useMemo } from 'react';
 import { CategoryService } from './services/category-service';
 import { Category } from './models/category';
-import { delay } from 'rxjs/operators';
 import { Sidebar } from './components/view/Sidebar';
-import { useContext } from 'react';
+import { useCallback } from 'react';
 
 // Styles
 const drawerWidth = 400;
@@ -86,14 +85,14 @@ function App() {
   /**
    * Refreshes the application context content
    */
-  function reloadContext() {
+  const reloadContext = useCallback(() => {
     setLoaded(false);
     categoryService.list().subscribe(response => {
       setSelectedCategory(undefined);
       setCategoryList(response);
       setLoaded(true);
     });
-  }
+  }, [categoryService]);
 
   const [categoryList, setCategoryList] = useState<Category[]>([]);
   const appContext: AppContextTypes = {categoryList, setCategoryList, reloadContext};
@@ -103,7 +102,7 @@ function App() {
    */
   useEffect(() => {
     reloadContext();
-  }, [])
+  }, [reloadContext])
 
 
   function handleOpen(): void {
@@ -120,11 +119,6 @@ function App() {
   function handleViewChange(view: AppView): void {
     setSelectedCategory(undefined);
     setView(view);
-  }
-
-  // Switch view
-  function switchView(): void {
-    view === AppView.OBJECTIVES ? handleViewChange(AppView.ACTIVITIES) : handleViewChange(AppView.OBJECTIVES);
   }
 
   /**
@@ -158,7 +152,8 @@ function App() {
                 anchor="left"
               >
                 <Sidebar 
-                  switchView={switchView} 
+                  view={view}
+                  switchView={handleViewChange} 
                   handleOpen={handleOpen}
                   selectedCategory={selectedCategory}
                   handleCategoryChange={handleCategoryChange}

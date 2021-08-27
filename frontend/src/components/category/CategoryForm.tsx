@@ -1,10 +1,8 @@
 import * as React from 'react';
 import {useMemo, useState, useEffect, useContext} from 'react';
 import { useForm, Controller } from 'react-hook-form'
-import {ObjectiveService} from 'src/services/objective-service';
 import {CategoryService} from 'src/services/category-service';
 import { Category } from 'src/models/category';
-import { Objective } from 'src/models/objective';
 import { CircularProgress, createStyles, makeStyles, MenuItem, TextField, Theme } from '@material-ui/core';
 import snackbar from 'src/SnackbarUtils';
 import { toTitleCase } from 'src/utils';
@@ -91,7 +89,7 @@ export function CategoryForm({categoryId, postSubmit}: CategoryFormProps) {
         setLoaded(true);
       });
     }
-  }, [categoryService, categoryId, categoryService, reset])
+  }, [categoryService, categoryId, reset])
 
 
   // On submit

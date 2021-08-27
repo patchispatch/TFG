@@ -1,4 +1,4 @@
-import { Card, CardContent, Chip, makeStyles, Typography } from '@material-ui/core';
+import { Card, CardContent, makeStyles, Typography } from '@material-ui/core';
 import * as React from 'react';
 import { useContext } from 'react';
 import { useCallback, useEffect } from 'react';
@@ -8,7 +8,6 @@ import { Category } from 'src/models/category';
 import { Objective } from 'src/models/objective';
 import { ObjectiveEntry } from 'src/models/objective-entry';
 import { convertToMap, ModelMap } from 'src/models/shared';
-import { CategoryService } from 'src/services/category-service';
 import { ObjectiveEntryParameters, ObjectiveEntryService } from 'src/services/objective-entry-service';
 import { ObjectiveService } from 'src/services/objective-service';
 import { CategoryChip } from '../category/CategoryChip';
@@ -81,7 +80,7 @@ export function ObjectiveEntryHistory({date, category}: EntryHistoryProps) {
         setLoaded(true);
       })
     });
-  }, [date, objectiveService, objectiveEntryService]);
+  }, [date, objectiveService, objectiveEntryService, category]);
 
   // On init
   useEffect(() => {
@@ -90,7 +89,7 @@ export function ObjectiveEntryHistory({date, category}: EntryHistoryProps) {
 
     // Load entry info
     loadEntryInfo();
-  }, [loadEntryInfo]);
+  }, [loadEntryInfo, categoryList]);
 
   // On day change
   useEffect(() => {

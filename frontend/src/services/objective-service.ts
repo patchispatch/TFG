@@ -1,7 +1,7 @@
 import axios from 'axios-observable';
 import { Deserialize, DeserializeArray, IJsonArray, IJsonObject, Serialize } from 'dcerialize';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { ObjectiveEntry } from 'src/models/objective-entry';
 import { Objective } from '../models/objective';
 import { CRUDL } from './crudl';

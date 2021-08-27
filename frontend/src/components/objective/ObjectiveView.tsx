@@ -10,6 +10,7 @@ import { Objective } from "src/models/objective";
 import { ObjectiveFilter } from "src/models/shared";
 import { Add } from "@material-ui/icons";
 import { Category } from "src/models/category";
+import { useCallback } from "react";
 
 
 // Styles
@@ -84,7 +85,7 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
   }
 
   // Refresh objective list
-  function refreshList(): void {
+  const refreshList = useCallback(() => {
     setObjLoaded(false);
     const listFilters: ObjectiveListParams = {filter: filter};
     if (category)
@@ -94,7 +95,7 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
       setObjectiveList(response);
       setObjLoaded(true);
     });
-  }
+  }, [category, filter, objectiveService]);
 
   // Filter
   function handleFilter(event: ChangeEvent<{value: unknown}>) {
@@ -105,7 +106,7 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
   // On init, filter and category change
   useEffect(() => {
     refreshList();
-  }, [filter, category])
+  }, [refreshList])
 
   // Render
   const classes = useStyles();

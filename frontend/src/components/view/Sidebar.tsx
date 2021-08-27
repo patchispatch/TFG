@@ -1,5 +1,5 @@
 import { Button, createStyles, Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, Menu, MenuItem, Theme, Typography } from "@material-ui/core"
-import { SyntheticEvent, useContext, useMemo, useState } from "react";
+import { SyntheticEvent, useContext, useMemo, useState, MouseEvent } from "react";
 import { AppContext } from "src/contexts/AppContext";
 import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -10,11 +10,19 @@ import { FormDialog } from "../utils/FormDialog";
 import snackbar from 'src/SnackbarUtils';
 import { CategoryService } from "src/services/category-service";
 import { CategoryForm } from "../category/CategoryForm";
+import { ClockCalendar } from "./ClockCalendar";
+import AddIcon from '@material-ui/icons/Add';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import { AppView } from "src/models/shared";
 
 // Styles
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
     root: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
       '& .MuiDivider-root': {
         margin: '2em 0',
         overflow: 'hidden',
@@ -23,23 +31,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     clockContainer: {
       marginBottom: '2em',
-      background: '#eee',
-      height: '12em',
-    },
-    buttons: {
-      display: 'block',
     },
     categoryMenu: {
-      marginTop: '2em',
       overflowX: 'hidden',
       overflowY: 'auto',
     },
     settingsButton: {
-      display: 'flex',
-      position: 'sticky',
-      button: 0,
-      alignSelf: 'flex-end',
-
+      marginTop: 'auto',
       '& .MuiButton-root': {
         display: 'flex',
         flexDirection: 'row',
@@ -54,6 +52,21 @@ const useStyles = makeStyles((theme: Theme) =>
       '&:hover $listItemSecondaryAction': {
         visibility: "inherit"
       }
+    },
+    listButton: {
+      '&:hover': {
+        color: theme.palette.primary.main
+      }
+    },
+    listLeftIcon: {
+      display: 'flex',
+      justifyContent: 'center',
+      marginRight: '1em'
+    },
+    toggleButtonGroup: {
+      '& .MuiToggleButton-root': {
+        padding: '0.5em 1em',
+      }
     }
   })
 );
@@ -62,7 +75,8 @@ const useStyles = makeStyles((theme: Theme) =>
  * Props
  */
 interface SidebarProps {
-  switchView: () => void,
+  view: AppView,
+  switchView: (view: AppView) => void,
   handleOpen: () => void,
   handleCategoryChange: (category: Category) => void,
   selectedCategory?: Category,
@@ -71,6 +85,7 @@ interface SidebarProps {
 
 
 export function Sidebar({
+  view,
   switchView, 
   handleOpen, 
   selectedCategory, 
@@ -86,6 +101,14 @@ export function Sidebar({
   const [categoryActiveMenu, setCategoryActiveMenu] = useState<Category | undefined>(undefined);
   const [editDialogState, setEditDialogState] = useState(false);
   const [deleteDialogState, setDeleteDialogState] = useState(false);
+
+  /**
+   * Handles view change event
+   */
+  function handleViewChange(event: MouseEvent<HTMLElement>, newView: AppView): void {
+    if (newView !== null)
+      switchView(newView);
+  }
 
 
   // Extend onClick menu event
@@ -130,12 +153,23 @@ export function Sidebar({
   return (
     <div className={classes.root}>
       <div className={classes.clockContainer}>
+        <ClockCalendar />
       </div>
 
-      <div className={classes.buttons}>
-        <Button variant="contained" color="secondary" onClick={switchView}>Switch view</Button>
-
-        <Button variant="contained" color="primary" onClick={handleOpen}>New category</Button>
+      <div>
+        <ToggleButtonGroup
+          className={classes.toggleButtonGroup}
+          value={view}
+          exclusive
+          onChange={handleViewChange}
+        >
+          <ToggleButton value={AppView.OBJECTIVES}>
+            Objectives
+          </ToggleButton>
+          <ToggleButton value={AppView.ACTIVITIES}>
+            Activities
+          </ToggleButton>
+        </ToggleButtonGroup>
       </div>
 
       <Divider />
@@ -169,6 +203,12 @@ export function Sidebar({
               </ListItemSecondaryAction>
             </ListItem>
           ))}
+
+          {/* New category button */}
+          <ListItem className={classes.listButton} button onClick={handleOpen}>
+            <span className={classes.listLeftIcon}><AddIcon /></span>
+            New category
+          </ListItem>
         </List>
       </div>
 

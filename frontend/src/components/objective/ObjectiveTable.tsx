@@ -59,7 +59,7 @@ export function ObjectiveTable({objectives, loaded=true, refresh=() => {}}: Obje
     });
 
     refresh();
-  }, [categoryService])
+  }, [categoryService, refresh])
 
 
   // On objective update
