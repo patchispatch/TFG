@@ -153,7 +153,7 @@ export function ActivityTable({activities, instances, refresh=() => {}}: Activit
         {[...Array(7).keys()].map((day: number) => (<Fragment key={day}>
           <Grid container item spacing={1} direction='column' justifyContent='flex-start'>
 
-            {day === new Date().getDay() 
+            {day === new Date().getDay() - 1
             ?
               <Chip 
                 classes={{root: classes.dayHeader}}

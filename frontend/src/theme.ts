@@ -57,16 +57,16 @@ const darkBlueTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: '#66bb6a',
-      light: '#98ee99',
-      dark: '#338ae3',
-      contrastText: '#000000',
+      main: '#1976d2',
+      light: '#63a4ff',
+      dark: '#004ba0',
+      contrastText: '#ffffff',
     },
     secondary: {
-      main: '#8d6e63',
-      light: '#be9c91',
-      dark: '#5f4339',
-      contrastText: '#ffffff',
+      main: '#f06292',
+      light: '#ff94c2',
+      dark: '#ba2d65',
+      contrastText: '#000000',
     },
   },
 });

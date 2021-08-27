@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
-import { AppBar, createStyles, Fab, FormControl, InputLabel, makeStyles, Select, Toolbar, Typography, MenuItem } from "@material-ui/core";
+import { AppBar, createStyles, Fab, FormControl, InputLabel, makeStyles, Select, Toolbar, Typography, MenuItem, ThemeProvider } from "@material-ui/core";
 import { ObjectiveTable } from "./ObjectiveTable";
 import { Theme } from "@material-ui/core";
 import { ObjectiveForm } from "./ObjectiveForm";
@@ -11,6 +11,7 @@ import { ObjectiveFilter } from "src/models/shared";
 import { Add } from "@material-ui/icons";
 import { Category } from "src/models/category";
 import { useCallback } from "react";
+import { ColorDataMap, defaultTheme } from "src/theme";
 
 
 // Styles
@@ -112,6 +113,7 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
   const classes = useStyles();
   return (
     <>
+    <ThemeProvider theme={category ? ColorDataMap[category.color].theme : defaultTheme}>
       <AppBar elevation={0} position="sticky">
         <Toolbar>
           <Typography variant="h6">
@@ -176,6 +178,7 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
           <ObjectiveForm postSubmit={handleClose} />
         </FormDialog>
       </div>
+      </ThemeProvider>
     </>
   )
 }
