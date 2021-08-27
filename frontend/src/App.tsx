@@ -116,9 +116,10 @@ function App() {
   /**
    * Handle view change
    */
-  function handleViewChange(view: AppView): void {
+  function handleViewChange(view: AppView | null): void {
     setSelectedCategory(undefined);
-    setView(view);
+    if (view !== null)
+      setView(view);
   }
 
   /**

@@ -106,8 +106,7 @@ export function Sidebar({
    * Handles view change event
    */
   function handleViewChange(event: MouseEvent<HTMLElement>, newView: AppView): void {
-    if (newView !== null)
-      switchView(newView);
+    switchView(newView);
   }
 
 
