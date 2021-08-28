@@ -21,16 +21,16 @@ export const defaultTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: '#66bb6a',
-      light: '#98ee99',
-      dark: '#338ae3',
+      main: '#aed581',
+      light: '#e1ffb1',
+      dark: '#7da453',
       contrastText: '#000000',
     },
     secondary: {
-      main: '#8d6e63',
-      light: '#be9c91',
-      dark: '#5f4339',
-      contrastText: '#ffffff',
+      main: '#a1887f',
+      light: '#d3b8ae',
+      dark: '#725b53',
+      contrastText: '#000000',
     },
   },
 });
@@ -75,16 +75,16 @@ const lightGreenTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: '#66bb6a',
-      light: '#98ee99',
-      dark: '#338ae3',
+      main: '#aed581',
+      light: '#e1ffb1',
+      dark: '#7da453',
       contrastText: '#000000',
     },
     secondary: {
-      main: '#8d6e63',
-      light: '#be9c91',
-      dark: '#5f4339',
-      contrastText: '#ffffff',
+      main: '#a1887f',
+      light: '#d3b8ae',
+      dark: '#725b53',
+      contrastText: '#000000',
     },
   },
 });
@@ -93,15 +93,15 @@ const darkGreenTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: '#66bb6a',
-      light: '#98ee99',
-      dark: '#338ae3',
+      main: '#81c784',
+      light: '#b2fab4',
+      dark: '#519657',
       contrastText: '#000000',
     },
     secondary: {
-      main: '#8d6e63',
-      light: '#be9c91',
-      dark: '#5f4339',
+      main: '#795548',
+      light: '#a98274',
+      dark: '#4b2c20',
       contrastText: '#ffffff',
     },
   },
@@ -111,15 +111,15 @@ const lightPinkTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: '#66bb6a',
-      light: '#98ee99',
-      dark: '#338ae3',
+      main: '#f8bbd0',
+      light: '#ffeeff',
+      dark: '#c48b9f',
       contrastText: '#000000',
     },
     secondary: {
-      main: '#8d6e63',
-      light: '#be9c91',
-      dark: '#5f4339',
+      main: '#80deea',
+      light: '#b4ffff',
+      dark: '#4bacb8',
       contrastText: '#ffffff',
     },
   },
@@ -129,16 +129,16 @@ const darkPinkTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: '#66bb6a',
-      light: '#98ee99',
-      dark: '#338ae3',
+      main: '#f06292',
+      light: '#ff94c2',
+      dark: '#ba2d65',
       contrastText: '#000000',
     },
     secondary: {
-      main: '#8d6e63',
-      light: '#be9c91',
-      dark: '#5f4339',
-      contrastText: '#ffffff',
+      main: '#42a5f5',
+      light: '#80d6ff',
+      dark: '#0077c2',
+      contrastText: '#000000',
     },
   },
 });
@@ -147,16 +147,16 @@ const lightYellowTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: '#66bb6a',
-      light: '#98ee99',
-      dark: '#338ae3',
+      main: '#fff176',
+      light: '#ffffa8',
+      dark: '#cabf45',
       contrastText: '#000000',
     },
     secondary: {
-      main: '#8d6e63',
-      light: '#be9c91',
-      dark: '#5f4339',
-      contrastText: '#ffffff',
+      main: '#ff8a65',
+      light: '#ffbb93',
+      dark: '#c75b39',
+      contrastText: '#000000',
     },
   },
 });
@@ -165,15 +165,15 @@ const darkYellowTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: '#66bb6a',
-      light: '#98ee99',
-      dark: '#338ae3',
+      main: '#fdd835',
+      light: '#ffff6b',
+      dark: '#c6a700',
       contrastText: '#000000',
     },
     secondary: {
-      main: '#8d6e63',
-      light: '#be9c91',
-      dark: '#5f4339',
+      main: '#4e342e',
+      light: '#7b5e57',
+      dark: '#260e04',
       contrastText: '#ffffff',
     },
   },
@@ -183,16 +183,16 @@ const lightPurpleTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: '#66bb6a',
-      light: '#98ee99',
-      dark: '#338ae3',
+      main: '#b39ddb',
+      light: '#e6ceff',
+      dark: '#836fa9',
       contrastText: '#000000',
     },
     secondary: {
-      main: '#8d6e63',
-      light: '#be9c91',
-      dark: '#5f4339',
-      contrastText: '#ffffff',
+      main: '#f48fb1',
+      light: '#ffc1e3',
+      dark: '#bf5f82',
+      contrastText: '#000000',
     },
   },
 });
@@ -201,15 +201,15 @@ const darkPurpleTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: '#66bb6a',
-      light: '#98ee99',
-      dark: '#338ae3',
-      contrastText: '#000000',
+      main: '#7e57c2',
+      light: '#b085f5',
+      dark: '#4d2c91',
+      contrastText: '#ffffff',
     },
     secondary: {
-      main: '#8d6e63',
-      light: '#be9c91',
-      dark: '#5f4339',
+      main: '#ffd54f',
+      light: '#ffff81',
+      dark: '#c8a415',
       contrastText: '#ffffff',
     },
   },
