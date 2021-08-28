@@ -1,9 +1,11 @@
 from datetime import date
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import viewsets, status
+from rest_framework import mixins, viewsets, status
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from drf_spectacular.types import OpenApiTypes
+from rest_framework.views import APIView
+from core.models.settings import Settings
 
 from core.types import ObjectiveFilter
 from .models import *
@@ -205,3 +207,24 @@ class ActivityInstanceViewSet(viewsets.ModelViewSet):
     queryset = ActivityInstance.objects.all()
     serializer_class = ActivityInstanceSerializer
 
+# Settings endpoints
+class SettingsViewSet(viewsets.GenericViewSet):
+    queryset = Settings.objects.all()
+    serializer_class = SettingsSerializer
+
+    @action(detail=False, methods=['get'])
+    def get(self, request):
+        settings = Settings.objects.first()
+        serializer = SettingsSerializer(settings)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['put'], url_path='update')
+    def upd(self, request):
+        settings = Settings.objects.first()
+        serializer = SettingsSerializer(data=request.data)
+        if serializer.is_valid():
+            settings.weekly_reset_day = serializer.data['weekly_reset_day']
+            settings.theme = serializer.data['theme']
+            settings.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

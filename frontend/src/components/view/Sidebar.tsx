@@ -16,6 +16,7 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import { AppView } from "src/models/shared";
 import { ObjectiveSuggestions } from "../objective/ObjectiveSuggestions";
+import { SettingsForm } from "../settings/SettingsForm";
 
 // Styles
 const useStyles = makeStyles((theme: Theme) => 
@@ -103,6 +104,7 @@ export function Sidebar({
   const [categoryActiveMenu, setCategoryActiveMenu] = useState<Category | undefined>(undefined);
   const [editDialogState, setEditDialogState] = useState(false);
   const [deleteDialogState, setDeleteDialogState] = useState(false);
+  const [settingsDialogState, setSettingsDialogState] = useState(false);
 
   /**
    * Handles view change event
@@ -110,6 +112,7 @@ export function Sidebar({
   function handleViewChange(event: MouseEvent<HTMLElement>, newView: AppView): void {
     switchView(newView);
   }
+
 
 
   // Extend onClick menu event
@@ -217,7 +220,7 @@ export function Sidebar({
       </ListItem>
 
       <div className={classes.settingsButton} >
-        <Button>
+        <Button onClick={() => setSettingsDialogState(true)}>
           <span>Settings</span>
           <SettingsIcon />
         </Button>
@@ -249,6 +252,15 @@ export function Sidebar({
           <CategoryForm categoryId={categoryActiveMenu.id} postSubmit={handleEdit} />
         </FormDialog>
       </>}
+
+      <FormDialog 
+        title="New objective"
+        formId="settingsForm"
+        isOpen={settingsDialogState}
+        onClose={() => setSettingsDialogState(false)}
+      >
+        <SettingsForm />
+      </FormDialog>
     </div>
   )
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import './App.css';
 import 'react-calendar/dist/Calendar.css';
 import { CircularProgress, createStyles, CssBaseline, Drawer, makeStyles, Theme, ThemeProvider } from '@material-ui/core';
-import { defaultTheme } from 'src/theme';
+import { ColorDataMap, defaultTheme } from 'src/theme';
 import { ObjectiveView } from './components/objective/ObjectiveView';
 import { SnackbarProvider } from 'notistack';
 import Grow from '@material-ui/core/Grow';
@@ -19,6 +19,7 @@ import { CategoryService } from './services/category-service';
 import { Category } from './models/category';
 import { Sidebar } from './components/view/Sidebar';
 import { useCallback } from 'react';
+import { SettingsService } from './services/settings-service';
 
 // Styles
 const drawerWidth = 400;
@@ -57,6 +58,7 @@ function App() {
 
   // Services
   const categoryService = useMemo(() => new CategoryService(), []);
+  const settingsService = useMemo(() => new SettingsService(), []);
 
   // State
   /**
@@ -74,12 +76,8 @@ function App() {
    */
   const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(undefined);
 
-  // Category form things
-  // TODO: move drawer to separate component
+  // Category form dialog
   let [dialogState, setDialogState] = useState(false);
-
-  // Initialize app context
-  // TODO: settings
 
   /**
    * Refreshes the application context content
@@ -91,10 +89,23 @@ function App() {
       setCategoryList(response);
       setLoaded(true);
     });
-  }, [categoryService]);
+
+    settingsService.get().subscribe(response => {
+      setTheme(ColorDataMap[response.theme].theme);
+      setResetDay(response.resetDay);
+    })
+  }, [categoryService, settingsService]);
 
   const [categoryList, setCategoryList] = useState<Category[]>([]);
-  const appContext: AppContextTypes = {categoryList, setCategoryList, reloadContext};
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
+  const [resetDay, setResetDay] = useState<number>(0);
+  const appContext: AppContextTypes = {
+    categoryList: categoryList, 
+    setCategoryList: setCategoryList, 
+    reloadContext: reloadContext,
+    currentTheme: theme,
+    resetDay: resetDay
+  };
 
   /**
    * Load context on app render
@@ -129,7 +140,7 @@ function App() {
   }
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme}>
       <SnackbarProvider 
         /* 
         // @ts-ignore */

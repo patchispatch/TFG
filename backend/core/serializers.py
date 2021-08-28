@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from .models.settings import Settings
 from .models.activity_instance import ActivityInstance
 from .models.objective import Objective
 from .models.category import Category
@@ -52,3 +53,9 @@ class ActivityInstanceSerializer(serializers.ModelSerializer):
 
 class ObjectiveEntryDaysSerializer(serializers.Serializer):
     days = serializers.ListField(child=serializers.IntegerField())
+
+
+class SettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Settings
+        fields = '__all__'

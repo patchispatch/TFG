@@ -6,7 +6,7 @@ class ObjectiveFilter(Enum):
   IN_PROGRESS = 'in-progress'
   COMPLETED = 'completed'
 
-class CategoryColor(Enum):
+class Color(Enum):
   DEFAULT = 'default'
   LIGHT_BLUE = 'light_blue'
   DARK_BLUE = 'dark_blue'
@@ -18,3 +18,4 @@ class CategoryColor(Enum):
   DARK_YELLOW = 'dark_yellow'
   LIGHT_PURPLE = 'light_purple'
   DARK_PURPLE = 'dark_purple'
+  

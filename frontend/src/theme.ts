@@ -120,7 +120,7 @@ const lightPinkTheme = createMuiTheme({
       main: '#80deea',
       light: '#b4ffff',
       dark: '#4bacb8',
-      contrastText: '#ffffff',
+      contrastText: '#000000',
     },
   },
 });
@@ -210,7 +210,7 @@ const darkPurpleTheme = createMuiTheme({
       main: '#ffd54f',
       light: '#ffff81',
       dark: '#c8a415',
-      contrastText: '#ffffff',
+      contrastText: '#000000',
     },
   },
 });

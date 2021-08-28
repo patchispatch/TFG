@@ -12,6 +12,7 @@ router.register(r'categories', views.CategoryViewSet)
 router.register(r'objective-entries', views.ObjectiveEntryViewSet)
 router.register(r'activities', views.ActivityViewSet)
 router.register(r'activity-instances', views.ActivityInstanceViewSet)
+router.register(r'settings', views.SettingsViewSet)
 
 urlpatterns = [
     # Docs

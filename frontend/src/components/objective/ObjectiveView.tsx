@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useMemo, useState } from "react";
 import { AppBar, createStyles, Fab, FormControl, InputLabel, makeStyles, Select, Toolbar, Typography, MenuItem, ThemeProvider } from "@material-ui/core";
 import { ObjectiveTable } from "./ObjectiveTable";
 import { Theme } from "@material-ui/core";
@@ -11,7 +11,8 @@ import { ObjectiveFilter } from "src/models/shared";
 import { Add } from "@material-ui/icons";
 import { Category } from "src/models/category";
 import { useCallback } from "react";
-import { ColorDataMap, defaultTheme } from "src/theme";
+import { ColorDataMap } from "src/theme";
+import { AppContext } from "src/contexts/AppContext";
 
 
 // Styles
@@ -61,6 +62,7 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
   const [objLoaded, setObjLoaded] = useState<boolean>(false);
   const [objectiveList, setObjectiveList] = useState<Objective[]>([]);
   const [filter, setFilter] = useState<string>('');
+  const context = useContext(AppContext);
 
   // Calendar state
   const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth() + 1);
@@ -113,7 +115,7 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
   const classes = useStyles();
   return (
     <>
-    <ThemeProvider theme={category ? ColorDataMap[category.color].theme : defaultTheme}>
+    <ThemeProvider theme={category ? ColorDataMap[category.color].theme : context.currentTheme}>
       <AppBar elevation={0} position="sticky">
         <Toolbar>
           <Typography variant="h6">
@@ -161,7 +163,7 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
         </div>
 
         <div className={classes.fab}>
-          <Fab variant="extended" onClick={handleOpen} color="primary" aria-label="create">
+          <Fab variant="extended" onClick={handleOpen} color="secondary" aria-label="create">
             <Add className={classes.extendedIcon} />
             New objective
           </Fab>
