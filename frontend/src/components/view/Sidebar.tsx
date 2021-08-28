@@ -15,6 +15,7 @@ import AddIcon from '@material-ui/icons/Add';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import { AppView } from "src/models/shared";
+import { ObjectiveSuggestions } from "../objective/ObjectiveSuggestions";
 
 // Styles
 const useStyles = makeStyles((theme: Theme) => 
@@ -40,6 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: 'auto',
       '& .MuiButton-root': {
         display: 'flex',
+        marginTop: '2em',
         flexDirection: 'row',
         width: '100%',
         justifyContent: 'space-between'
@@ -173,11 +175,14 @@ export function Sidebar({
 
       <Divider />
 
-      <div className={classes.categoryMenu}>
-        <Typography variant='h6'>
-          Categories
-        </Typography>
+      <ObjectiveSuggestions />
 
+      <Divider />
+
+      <Typography variant='h6'>
+          Categories
+      </Typography>
+      <div className={classes.categoryMenu}>
         <List component="nav" aria-label="Category menu">
           {context.categoryList.map(category => (
             <ListItem 
@@ -202,14 +207,14 @@ export function Sidebar({
               </ListItemSecondaryAction>
             </ListItem>
           ))}
-
-          {/* New category button */}
-          <ListItem className={classes.listButton} button onClick={handleOpen}>
-            <span className={classes.listLeftIcon}><AddIcon /></span>
-            New category
-          </ListItem>
         </List>
       </div>
+
+      {/* New category button */}
+      <ListItem className={classes.listButton} button onClick={handleOpen}>
+        <span className={classes.listLeftIcon}><AddIcon /></span>
+        New category
+      </ListItem>
 
       <div className={classes.settingsButton} >
         <Button>

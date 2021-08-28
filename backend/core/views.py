@@ -98,6 +98,15 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
         serializer = ObjectiveSerializer(objective)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @action(detail=False, methods=['GET'])
+    def suggestions(self, request):
+        objectives = [obj for obj in Objective.objects.all() if not obj.is_complete()]
+        objectives.sort(key=lambda t: t.progress)
+        suggestions = objectives[::len(objectives)-1]
+
+        serializer = ObjectiveSerializer(suggestions, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 # ObjectiveEntry endpoints
 class ObjectiveEntryViewSet(viewsets.ModelViewSet):

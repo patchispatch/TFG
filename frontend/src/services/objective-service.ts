@@ -145,4 +145,18 @@ export class ObjectiveService implements CRUDL {
       }),
     );
   }
+
+  /**
+   * List objective suggestions
+   */
+  suggestions(): Observable<Objective[]> {
+    return axios.get<IJsonArray>(`${this.baseUrl}suggestions/`)
+    .pipe(
+      map(result => DeserializeArray(result.data, () => Objective)),
+      catchError(err => {
+        snackbar.error("Error retrieving objective list");
+        return throwError(err);
+      }),
+    );
+  }
 }
