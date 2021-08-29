@@ -41,3 +41,16 @@ export function fromHHmmToDate(time: string): Date {
   dt.setMinutes(parseInt(tempTime[1]));
   return dt;
 }
+
+/**
+ * Returns an array with days index starting at selected index
+ * @param day Day of start
+ */
+export function weekFromStart(day: number): number[] {
+  const daysList = []
+  for (let i = day; daysList.length < 7; i = (i + 1) % 7) {
+    daysList.push(i);
+  }
+
+  return daysList;
+}

@@ -14,7 +14,9 @@ import { FormDialog } from "../utils/FormDialog";
 import { ActivityInstanceEditForm } from "./ActivityInstanceEditForm";
 import snackbar from 'src/SnackbarUtils';
 import { CategoryChip } from "../category/CategoryChip";
-import { fromHHmmToDate } from "src/utils";
+import { fromHHmmToDate, weekFromStart } from "src/utils";
+import { useContext } from "react";
+import { AppContext } from "src/contexts/AppContext";
 
 
 // Styles
@@ -83,6 +85,7 @@ export function ActivityTable({activities, instances, refresh=() => {}}: Activit
   const [editDialogState, setEditDialogState] = useState(false);
   const [deleteDialogState, setDeleteDialogState] = useState(false);
   const activityMenu = usePopupState({ variant: 'popover', popupId: 'activityMenu' });
+  const context = useContext(AppContext);
 
 
   // On init
@@ -153,7 +156,7 @@ export function ActivityTable({activities, instances, refresh=() => {}}: Activit
 
         <Divider orientation="vertical" flexItem />
 
-        {[...Array(7).keys()].map((day: number) => (<Fragment key={day}>
+        {weekFromStart(context.resetDay).map((day: number) => (<Fragment key={day}>
           <Grid container item spacing={1} direction='column' justifyContent='flex-start'>
 
             {day === (new Date().getDay() + 6) % 7
