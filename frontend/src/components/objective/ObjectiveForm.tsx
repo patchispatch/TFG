@@ -14,23 +14,19 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: 'flex',
       flexDirection: 'column',
+      justifyContent: 'space-between',
       padding: theme.spacing(2),
-      minWidth: 120,
+      minWidth: 300,
       position: 'relative',
-
-      '& .MuiTextField-root': {
-        marginBottom: theme.spacing(2),
-      }
     },
     content: {
       display: 'flex',
-      alignItems: 'center',
       justifyContent: 'center',
       position: 'relative',
       overflow: 'hidden',
-      minHeight: '14em',
+      minHeight: '16em',
       minWidth: '14em',
-    }
+    },
   })
 );
 

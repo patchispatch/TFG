@@ -1,5 +1,6 @@
 import { autoserializeAs } from "dcerialize";
 import { Color } from "src/theme";
+import { AppView } from "./shared";
 
 /**
  * Objective model
@@ -15,6 +16,11 @@ export class Settings {
    */
   @autoserializeAs(() => String) theme: Color;
 
+  /**
+   * Objective title
+   */
+  @autoserializeAs(() => String, 'default_view') defaultView: AppView;
+
 
   /**
    * Constructor
@@ -22,8 +28,10 @@ export class Settings {
   constructor(
       resetDay: number,
       theme: Color,
+      defaultView: AppView
   ) {
       this.resetDay = resetDay;
       this.theme = theme;
+      this.defaultView = defaultView;
   }
 }

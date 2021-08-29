@@ -19,3 +19,6 @@ class Color(Enum):
   LIGHT_PURPLE = 'light_purple'
   DARK_PURPLE = 'dark_purple'
   
+class AppView(Enum):
+  OBJECTIVES = 'objectives'
+  ACTIVITIES = 'activities'

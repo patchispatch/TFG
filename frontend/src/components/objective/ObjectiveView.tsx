@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useContext, useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { AppBar, createStyles, Fab, FormControl, InputLabel, makeStyles, Select, Toolbar, Typography, MenuItem, ThemeProvider } from "@material-ui/core";
 import { ObjectiveTable } from "./ObjectiveTable";
 import { Theme } from "@material-ui/core";
@@ -13,6 +13,7 @@ import { Category } from "src/models/category";
 import { useCallback } from "react";
 import { ColorDataMap } from "src/theme";
 import { AppContext } from "src/contexts/AppContext";
+import { Subscription } from "rxjs";
 
 
 // Styles
@@ -64,6 +65,9 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
   const [filter, setFilter] = useState<string>('');
   const context = useContext(AppContext);
 
+  // Prevent unmounted update
+  const mounted = useRef(false);
+
   // Calendar state
   const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth() + 1);
   const [entryDayList, setEntryDayList] = useState<number[]>([]);
@@ -89,15 +93,21 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
 
   // Refresh objective list
   const refreshList = useCallback(() => {
-    setObjLoaded(false);
-    const listFilters: ObjectiveListParams = {filter: filter};
-    if (category)
-      listFilters.category = category;
+    if (mounted.current) {
+      setObjLoaded(false);
+      const listFilters: ObjectiveListParams = {filter: filter};
+      if (category)
+        listFilters.category = category;
+  
+      const objList = objectiveService.list(listFilters).subscribe(response => {
+        setObjectiveList(response);
+        setObjLoaded(true);
+      });
 
-    objectiveService.list(listFilters).subscribe(response => {
-      setObjectiveList(response);
-      setObjLoaded(true);
-    });
+      return objList;
+    }
+
+    return new Subscription();
   }, [category, filter, objectiveService]);
 
   // Filter
@@ -108,7 +118,18 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
 
   // On init, filter and category change
   useEffect(() => {
-    refreshList();
+    mounted.current = true;
+    let refresh = new Subscription();
+    if (mounted.current){
+      refresh = refreshList();
+    }
+
+    return (() => {
+      if (mounted){
+        refresh.unsubscribe();
+        mounted.current = false;
+      }
+    });
   }, [refreshList])
 
   // Render

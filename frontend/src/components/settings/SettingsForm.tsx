@@ -6,9 +6,9 @@ import { useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { AppContext } from 'src/contexts/AppContext';
 import { Settings } from 'src/models/settings';
-import { DaysOfWeek } from 'src/models/shared';
+import { DaysOfWeek, AppView } from 'src/models/shared';
 import { SettingsService } from 'src/services/settings-service';
-import { Color, defaultTheme } from 'src/theme';
+import { Color } from 'src/theme';
 import { toTitleCase } from 'src/utils';
 
 // Styles
@@ -17,30 +17,27 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: 'flex',
       flexDirection: 'column',
+      justifyContent: 'space-between',
       padding: theme.spacing(2),
-      minWidth: 120,
+      minWidth: 300,
       position: 'relative',
-
-      '& .MuiTextField-root': {
-        marginBottom: theme.spacing(2),
-      }
     },
     content: {
       display: 'flex',
-      alignItems: 'center',
       justifyContent: 'center',
       position: 'relative',
       overflow: 'hidden',
-      minHeight: '14em',
+      minHeight: '16em',
       minWidth: '14em',
-    }
+    },
   })
 );
 
 // Form values
 interface SettingsFormValues {
   resetDay: number,
-  theme: Color
+  theme: Color,
+  defaultView: AppView
 }
 
 
@@ -56,7 +53,8 @@ export function SettingsForm() {
   const {handleSubmit, control, reset} = useForm({
     defaultValues: {
       resetDay: 0,
-      theme: defaultTheme
+      theme: 'default',
+      defaultView: AppView.OBJECTIVES
     }
   });
 
@@ -66,7 +64,8 @@ export function SettingsForm() {
     settingsService.get().subscribe(response => {
       reset({
         resetDay: response.resetDay,
-        theme: response.theme
+        theme: response.theme,
+        defaultView: response.defaultView
       });
       setLoaded(true);
     });
@@ -76,7 +75,7 @@ export function SettingsForm() {
    * Update settings
    */
   function onSubmit(data: SettingsFormValues): void {
-    const settings = new Settings(data.resetDay, data.theme);
+    const settings = new Settings(data.resetDay, data.theme, data.defaultView);
     setLoaded(false);
     settingsService.update(settings).subscribe(response => {
       setLoaded(true);
@@ -130,6 +129,30 @@ export function SettingsForm() {
               InputLabelProps={{shrink: true}}
             > 
               {Object.values(Color).map((option) => (
+                <MenuItem key={option} value={option}>
+                  {toTitleCase(option)}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+        />
+
+        <Controller
+          name="defaultView"
+          control={control}
+          rules={{required: 'Default view required'}}
+          render={({field: {onChange, value}, fieldState: {error}}) => (
+            <TextField
+              select
+              label="Default view"
+              value={value}
+              onChange={onChange}
+              error={!!error}
+              helperText={error ? error.message : null}
+              inputProps={{displayEmpty: true}}
+              InputLabelProps={{shrink: true}}
+            > 
+              {Object.values(AppView).map((option) => (
                 <MenuItem key={option} value={option}>
                   {toTitleCase(option)}
                 </MenuItem>

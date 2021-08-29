@@ -225,6 +225,7 @@ class SettingsViewSet(viewsets.GenericViewSet):
         if serializer.is_valid():
             settings.weekly_reset_day = serializer.data['weekly_reset_day']
             settings.theme = serializer.data['theme']
+            settings.default_view = serializer.data['default_view']
             settings.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

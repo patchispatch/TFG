@@ -61,10 +61,6 @@ function App() {
   const settingsService = useMemo(() => new SettingsService(), []);
 
   // State
-  /**
-   * Selected application view
-   */
-  const [view, setView] = useState<AppView>(AppView.OBJECTIVES);
 
   /**
    * Loading status of the application context
@@ -93,19 +89,28 @@ function App() {
     settingsService.get().subscribe(response => {
       setTheme(ColorDataMap[response.theme].theme);
       setResetDay(response.resetDay);
+      setDefaultView(response.defaultView);
+      setView(response.defaultView);
     })
   }, [categoryService, settingsService]);
 
   const [categoryList, setCategoryList] = useState<Category[]>([]);
   const [theme, setTheme] = useState<Theme>(defaultTheme);
   const [resetDay, setResetDay] = useState<number>(0);
+  const [defaultView, setDefaultView] = useState<AppView>(AppView.OBJECTIVES);
   const appContext: AppContextTypes = {
     categoryList: categoryList, 
     setCategoryList: setCategoryList, 
     reloadContext: reloadContext,
     currentTheme: theme,
-    resetDay: resetDay
+    resetDay: resetDay,
+    defaultView: defaultView
   };
+
+  /**
+   * Selected application view
+   */
+  const [view, setView] = useState<AppView>(defaultView);
 
   /**
    * Load context on app render

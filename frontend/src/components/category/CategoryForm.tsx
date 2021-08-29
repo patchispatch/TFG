@@ -17,11 +17,11 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       padding: theme.spacing(2),
-      minWidth: 120,
+      minWidth: 300,
       position: 'relative',
 
       '& .MuiTextField-root': {
-        marginBottom: theme.spacing(2),
+        marginBottom: theme.spacing(3),
       }
     },
     content: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       position: 'relative',
       overflow: 'hidden',
-      minHeight: '14em',
+      minHeight: '12em',
       minWidth: '14em',
     }
   })

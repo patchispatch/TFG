@@ -55,7 +55,11 @@ export function ObjectiveEntryCalendar({
     if (category)
       daysFilters.category = category;
 
-    objectiveEntryService.days(daysFilters).subscribe(response => setEntryDayList(response.days))
+    const days = objectiveEntryService.days(daysFilters)
+      .subscribe(response => setEntryDayList(response.days))
+
+
+    return (() => days.unsubscribe());
   }, [currentMonth, category, objectiveEntryService, setEntryDayList])
 
   // Render

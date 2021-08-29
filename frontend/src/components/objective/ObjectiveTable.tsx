@@ -53,12 +53,14 @@ export function ObjectiveTable({objectives, loaded=true, refresh=() => {}}: Obje
   // On init
   useEffect(() => {
     setCatLoaded(false);
-    categoryService.list().subscribe(categories => {
+    const catList = categoryService.list().subscribe(categories => {
       setCategoryMap(convertToMap(categories));
       setCatLoaded(true);
     });
 
     refresh();
+
+    return (() => catList.unsubscribe());
   }, [categoryService, refresh])
 
 

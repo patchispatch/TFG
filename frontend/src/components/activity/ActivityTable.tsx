@@ -88,9 +88,11 @@ export function ActivityTable({activities, instances, refresh=() => {}}: Activit
   // On init
   useEffect(() => {
     // Load category list
-    categoryService.list().subscribe(categories =>  {
+    const catList = categoryService.list().subscribe(categories =>  {
       setCategoryMap(convertToMap(categories));
     });
+
+    return (() => catList.unsubscribe());
   }, [categoryService])
 
   // On activities prop change
