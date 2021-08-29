@@ -14,6 +14,7 @@ import { FormDialog } from "../utils/FormDialog";
 import { ActivityInstanceEditForm } from "./ActivityInstanceEditForm";
 import snackbar from 'src/SnackbarUtils';
 import { CategoryChip } from "../category/CategoryChip";
+import { fromHHmmToDate } from "src/utils";
 
 
 // Styles
@@ -153,7 +154,7 @@ export function ActivityTable({activities, instances, refresh=() => {}}: Activit
         {[...Array(7).keys()].map((day: number) => (<Fragment key={day}>
           <Grid container item spacing={1} direction='column' justifyContent='flex-start'>
 
-            {day === new Date().getDay() - 1
+            {day === (new Date().getDay() + 6) % 7
             ?
               <Chip 
                 classes={{root: classes.dayHeader}}
@@ -166,7 +167,8 @@ export function ActivityTable({activities, instances, refresh=() => {}}: Activit
               </div>
             }
 
-            {instances.filter((ins: ActivityInstance) => (ins.day === day)).map(ins => (
+            {instances.sort((a, b) => +fromHHmmToDate(a.startHour) - +fromHHmmToDate(b.startHour))
+                      .filter((ins: ActivityInstance) => (ins.day === day)).map(ins => (
               <div key={ins.id} className={classes.activityContainer}>
                 <IconButton
                   className={classes.cardMenuIcon}

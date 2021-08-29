@@ -33,3 +33,11 @@ export function toTitleCase(original: string): string {
     })
     .join(' ');
 }
+
+export function fromHHmmToDate(time: string): Date {
+  let tempTime = time.split(":");
+  let dt = new Date();
+  dt.setHours(parseInt(tempTime[0]));
+  dt.setMinutes(parseInt(tempTime[1]));
+  return dt;
+}

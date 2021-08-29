@@ -113,7 +113,7 @@ export function ActivityView() {
         </div>
 
         <div className={classes.fab}>
-          <Fab variant="extended" onClick={handleOpen} color="primary" aria-label="create">
+          <Fab variant="extended" onClick={handleOpen} color="secondary" aria-label="create">
             <Add className={classes.extendedIcon} />
             New activity
           </Fab>
