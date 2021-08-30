@@ -14,6 +14,7 @@ import { useCallback } from "react";
 import { ColorDataMap } from "src/theme";
 import { AppContext } from "src/contexts/AppContext";
 import { Subscription } from "rxjs";
+import { toTitleCase } from "src/utils";
 
 
 // Styles
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     filterControl: {
       marginBottom: '1em',
-      minWidth: 120,
+      minWidth: 160,
     },
     content: {
       flexGrow: 1,
@@ -148,15 +149,16 @@ export function ObjectiveView({category}: ObjectiveViewProps) {
       <div className={classes.content}>
         <div className={classes.section}>
           <FormControl className={classes.filterControl}>
-            <InputLabel id="filter-label">Filter</InputLabel>
+            <InputLabel id="filter-label">Filter objectives</InputLabel>
             <Select 
               labelId="filter-label"
+              label="filter-label"
               id="filter"
               value={filter}
               onChange={handleFilter}
             >
               {Object.values(ObjectiveFilter).map(filt => (
-                <MenuItem key={filt} value={filt}>{filt !== ObjectiveFilter.NONE ? filt : 'None'}</MenuItem>
+                <MenuItem key={filt} value={filt}>{filt !== ObjectiveFilter.NONE ? toTitleCase(filt) : 'None'}</MenuItem>
               ))}
             </Select>
           </FormControl>

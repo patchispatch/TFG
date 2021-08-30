@@ -42,11 +42,10 @@
 % Capítulo: introducción
 \chapter{Introducción}
 
-\textbf{Palabras clave:} palabras clave
-
 \section{Resumen}
+\textbf{Palabras clave:} desarrollo web, \textit{React}, \textit{Typescript}, aplicación web, \textit{REST}, arquitectura cliente-servidor
 
-\textbf{NOTA: provisional}
+\bigskip
 
 Existe una gran oferta en cuanto a herramientas de organización personal. Desde activas comunidades que apuestan por formatos tradicionales como agendas y calendarios personalizados hasta numerosos servicios preparados para ajustarse a cualquier tipo de persona, escoger un método de organización puede suponer una odisea para alguien interesado en la materia. 
 
@@ -60,14 +59,32 @@ Se plantea una propuesta de aplicación con una funcionalidad simple, orientada 
 
 \medskip
 
-La aplicación propuesta se ha desarrollado utilizando tecnologías web extendidas y con gran soporte en la actualidad, y una arquitectura cliente-servidor basada en el patrón \textit{REST} \cite{fielding2000architectural}.
+La aplicación propuesta se ha desarrollado utilizando tecnologías web extendidas y con gran soporte en la actualidad, y una arquitectura cliente-servidor basada en el patrón \textit{REST} \cite{fielding2000architectural}. Se ha hecho énfasis en el aprendizaje de nuevas tecnologías, como \textit{TypeScript} \cite{bierman2014understanding}, \textit{React} \cite{react} o el popular entorno de desarrollo Django \cite{django}, junto con su \textit{Django REST Framework} \cite{drf}.
 
 \newpage
 
 
 \section{\textit{Abstract}}
 
-Una vez esté aprobado el resumen, traducir.
+\textbf{Keywords:} web development, \textit{React}, \textit{Typescript}, web application, \textit{REST}, client-server architecture
+
+\bigskip
+
+There is a huge offer in personal organization tools. From active communities reviving and reinventing traditional methods, like journals and custom calendars, 
+to numerous software services ready to accomodate to every kind of person, choosing a personal organizing system can be an epic task for any interested person.
+
+\medskip
+
+A lot of software resources offer a versatile and complete solution, often binded to a subscription model with a free trial. This approach offers serious advantages, like data sync between devices, or first-party support in the rest of the provider's ecosystem of tools. However, these options can be rather overwhelming for some users, who look for a simple solution fitting their everyday needs.
+
+\medskip
+
+The proposed application offers a simple functionality, with emphasis on creating and maintaining week-based routines, using objectives defined by the user, streaks, a registry, and a weekly timetable structure. The objective is to keep the application as easy to use as possible, without overloading it with extra functionalities that users might not need and other solutions already provide. 
+
+\medskip
+
+This application has been developed using modern web technologies used worldwide, using extended concepts like a component-based framework like React \cite{react},
+the TypesScript language \cite{bierman2014understanding}, the popular Django Web Framework \cite{django} and its plugin \textit{REST Framework} \cite{drf}, and a client-server architecture.
 
 
 \newpage
@@ -316,8 +333,6 @@ Se plantean los siguientes objetivos para la aplicación propuesta. Pueden divid
 \begin{enumerate}[resume]
 	\item Se debe poder ajustar el día de la semana y la hora en la que se reinicia el progreso de los objetivos.
 	
-	\item Se debe poder definir la zona horaria de la aplicación.
-	
 	\item Se debe poder seleccionar la vista por defecto al entrar en la aplicación.
 \end{enumerate}
 
@@ -326,7 +341,7 @@ Se plantean los siguientes objetivos para la aplicación propuesta. Pueden divid
 \begin{enumerate}[resume]
 	\item Se debe poder seleccionar el tema de la aplicación.
 	
-	\item Se debe poder acceder a la configuración de las categorías desde los ajustes generales.
+	\item Se debe poder definir la zona horaria de la aplicación.	
 \end{enumerate}
 
 
@@ -335,7 +350,7 @@ Se plantean los siguientes objetivos para la aplicación propuesta. Pueden divid
 \subsubsection*{Fundamentales}
 
 \begin{enumerate}[resume]
-	\item Se debe garantizar la navegabilidad de la aplicación utilizando lectores de pantalla.
+	\item Se debe garantizar la compatibilidad de la aplicación con herramientas de accesibilidad, y mantener un contraste adecuado.
 \end{enumerate}
 
 
@@ -374,11 +389,19 @@ Los estados definidos para este proyecto son los siguientes:
 
 \subsection*{Desarrollo iterativo e incremental}
 
-Presente en metodologías como \textit{SCRUM} o \textit{eXtreme Programming}, el desarrollo iterativo permite tener una visión temprana y real del proyecto, así como una mayor flexibilidad a la hora de detectar e implementar cambios y mejoras.
+Presente en metodologías como \textit{SCRUM} \cite{Schwaber04} o \textit{eXtreme Programming} \cite{BecAnd04extreme}, el desarrollo iterativo permite tener una visión temprana y real del proyecto, así como una mayor flexibilidad a la hora de detectar e implementar cambios y mejoras.
 
 \medskip
 
 Al tratarse de un proyecto centrado en el aprendizaje de nuevas tecnologías, esta flexibilidad ha permitido una mayor creatividad y un enfoque centrado en la implementación de la aplicación, utilizando documentación auxiliar en los casos necesarios.
+
+
+\subsection*{Diseño de bocetos y prototipado}
+
+Se han realizado numerosos prototipos y bocetos de la aplicación en la fase de diseño de la misma, para establecer un marco de trabajo en el que posicionar los 
+distintos elementos que permitan interactuar con la aplicación y realizar las funcionalidades previstas.
+
+Para la realización de los prototipos se han utilizado herramientas como \textit{Adobe Xd}, \textit{Diagrams.net} y software de ilustración vectorial.
 
 
 \subsection*{Historias de Usuario}
@@ -568,9 +591,6 @@ Dado que se ha utilizado la herramienta \textit{Jira Software} a lo largo del de
 	
 	Prioridad: media.
 	
-	\item [\textbf{TFG-36}] Como usuario, quiero poder acceder a la configuración de mis categorías desde la configuración general para poder tenerlo todo en el mismo sitio
-	
-	Prioridad: baja.
 	
 	\item [\textbf{TFG-37}] Como usuario, quiero poder fijar una vista por defecto para que al abrir la aplicación se muestre.
 	
@@ -743,8 +763,6 @@ La distribución aproximada de las épicas en las iteraciones de desarrollo se p
 
 \textbf{Iteración 5}
 \begin{itemize}[leftmargin=16mm]
-	\item [\textbf{TFG-36}] Como usuario, quiero poder acceder a la configuración de mis categorías desde la configuración general para poder tenerlo todo en el mismo sitio.
-
 	\item [\textbf{TFG-38}] Como usuario, quiero poder fijar una vista por defecto para que al abrir la aplicación se muestre.
 	
 	\item [\textbf{TFG-40}] Como usuario con problemas visuales, quiero que la aplicación sea navegable con lectores de pantalla para poder usarla cómodamente .
@@ -799,7 +817,7 @@ Se ofrece además un presupuesto aproximado del coste de mantenimiento de la apl
 		\end{tabular}
 	\end{center}
 \end{table}
-
+ Author Ken Schwaber, a leader in the agile process movement and a co-creator of Scrum, brings his vast expertise to helping you guide the product and software development process more effectively and efficiently. Help eliminate the ambiguity into which so many software projects are borne, where vision and planning documents are essentially thrown over the wall to developers. This high-level reference describes how to use Scrum to manage complex technology projects in detail, combining expert insights with examples and case studies based on Scrum. Emphasizing practice over theory, this book explores every aspect of using Scrum, focusing on driving projects for maximum return on investment.
 
 
 \subsection*{Servicios opcionales de despliegue y mantenimiento}
@@ -834,6 +852,20 @@ Se ofrece además un presupuesto orientativo sobre el coste de desplegar y mante
 
 % Capítulo: diseño y resolución del trabajo
 \chapter{Desarrollo del proyecto}
+
+\section{Fase de diseño}
+
+\subsection{Arquitectura de la aplicación}
+
+Se plantea una arquitectura cliente-servidor, sobre la que se implementa el patrón Modelo-Vista-Controlador \cite{Uyun2010IMPLEMENTATIONOM}.
+Pese a que la implementación realizada es sencilla, este modelo permite escalar el proyecto de acuerdo a sus posibles necesidades con facilidad.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{img/arquitectura.png}
+	\caption{Diagrama de arquitectura del proyecto}
+\end{figure}
+
 
 \section{Primera iteración}
 

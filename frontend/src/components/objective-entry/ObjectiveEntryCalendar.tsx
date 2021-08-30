@@ -11,7 +11,7 @@ import { Category } from 'src/models/category';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     hasEntries: {
-      background: theme.palette.primary.light,
+      background: theme.palette.primary.main,
       color: theme.palette.primary.contrastText,
     },
   }),
