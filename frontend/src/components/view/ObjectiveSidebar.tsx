@@ -1,4 +1,5 @@
-import { Divider, List, ListItem, makeStyles, createStyles, Typography, Theme, ListItemText, ListItemSecondaryAction, Button, IconButton, Menu, MenuItem } from "@material-ui/core";
+import { Divider, List, ListItem, makeStyles, createStyles, Typography, Theme, ListItemText, 
+  ListItemSecondaryAction, IconButton, Menu, MenuItem } from "@material-ui/core";
 import { bindMenu, bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
 import { SyntheticEvent, useContext, useMemo, useState } from "react";
 import { AppContext } from "src/contexts/AppContext";
@@ -42,11 +43,6 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'center',
       marginRight: '1em'
-    },
-    toggleButtonGroup: {
-      '& .MuiToggleButton-root': {
-        padding: '0.5em 1em',
-      }
     }
   })
 );

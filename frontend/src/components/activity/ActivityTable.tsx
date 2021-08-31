@@ -79,7 +79,7 @@ export function ActivityTable({activities, instances, refresh=() => {}}: Activit
   const instanceService = useMemo(() => new ActivityInstanceService(), []);
 
   // State
-  const [activityMap, setActivityMap] = useState<ModelMap<Activity>>({});
+  const [activityMap, setActivityMap] = useState<ModelMap<Activity>>(convertToMap(activities));
   const [categoryMap, setCategoryMap] = useState<ModelMap<Category>>({});
   const [selectedInstance, setSelectedInstance] = useState<ActivityInstance | undefined>(undefined);
   const [editDialogState, setEditDialogState] = useState(false);

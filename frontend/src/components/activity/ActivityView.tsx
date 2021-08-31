@@ -1,16 +1,18 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { AppBar, createStyles, Fab, makeStyles, Toolbar, Typography} from "@material-ui/core";
 import { Theme } from "@material-ui/core";
-import { ActivityService } from "src/services/activity-service";
 import { Activity } from "src/models/activity";
 import { FormDialog } from "../utils/FormDialog";
 import { ActivityForm } from "./ActivityCreateForm";
 import { Add } from "@material-ui/icons";
 import { ActivityTable } from "./ActivityTable";
-import { forkJoin } from "rxjs";
 import { ActivityInstanceService } from "src/services/activity-instance-service";
 import { ActivityInstance } from "src/models/activity-instance";
 
+// Props
+interface ActivityViewProps {
+  activityList: Activity[]
+}
 
 // Styles
 const useStyles = makeStyles((theme: Theme) =>
@@ -46,14 +48,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 // Component
-export function ActivityView() {
+export function ActivityView({activityList}: ActivityViewProps) {
   // Services
-  const activityService = useMemo(() => new ActivityService(), []);
   const instanceService = useMemo(() => new ActivityInstanceService(), []);
 
   // State
   const [activityLoaded, setActivityLoaded] = useState<boolean>(false);
-  const [activityList, setActivityList] = useState<Activity[]>([]);
   const [instanceList, setInstanceList] = useState<ActivityInstance[]>([]);
 
   // Handle dialog state
@@ -71,15 +71,11 @@ export function ActivityView() {
   // Refresh activity and instance list
   const refreshList = useCallback(() => {
     setActivityLoaded(false);
-    forkJoin({
-      activities: activityService.list(),
-      instances: instanceService.list()
-    }).subscribe(({activities, instances}) => {
-      setActivityList(activities);
+    instanceService.list().subscribe(instances => {
       setInstanceList(instances);
       setActivityLoaded(true);
     });
-  },[activityService, instanceService]);
+  }, [instanceService]);
 
   // On init
   useEffect(() => {
@@ -121,8 +117,8 @@ export function ActivityView() {
 
         {/* Dialogs */}
         <FormDialog 
-            title="New objective"
-            formId="objectiveForm"
+            title="New activity"
+            formId="activityCreateForm"
             isOpen={dialogState}
             onClose={handleClose}
         >

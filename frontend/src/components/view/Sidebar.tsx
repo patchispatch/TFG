@@ -1,4 +1,4 @@
-import { Button, createStyles, Divider, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, Menu, MenuItem, Theme, Typography } from "@material-ui/core"
+import { Button, createStyles, Divider, makeStyles, Theme } from "@material-ui/core"
 import { useState, MouseEvent } from "react";
 import SettingsIcon from '@material-ui/icons/Settings';
 import { Category } from "src/models/category";
@@ -9,6 +9,9 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import { AppView } from "src/models/shared";
 import { SettingsForm } from "../settings/SettingsForm";
 import { ObjectiveSidebar } from "./ObjectiveSidebar";
+import { ActivitySidebar } from "./ActivitySidebar";
+import { Subscription } from "rxjs";
+import { Activity } from "src/models/activity";
 
 // Styles
 const useStyles = makeStyles((theme: Theme) => 
@@ -76,7 +79,9 @@ interface SidebarProps {
   handleOpen: () => void,
   handleCategoryChange: (category: Category) => void,
   selectedCategory?: Category,
-  refresh: () => void
+  refresh: () => void,
+  activityList: Activity[],
+  refreshActivityList: () => Subscription
 }
 
 
@@ -86,7 +91,9 @@ export function Sidebar({
   handleOpen, 
   selectedCategory, 
   handleCategoryChange, 
-  refresh=() => {}
+  refresh=() => {},
+  activityList,
+  refreshActivityList=() => new Subscription()
 }: SidebarProps) {
 
   // State
@@ -135,7 +142,7 @@ export function Sidebar({
           handleOpen={handleOpen}
         />
       :
-        <></>
+        <ActivitySidebar activityList={activityList} refreshList={refreshActivityList}/>
       }
 
 

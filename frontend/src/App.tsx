@@ -20,6 +20,9 @@ import { Category } from './models/category';
 import { Sidebar } from './components/view/Sidebar';
 import { useCallback } from 'react';
 import { SettingsService } from './services/settings-service';
+import { Activity } from './models/activity';
+import { ActivityService } from './services/activity-service';
+
 
 // Styles
 const drawerWidth = 400;
@@ -58,9 +61,15 @@ function App() {
 
   // Services
   const categoryService = useMemo(() => new CategoryService(), []);
+  const activityService = useMemo(() => new ActivityService(), []);
   const settingsService = useMemo(() => new SettingsService(), []);
 
   // State
+
+  /**
+   * Activity list
+   */
+   const [activityList, setActivityList] = useState<Activity[]>([]);
 
   /**
    * Loading status of the application context
@@ -74,6 +83,17 @@ function App() {
 
   // Category form dialog
   let [dialogState, setDialogState] = useState(false);
+
+  /**
+   * Refresh the activity list
+   */
+  const refreshActivityList = useCallback(() => {
+    setLoaded(false);
+    return activityService.list().subscribe(response => {
+      setActivityList(response);
+      setLoaded(true);
+    });
+  }, [activityService]);
 
   /**
    * Refreshes the application context content
@@ -113,11 +133,12 @@ function App() {
   const [view, setView] = useState<AppView>(defaultView);
 
   /**
-   * Load context on app render
+   * Load context and data on app render
    */
   useEffect(() => {
     reloadContext();
-  }, [reloadContext])
+    refreshActivityList();
+  }, [reloadContext, refreshActivityList])
 
 
   function handleOpen(): void {
@@ -174,13 +195,15 @@ function App() {
                   selectedCategory={selectedCategory}
                   handleCategoryChange={handleCategoryChange}
                   refresh={reloadContext}
+                  activityList={activityList}
+                  refreshActivityList={refreshActivityList}
                 />
               </Drawer>
 
               <main className={classes.mainView}>
                 {view === AppView.OBJECTIVES 
                 ? <ObjectiveView category={selectedCategory} /> 
-                : <ActivityView />
+                : <ActivityView activityList={activityList}/>
                 }
               </main>
 

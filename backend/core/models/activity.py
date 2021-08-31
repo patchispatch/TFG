@@ -4,7 +4,7 @@ from datetime import timedelta
 
 class Activity(models.Model):
     name = models.CharField(max_length=120)
-    description = models.CharField(max_length=500, null=True)
+    description = models.CharField(max_length=500, null=True, blank=True)
     category = models.ForeignKey(
         'Category',
         default=None,

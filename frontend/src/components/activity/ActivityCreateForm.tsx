@@ -150,7 +150,7 @@ export function ActivityForm({postSubmit}: ActivityFormProps) {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       {loaded ?
-        <form id="objectiveForm" className={classes.root} onSubmit={handleSubmit(onSubmit)}>
+        <form id="activityCreateForm" className={classes.root} onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="activity"
             control={control}
