@@ -93,7 +93,7 @@ export function ActivityView() {
       <AppBar elevation={0} position="sticky">
         <Toolbar>
           <Typography variant="h6">
-            Home
+            Activities
           </Typography>
         </Toolbar>
       </AppBar>

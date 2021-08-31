@@ -1,6 +1,6 @@
-import { Card, CardContent, makeStyles, Typography } from '@material-ui/core';
+import { Card, CardContent, CardHeader, CircularProgress, IconButton, makeStyles, Menu, MenuItem, Typography } from '@material-ui/core';
 import * as React from 'react';
-import { useContext } from 'react';
+import { SyntheticEvent, useContext } from 'react';
 import { useCallback, useEffect } from 'react';
 import { useMemo, useState } from 'react';
 import { AppContext } from 'src/contexts/AppContext';
@@ -11,12 +11,15 @@ import { convertToMap, ModelMap } from 'src/models/shared';
 import { ObjectiveEntryParameters, ObjectiveEntryService } from 'src/services/objective-entry-service';
 import { ObjectiveService } from 'src/services/objective-service';
 import { CategoryChip } from '../category/CategoryChip';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks';
+import { ConfirmDialog } from '../utils/ConfirmDialog';
+import snackbar from 'src/SnackbarUtils';
+import { FormDialog } from '../utils/FormDialog';
+import { ObjectiveEntryForm } from './ObjectiveEntryForm';
 
 // Style
 const useStyles = makeStyles({
-  title: {
-    fontSize: 14,
-  },
   entryList: {
     maxHeight: '50vh',
     padding: '0.5em',
@@ -34,7 +37,13 @@ const useStyles = makeStyles({
     position: 'absolute',
     bottom: '1em',
     right: '1em'
-  }
+  },
+  cardMenuIcon: {
+    scale: 0.75,
+    position: 'absolute',
+    right: '0.01em',
+    top: '0.01em'
+  },
 });
 
 // Props
@@ -53,7 +62,11 @@ export function ObjectiveEntryHistory({date, category}: EntryHistoryProps) {
   const [objectiveMap, setObjectiveMap] = useState<ModelMap<Objective>>({});
   const [categoryMap, setCategoryMap] = useState<ModelMap<Category>>({});
   const [loaded, setLoaded] = useState<boolean>(false);
+  const [selectedEntry, setSelectedEntry] = useState<ObjectiveEntry | undefined>(undefined);
+  const [editDialogState, setEditDialogState] = useState(false);
+  const [deleteDialogState, setDeleteDialogState] = useState(false);
   const {categoryList} = useContext(AppContext);
+  const entryMenu = usePopupState({ variant: 'popover', popupId: 'entryMenu' });
 
   /**
    * Load entries and related objectives on the selected date
@@ -105,6 +118,42 @@ export function ObjectiveEntryHistory({date, category}: EntryHistoryProps) {
     return objective.categoryId ? categoryMap[objective.categoryId] : undefined;
   }
 
+  // Extend onClick menu event
+  function onMenuClick(entry: ObjectiveEntry, event: SyntheticEvent): void {
+    setSelectedEntry(entry);
+    bindTrigger(entryMenu).onClick(event);
+  }
+
+  function onMenuEdit(): void {
+    setEditDialogState(true);
+    entryMenu.setOpen(false);
+  }
+
+  function handleEdit(response?: ObjectiveEntry, updated = false): void {
+    setEditDialogState(false);
+
+    if (updated) {
+      loadEntryInfo();
+    }
+  }
+
+  function onMenuDelete(): void {
+    setDeleteDialogState(true);
+    entryMenu.setOpen(false);
+  }
+
+  /**
+   * Deletes an activity instance
+   */
+  function deleteInstance(entryId: number): void {
+    objectiveEntryService.delete(entryId).subscribe(() => {
+      setDeleteDialogState(false);
+      loadEntryInfo();
+
+      snackbar.success('Activity instance deleted successfully');
+    });
+  }
+
   // Render
   const classes = useStyles();
 
@@ -115,7 +164,16 @@ export function ObjectiveEntryHistory({date, category}: EntryHistoryProps) {
           {entryList.length > 0 ? entryList.map(entry => (
             <Card key={entry.id} className={classes.entry}>
               <CardContent className={classes.cardContent}>
-                <Typography className={classes.title}>
+                <IconButton
+                    className={classes.cardMenuIcon}
+                    aria-label="activity menu"
+                    {...bindTrigger(entryMenu)}
+                    onClick={(event) => onMenuClick(entry, event)}
+                  >
+                    <MoreVertIcon />
+                </IconButton>
+
+                <Typography variant="h6">
                   {objectiveMap[entry.objective_id].name}
                 </Typography>
                 
@@ -135,8 +193,44 @@ export function ObjectiveEntryHistory({date, category}: EntryHistoryProps) {
             ))
             : <p className={classes.emptyMessage}>There are no entries this day.</p>
           }
+
+          {selectedEntry &&
+            <Menu {...bindMenu(entryMenu)}>
+              <MenuItem onClick={onMenuEdit}>Edit</MenuItem>
+              <MenuItem onClick={onMenuDelete}>Delete</MenuItem>
+            </Menu>
+          }
+
+          {/* DIALOGS */}
+          {selectedEntry && <>
+            <ConfirmDialog
+              title="Delete activity instance"
+              message={`Are you sure you want to delete \
+              ${objectiveMap[selectedEntry!.objective_id].name} - ${selectedEntry!.date.toLocaleDateString()} \
+              - ${selectedEntry!.date.toTimeString()}?`}
+              isOpen={deleteDialogState}
+              onConfirm={() => deleteInstance(selectedEntry!.id!)}
+              onClose={() => setDeleteDialogState(false)}
+            />
+
+            <FormDialog 
+              title="Edit activity instance"
+              formId="objectiveEntryForm"
+              isOpen={editDialogState}
+              onClose={() => setEditDialogState(false)}
+            >
+              <ObjectiveEntryForm 
+                objectiveId={selectedEntry.objective_id} 
+                entry={selectedEntry} 
+                postSubmit={handleEdit} 
+              />
+            </FormDialog>
+          </>}
         </div>
-      : <>{/* TODO: add loading indicator */}</>
+      : 
+        <>
+          <CircularProgress />
+        </>
       }
     </>
   )
