@@ -67,7 +67,6 @@ const useStyles = makeStyles({
 interface ActivityTableProps {
   activities: Activity[];
   instances: ActivityInstance[];
-  loaded?: boolean;
   refresh?: () => void;
 }
 

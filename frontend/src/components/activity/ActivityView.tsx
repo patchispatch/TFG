@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { AppBar, createStyles, Fab, makeStyles, Toolbar, Typography} from "@material-ui/core";
+import { AppBar, CircularProgress, createStyles, Fab, makeStyles, Toolbar, Typography} from "@material-ui/core";
 import { Theme } from "@material-ui/core";
 import { Activity } from "src/models/activity";
 import { FormDialog } from "../utils/FormDialog";
@@ -8,10 +8,13 @@ import { Add } from "@material-ui/icons";
 import { ActivityTable } from "./ActivityTable";
 import { ActivityInstanceService } from "src/services/activity-instance-service";
 import { ActivityInstance } from "src/models/activity-instance";
+import { Subscription } from "rxjs";
 
 // Props
 interface ActivityViewProps {
-  activityList: Activity[]
+  activityList: Activity[],
+  refreshActivityList: () => Subscription,
+  activityListLoaded: boolean
 }
 
 // Styles
@@ -48,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 // Component
-export function ActivityView({activityList}: ActivityViewProps) {
+export function ActivityView({activityList, refreshActivityList, activityListLoaded}: ActivityViewProps) {
   // Services
   const instanceService = useMemo(() => new ActivityInstanceService(), []);
 
@@ -65,6 +68,7 @@ export function ActivityView({activityList}: ActivityViewProps) {
 
   function handleClose(): void {
     setDialogState(false);
+    refreshActivityList();
     refreshList();
   }
 
@@ -100,12 +104,16 @@ export function ActivityView({activityList}: ActivityViewProps) {
             Activities
           </Typography>
 
-          <ActivityTable 
-            activities={activityList}
-            instances={instanceList}
-            loaded={activityLoaded}
-            refresh={refreshList}
-          />
+          {activityListLoaded && activityLoaded
+          ? 
+            <ActivityTable 
+              activities={activityList}
+              instances={instanceList}
+              refresh={refreshActivityList}
+            />
+          :
+            <CircularProgress />
+          }
         </div>
 
         <div className={classes.fab}>

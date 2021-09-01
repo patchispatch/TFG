@@ -77,6 +77,11 @@ function App() {
   const [loaded, setLoaded] = useState(false);
 
   /**
+   * Loading status of activity list
+   */
+  const [activityListLoaded, setActivityListLoaded] = useState(false);
+
+  /**
    * Selected category, if any
    */
   const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(undefined);
@@ -88,10 +93,10 @@ function App() {
    * Refresh the activity list
    */
   const refreshActivityList = useCallback(() => {
-    setLoaded(false);
+    setActivityListLoaded(false);
     return activityService.list().subscribe(response => {
       setActivityList(response);
-      setLoaded(true);
+      setActivityListLoaded(true);
     });
   }, [activityService]);
 
@@ -203,7 +208,11 @@ function App() {
               <main className={classes.mainView}>
                 {view === AppView.OBJECTIVES 
                 ? <ObjectiveView category={selectedCategory} /> 
-                : <ActivityView activityList={activityList}/>
+                : <ActivityView 
+                    activityList={activityList}
+                    refreshActivityList={refreshActivityList}
+                    activityListLoaded={activityListLoaded}
+                  />
                 }
               </main>
 

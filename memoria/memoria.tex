@@ -844,7 +844,7 @@ Se ofrece además un presupuesto orientativo sobre el coste de desplegar y mante
 				>{\columncolor[HTML]{EFEFEF}}l |l|}
 			\hline
 			\textbf{Total}                                          & 6.000€    \\ \hline
-			\textbf{Total, con servicios opcionales durante un año} & 5.296,08€ \\ \hline
+			\textbf{Servicios opcionales durante un año} & 5.296,08€ \\ \hline
 		\end{tabular}
 	\end{center}
 \end{table}
@@ -853,7 +853,7 @@ Se ofrece además un presupuesto orientativo sobre el coste de desplegar y mante
 % Capítulo: diseño y resolución del trabajo
 \chapter{Desarrollo del proyecto}
 
-\section{Fase de diseño}
+\section{Consideraciones previas}
 
 \subsection{Arquitectura de la aplicación}
 
@@ -865,6 +865,34 @@ Pese a que la implementación realizada es sencilla, este modelo permite escalar
 	\includegraphics[scale=0.6]{img/arquitectura.png}
 	\caption{Diagrama de arquitectura del proyecto}
 \end{figure}
+
+\subsubsection*{Capa de datos}
+
+El modelo propuesto se ha implementado sobre una base de datos relacional SQLite, debido a su fácil integración
+con el resto de tecnologías utilizadas ---principalmente Python y Django, ya que la ofrecen de serie---, 
+su sencillez y la relativa simplicidad del modelo de datos confeccionado.
+
+En caso de ser necesario sustituir el sistema gestor de bases de datos en un futuro, es sencillo exportar SQLite a otros motores 
+como MySQL o PostgreSQL. Pese a que conectar estos servicios con la aplicación resultaría sencillo ---en parte gracias a la abstracción
+que realiza Django de los datos---, utilizar estas tecnologías requeriría una configuración más avanzada.
+
+\subsubsection*{Capa de aplicación}
+
+Se ha optado por utilizar el popular \textit{framework} de desarrollo de aplicaciones web Django para la capa de aplicación.
+
+Su versatilidad y facilidad de uso, así como su excelente documentación y numerosa cantidad de \textit{plugins} 
+desarrollados por parte de la comunidad, fueron algunos de los criterios tenidos en cuenta para su uso, además de su abstracción
+sobre la capa de datos a la hora de gestionar el modelo.
+
+Concretamente, se ha trabajado utilizando el \textit{plugin} Django Rest Framework, que permite utilizar Django para servir
+una API REST de forma sencilla, y ofreciendo múltiples herramientas para trabajar con los modelos de la herramienta.
+
+\subsubsection*{Capa de presentación}
+
+Para la capa de presentación se ha optado por desarrollar un cliente utilizando React, el \textit{framework} de desarrollo de aplicaciones web 
+desarrollado y mantenido por Facebook.
+
+Comparado con otras de las opciones populares, como pueden ser Angular o Vue.js, React cuenta con un mauor 
 
 
 \section{Primera iteración}
