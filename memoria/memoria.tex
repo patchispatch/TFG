@@ -618,17 +618,73 @@ Dado que se ha utilizado la herramienta \textit{Jira Software} a lo largo del de
 
 \subsection{Planificación inicial}
 
-La planificación que se hubiese seguido en condiciones ideales
+\subsubsection{Descripción}
+
+El desarrollo del proyecto comenzó en octubre de 2020. Dado el enfoque de utilizar tecnologías desconocidas para familiarizarse con el desarrollo
+de aplicaciones web, se realizó una planificación del proyecto haciendo énfasis en la elección y aprendizaje de las mismas.
+
+Se realizó una estimación de las distintas fases del proyecto, teniendo en cuenta los distintos objetivos y requisitos, y definiendo distintas metas con
+una fecha límite aproximada, con vistas a su conclusión a finales de mayo. Teniendo en cuenta esto, se definieron iteraciones de un mes de duración, con contenido variable, que se definirían en una jornada de planificación al inicio de cada una, dependiendo de la velocidad de la anterior y el número de tareas pendientes en el \textit{product backlog}.
+
+A continuación se detallan las distintas fases del proyecto, junto con una breve descripción, tareas asociadas y duración estimada.
+
+\begin{enumerate}
+	\item Sección de \textbf{aprendizaje}: todas las actividades relacionadas con la formación y el manejo de las tecnologías a utilizar, su elección y configuración.
+	
+	\begin{itemize}
+		\item \textbf{Duración estimada:} tres meses ---de octubre a diciembre de 2020---.
+	\end{itemize}
+	
+	\item Sección de \textbf{objetivos}: todas aquellas tareas que cumpliesen los requisitos del cliente relativos a la sección de objetivos de la aplicación.
+	
+	\begin{itemize}
+		\item \textbf{Duración estimada:} un mes y medio ---de principios de enero a mediados de febrero de 2021---.
+	\end{itemize}
+	
+	\item Sección de \textbf{actividades}: todas aquellas tareas que cumpliesen los requisitos del cliente relativos a la sección de actividades de la aplicación.
+	
+	\begin{itemize}
+		\item \textbf{Duración estimada:} un mes y medio ---de mediados de febrero a principios de abril de 2021---.
+	\end{itemize}
+
+	\item Sección de \textbf{barra lateral}: todas aquellas tareas que cumpliesen los requisitos del cliente relativos a la sección de barra lateral de la aplicación.
+	
+	\begin{itemize}
+		\item \textbf{Duración estimada:} un mes ---abril de 2021---.
+	\end{itemize}
+
+	\item Sección de \textbf{ajustes}: todas las tareas relacionadas con los diferentes ajustes de la aplicación de cara al usuario.
+	
+	\begin{itemize}
+		\item \textbf{Duración estimada:} medio mes ---de principios a mediados de mayo de 2021---.
+	\end{itemize}
+\end{enumerate}
+
+\medskip
+
+A continuación se presenta el diagrama de Gantt correspondiente a dichos plazos. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{img/old_Gantt.png}
+	\caption{Diagrama de Gantt de las etapas del proyecto en la planificación inicial}
+\end{figure}
+
+\subsubsection{Problemas}
+
+La planificación inicial descrita contaba con numerosos fallos, principalmente debidos a la laxitud de su definición y plazos, sumada a la incertidumbre del aprendizaje autónomo de las distintas tecnologías utilizadas. Esto, sumado a a diversos factores ajenos al proyecto, propició la necesidad de replantear el estado del proyecto, y se decidió reiniciar la fase de desarrollo con una nueva planificación, ajustada esta vez a una fecha de entrega posterior, y con un nivel de detalle mucho mayor.
 
 \subsection{Planificación final}
 
-Debido a diversos factores, principalmente externos al proyecto, la planificación inicial no pudo llevarse a cabo. Se analizó el estado del proyecto, y se decidió reiniciar la fase de desarrollo con una nueva planificación, ajustada esta vez a una fecha de entrega posterior.
+A mediados de abril se realizó un análisis del estado del proyecto, concluyendo en la necesidad de reiniciar su desarrollo casi por completo. Se decidió conservar la elección de tecnologías utilizadas, ya que se había dedicado una gran cantidad de tiempo a su aprendizaje. De esta forma, se ha podido obviar esta fase en la planificación final del proyecto, puesto que ya se contaba con los conocimientos necesarios para su desarrollo.
+
+El mayor inconveniente de esta nueva planificación es el retraso en la fecha de finalización, estimada ahora el 31 de agosto de 2021. En una situación real, un retraso de varios meses como este podría causar graves consecuencias tanto al proyecto como a la reputación del desarrollador.
 
 \subsubsection*{Distribución de etapas del proyecto en el tiempo}
 
 Con tal de evitar los posibles imprevistos ---algo que, como ya se ha podido observar, ha afectado con severidad al proyecto anteriormente---, la nueva planificación se ha realizado de forma exhaustiva, presentando un mayor número de iteraciones, ajustadas de antemano con un listado de funcionalidades concretas a implementar.
 
-Las etapas del proyecto quedaron distribuidas de la siguiente manera:
+Las etapas del proyecto quedan distribuidas de la siguiente manera:
 
 \begin{enumerate}
 	\item Investigación previa: elección de tecnologías a utilizar, revisión del estado actual del proyecto y estimación del coste de los cambios necesarios.
@@ -662,7 +718,7 @@ La distribución de las etapas en el tiempo se puede consultar en el siguiente d
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.35]{img/gantt\ sprints.png}
-	\caption{Diagrama de Gantt de las etapas del proyecto}
+	\caption{Diagrama de Gantt de las etapas del proyecto en la planificación final}
 \end{figure}
 
 
@@ -855,7 +911,7 @@ Se ofrece además un presupuesto orientativo sobre el coste de desplegar y mante
 
 \section{Consideraciones previas}
 
-\subsection{Arquitectura de la aplicación}
+\subsection{Arquitectura de la aplicación y tecnologías utilizadas}
 
 Se plantea una arquitectura cliente-servidor, sobre la que se implementa el patrón Modelo-Vista-Controlador \cite{Uyun2010IMPLEMENTATIONOM}.
 Pese a que la implementación realizada es sencilla, este modelo permite escalar el proyecto de acuerdo a sus posibles necesidades con facilidad.
@@ -868,31 +924,68 @@ Pese a que la implementación realizada es sencilla, este modelo permite escalar
 
 \subsubsection*{Capa de datos}
 
-El modelo propuesto se ha implementado sobre una base de datos relacional SQLite, debido a su fácil integración
-con el resto de tecnologías utilizadas ---principalmente Python y Django, ya que la ofrecen de serie---, 
-su sencillez y la relativa simplicidad del modelo de datos confeccionado.
+El modelo propuesto se ha implementado sobre una base de datos relacional SQLite \cite{noauthor_sqlite3_nodate}, debido a su fácil integración
+con el resto de tecnologías utilizadas ---principalmente Python y Django, ya que la ofrecen de serie---;
+su sencillez, dado que la base de datos se almacena en un único archivo binario; y la relativa simplicidad del modelo de datos elaborado.
 
-En caso de ser necesario sustituir el sistema gestor de bases de datos en un futuro, es sencillo exportar SQLite a otros motores 
-como MySQL o PostgreSQL. Pese a que conectar estos servicios con la aplicación resultaría sencillo ---en parte gracias a la abstracción
-que realiza Django de los datos---, utilizar estas tecnologías requeriría una configuración más avanzada.
+En caso de ser necesario sustituir el sistema gestor de bases de datos en un futuro debido al crecimiento en complejidad de la aplicación,
+es sencillo exportar SQLite a otros motores como MySQL o PostgreSQL. 
+Pese a que conectar estos servicios con la aplicación resultaría sencillo ---en parte gracias a la abstracción
+que realiza la capa de aplicación sobre los datos---, utilizar estas tecnologías requeriría una configuración más avanzada.
+
+\medskip
+
+\textbf{Alternativas exploradas}
+
+Se eligió Django de forma rotunda en una fase bien temprana del proyecto, dado el interés en aprender a utilizarlo. En torno a la 
+mitad de la fase de desarrollo, se planteó sustituir Django por Flask \cite{noauthor_flask_nodate} junto con otras tecnologías para servir 
+la API, pero la idea fue descartada.
 
 \subsubsection*{Capa de aplicación}
 
 Se ha optado por utilizar el popular \textit{framework} de desarrollo de aplicaciones web Django para la capa de aplicación.
 
 Su versatilidad y facilidad de uso, así como su excelente documentación y numerosa cantidad de \textit{plugins} 
-desarrollados por parte de la comunidad, fueron algunos de los criterios tenidos en cuenta para su uso, además de su abstracción
-sobre la capa de datos a la hora de gestionar el modelo.
+desarrollados por parte de la comunidad, fueron algunos de los criterios tenidos en cuenta para su uso, además de su completa
+abstracción sobre la capa de datos a la hora de gestionar el modelo.
 
-Concretamente, se ha trabajado utilizando el \textit{plugin} Django Rest Framework, que permite utilizar Django para servir
-una API REST de forma sencilla, y ofreciendo múltiples herramientas para trabajar con los modelos de la herramienta.
+Concretamente, la aplicación se ha construido utilizando el \textit{plugin} Django Rest Framework, que permite utilizar Django para servir
+una API REST de forma sencilla, ofreciendo múltiples herramientas para trabajar con los modelos de la herramienta de forma consistente.
+
+Se ha escogido la arquitectura REST para construir la API de la aplicación debido a su extensa acogida y soporte, así como la posibilidad
+de ofrecer una documentación completa de forma estandarizada utilizando la especificación OpenAPI 3.0 \cite{miller_openapi_2021}.
+
+\medskip
+
+\textbf{Alternativas exploradas}
+
+Se planteó utilizar en su lugar GraphQL \cite{noauthor_graphql_2018}, pero dada la simplicidad del modelo de datos utilizado, se descartó esta opción,
+ya que no se vieron suficientes ventajas en su uso frente a REST.
+
 
 \subsubsection*{Capa de presentación}
 
-Para la capa de presentación se ha optado por desarrollar un cliente utilizando React, el \textit{framework} de desarrollo de aplicaciones web 
-desarrollado y mantenido por Facebook.
+Para la capa de presentación se ha optado por desarrollar una aplicación de página única ---\textbf{SPA} por sus siglas en inglés---. Las SPA son aplicaciones
+web que, por medio de AJAX u otras tecnologías similares \cite{van_kesteren_xmlhttprequest_2016}, funcionan actualizando un único documento de forma dinámica, ofreciendo una experiencia similar a una aplicación de escritorio. 
 
-Comparado con otras de las opciones populares, como pueden ser Angular o Vue.js, React cuenta con un mauor 
+Se ha elegido utilizar React como tecnología principal para la elaboración del cliente propuesto. React es una biblioteca de código abierto orientada al desarrollo de
+SPAs, creada y mantenida por Facebook. Goza de una gran popularidad, un sólido ecosistema de componentes y \textit{plugins}, y es ampliamente utilizada
+en multitud de proyectos. Además, ha sido elegido el \textit{framework} de desarrollo web más popular, así como uno de los más requeridos en empresas, en la encuesta para desarrolladores de Stack Overflow de 2021 \cite{noauthor_stack_2021}.
+
+\medskip
+
+\textbf{Alternativas exploradas}
+
+Junto con React, Angular y Vue.js son dos de los \textit{frameworks} de desarrollo de SPAs más populares. A la hora de escoger una de estas herramientas,
+se estudió su modelo de trabajo, su popularidad \cite{potter_angular}, su curva de aprendizaje y, sobre todo, la magnitud del proyecto.
+
+Angular, al tratarse de un \textit{framework} completo, ofrece muchas más herramientas que React, integrando muchos módulos y tecnologías útiles
+de primera mano. No obstante, la sencillez de React juega a su favor, ya que adaptarse a la forma de trabajar en Angular es un proceso mucho más complejo,
+y es necesario conocer los patrones de desarrollo específicos de la plataforma, como la inyección de dependencias o los servicios.
+
+Vue.js también fue considerado, pero se descartó debido a su menor ecosistema de componentes, bibliotecas y documentación frente a las otras alternativas.
+
+
 
 
 \section{Primera iteración}
