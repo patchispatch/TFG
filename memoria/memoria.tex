@@ -91,7 +91,49 @@ the TypesScript language \cite{bierman2014understanding}, the popular Django Web
 
 \section{Integración de conocimientos previos}
 
-Para la realización de este proyecto, han sido útiles los conocimientos adquiridos en las siguientes asignaturas del grado:
+Este proyecto se centra en la adquisición de nuevos conocimientos a la hora de desarrollar aplicaciones web, así como en el desarrollo de los aquiridos a lo largo del grado. A continuación se repasan varias materias útiles en la elaboración de este trabajo, así como las asignaturas en las que se imparten y desarrollan.
+
+\subsection*{Conocimientos de bases de datos}
+
+Ha sido de especial utilidad conocer los diferentes tipos de sistemas gestores de bases de datos, sus ventajas e inconvenientes, y el manejo de lenguajes de 
+consulta como SQL. También ha resultado indispensable el saber cómo establecer una conexión con una base de datos, realizar un correcto modelo de los mismos, 
+y aprovechar el esquema relacional.
+
+\textbf{Asignaturas útiles} 
+
+\begin{itemize}
+	\item Fundamentos de Bases de Datos
+	\item Diseño y Desarrollo de Sistemas de Información
+	\item Sistemas de Información Basados en Web
+\end{itemize}
+
+
+\subsection*{Conocimientos de desarrollo web}
+
+Pese a haber trabajado poco en este campo anteriormente, los conocimientos previos en la materia han sido de gran ayuda de cara a comprender el funcionamiento de tecnologías como TypeScript, HTML, el protocolo HTTP o el patrón Modelo-Vista-Controlador, así como el funcionamiento de un servidor web y la infraestructura necesaria para un proyecto de estas características. Además, las prácticas de empresa realizadas en el grado han complementado la formación recibida, ya que se ha trabajado con diferentes tecnologías web.
+
+\textbf{Asignaturas útiles}
+
+\begin{itemize}
+	\item Sistemas de Información Basados en Web
+	\item Fundamentos de Redes
+	\item Servidores Web de Altas Prestaciones
+	\item Prácticas de empresa
+\end{itemize}
+
+
+\subsection*{Conocimientos de metodologías de desarrollo y gestión de proyectos}
+
+Dado que este proyecto se centra en los aspectos del desarrollo utilizando metodologías ágiles, los conocimientos adquiridos en el grado acerca de ello han sido de vital importancia para la realización del mismo.
+
+\textbf{Asignaturas útiles}
+
+\begin{itemize}
+	\item Fundamentos de Ingeniería del Software
+	\item Metodologías de Desarrollo Ágil
+	\item Dirección y Gestión de Proyectos
+\end{itemize}
+
 
 \begin{itemize}
 	\item Fundamentos de Bases de Datos
@@ -222,34 +264,37 @@ Por último, las aplicaciones de seguimiento de hábitos siguen un propósito es
 No obstante, pese a que gozan de gran popularidad y variedad, muchas de ellas ofrecen incentivos y mecanismos tan distintos al usuario que pueden resultar desde poco interesantes a abrumadoras. Además, el soporte de muchas de estas aplicaciones comparadas con el resto de casos estudiados suele ser escaso, o depender de servicios externos a configurar por el usuario. Esto último no es necesariamente algo negativo, pero puede inclinar al usuario a explorar otras opciones.
 
 
-
-
 \section{Propuesta}
 
-\subsection{Objetivos}
+Debido a la gran variedad y flexibilidad que se puede encontrar en el mercado, las aplicaciones de seguimiento de hábitos son un marco perfecto para desarrollar un proyecto utilizando tecnologías web: presenta una variedad de requisitos aceptable, un modelo de datos interesante, y peticiones específicas de un posible cliente que se han de satisfacer. Además, una aplicación de este estilo puede beneficiarse del formato propuesto ---una aplicación de página única o \textit{SPA}---, como ya hacen muchas de las alternativas exploradas.
 
-Se plantean los siguientes objetivos para la aplicación propuesta. Pueden dividirse en varias secciones, cada una con sus propios objetivos anidados de diferente prioridad:
+Con esto en mente, se idea una aplicación sencilla, desarrollada siguiendo una metodología ágil, e intentando ajustarse a un modelo de trabajo profesional, al mismo tiempo que se profundiza en las tecnologías utilizadas.
+
+
+\subsection{Requisitos}
+
+Se plantean los siguientes requisitos para la aplicación propuesta. Pueden dividirse en varias secciones, cada una con sus propios requisitos anidados de diferente prioridad:
 
 \begin{itemize}
-	\item La aplicación debe permitir registrar, modificar y eliminar objetivos definidos por el usuario, permitiendo una visualización clara y detallada de su progreso, e incentivar el seguimiento de los mismos.
+	\item[\textbf{R1}] La aplicación debe permitir registrar, modificar y eliminar objetivos definidos por el usuario, permitiendo una visualización clara y detallada de su progreso, e incentivar el seguimiento de los mismos.
 	
-	\item La aplicación debe permitir registrar, modificar y eliminar actividades habituales que realiza el usuario, y mostrar un horario semanal con las mismas, de forma que el usuario pueda visualizar de forma clara su tiempo.
+	\item[\textbf{R2}] La aplicación debe permitir registrar, modificar y eliminar actividades habituales que realiza el usuario, y mostrar un horario semanal con las mismas, de forma que el usuario pueda visualizar de forma clara su tiempo.
 	
-	\item La aplicación debe permitir registrar, modificar y eliminar categorías definidas por el usuario, para que pueda organizar sus objetivos y actividades de forma temática, así como visualizar su progreso de la misma manera.
+	\item[\textbf{R3}] La aplicación debe permitir registrar, modificar y eliminar categorías definidas por el usuario, para que pueda organizar sus objetivos y actividades de forma temática, así como visualizar su progreso de la misma manera.
 	
-	\item La aplicación debe mostrar un panel de navegación entre las diferentes vistas, con una lista de categorías definidas por el usuario, un indicador de fecha y hora, y acceso a las opciones de configuración, así como sugerencias de objetivos a completar.
+	\item[\textbf{R4}] La aplicación debe mostrar un panel de navegación entre las diferentes vistas, con una lista de categorías definidas por el usuario, un indicador de fecha y hora, y acceso a las opciones de configuración, así como sugerencias de objetivos a completar.
 	
-	\item La aplicación debe permitir configurar aspectos como el día de la semana en el que se reinician los objetivos definidos por el usuario, la vista por defecto y el tema de la aplicación, y la zona horaria.
+	\item[\textbf{R5}] La aplicación debe permitir configurar aspectos como el día de la semana en el que se reinician los objetivos definidos por el usuario, la vista por defecto y el tema de la aplicación, y la zona horaria.
 	
-	\item La aplicación debe cumplir con los niveles de conformidad WCAG... (investigar)
+	\item[\textbf{R6}] La aplicación debe ser intuitiva y accesible, garantizando el contraste entre sus elementos.
 \end{itemize}
 
 
-\subsection*{Sección de objetivos}
+\subsection*{[R1] Sección de objetivos}
 
 \subsubsection*{Fundamentales}
 
-\begin{enumerate}
+\begin{enumerate}[label=\textbf{R1.\arabic*f}, leftmargin=10mm]
 	\item Se debe poder crear, consultar, editar y eliminar objetivos.
 	
 	\item Se debe poder registrar una entrada de un objetivo, y ver reflejado el progreso del mismo.
@@ -268,18 +313,18 @@ Se plantean los siguientes objetivos para la aplicación propuesta. Pueden divid
 
 \subsubsection*{Opcionales}
 
-\begin{enumerate}[resume]
+\begin{enumerate}[label=\textbf{R1.\arabic*o}, leftmargin=10mm]
 	\item Se debe permitir pausar un objetivo indefinidamente. Esto lo excluirá de la lista de objetivos activos, y no se podrá introducir nuevas entradas del mismo hasta que no sea reanudado. La racha actual se guardará.
 	
 	\item Se debe poder definir diferentes frecuencias al crear objetivos, que determinarán el reinicio del progreso de los mismos. Se podrá seleccionar entre frecuencia semanal y mensual.
 \end{enumerate}
 
 
-\subsection*{Sección de actividades}
+\subsection*{[R2] Sección de actividades}
 
 \subsubsection*{Fundamentales}
 
-\begin{enumerate}[resume]
+\begin{enumerate}[label=\textbf{R2.\arabic*f}, leftmargin=10mm]
 	\item Se debe poder crear, consultar, editar y eliminar actividades.
 	
 	\item Se debe mostrar una vista con el horario de la semana en formato de lista de actividades.
@@ -287,16 +332,16 @@ Se plantean los siguientes objetivos para la aplicación propuesta. Pueden divid
 
 \subsubsection*{Opcionales}
 
-\begin{enumerate}[resume]
+\begin{enumerate}[label=\textbf{R2.\arabic*o}, leftmargin=10mm]
 	\item Se debe poder ver una lista de las actividades pertenecientes a una categoría en la vista de resumen de la misma.
 \end{enumerate}
 
 
-\subsection*{Sección de categorías}
+\subsection*{[R3] Sección de categorías}
 
 \subsubsection*{Fundamentales}
 
-\begin{enumerate}[resume]
+\begin{enumerate}[label=\textbf{R3.\arabic*f}, leftmargin=10mm]
 	\item Se debe poder crear, consultar, editar y eliminar categorías.
 	
 	\item Se debe poder asignar una categoría a objetivos y actividades.
@@ -305,11 +350,11 @@ Se plantean los siguientes objetivos para la aplicación propuesta. Pueden divid
 \end{enumerate}
 
 
-\subsection*{Sección de panel de navegación o \textit{Vista Rápida}}
+\subsection*{[R4] Sección de panel de navegación o \textit{Vista Rápida}}
 
 \subsubsection*{Fundamentales}
 
-\begin{enumerate}[resume]
+\begin{enumerate}[label=\textbf{R4.\arabic*f}, leftmargin=10mm]
 	\item Se debe mostrar la fecha y hora actuales.
 	
 	\item Se deben mostrar varios objetivos pendientes de finalización como sugerencias al usuario, para incentivarlo a completarlos en caso de no saber qué hacer.
@@ -321,16 +366,16 @@ Se plantean los siguientes objetivos para la aplicación propuesta. Pueden divid
 
 \subsubsection*{Opcionales}
 
-\begin{enumerate}[resume]
+\begin{enumerate}[label=\textbf{R4.\arabic*o}, leftmargin=10mm]
 	\item Se debe poder ocultar y expandir el panel de navegación.
 \end{enumerate}
 
 
-\subsection*{Sección de configuración}
+\subsection*{[R5] Sección de configuración}
 
 \subsubsection*{Fundamentales}
 
-\begin{enumerate}[resume]
+\begin{enumerate}[label=\textbf{R5.\arabic*f}, leftmargin=10mm]
 	\item Se debe poder ajustar el día de la semana y la hora en la que se reinicia el progreso de los objetivos.
 	
 	\item Se debe poder seleccionar la vista por defecto al entrar en la aplicación.
@@ -338,18 +383,18 @@ Se plantean los siguientes objetivos para la aplicación propuesta. Pueden divid
 
 \subsubsection*{Opcionales}
 
-\begin{enumerate}[resume]
+\begin{enumerate}[label=\textbf{R5.\arabic*o}, leftmargin=10mm]
 	\item Se debe poder seleccionar el tema de la aplicación.
 	
 	\item Se debe poder definir la zona horaria de la aplicación.	
 \end{enumerate}
 
 
-\subsection*{Sección de accesibilidad}
+\subsection*{[R6] Sección de accesibilidad}
 
 \subsubsection*{Fundamentales}
 
-\begin{enumerate}[resume]
+\begin{enumerate}[label=\textbf{R6.\arabic*f}, leftmargin=10mm]
 	\item Se debe garantizar la compatibilidad de la aplicación con herramientas de accesibilidad, y mantener un contraste adecuado.
 \end{enumerate}
 
@@ -422,11 +467,13 @@ Las historias de usuario pueden agruparse en las llamadas \textit{épicas}, que 
 
 \section{Análisis de requisitos}
 
-Para este proyecto, se han definido historias de usuario basadas en los objetivos de la aplicación descritos anteriormente, distribuidas en épicas.
+Se han definido historias de usuario basadas en los objetivos de la aplicación descritos anteriormente, distribuidas en épicas.
 
-Dado que se ha utilizado la herramienta \textit{Jira Software} a lo largo del desarrollo, se ha asignado un identificador único a cada historia de usuario, con el formato \textit{TFG-n}.
+Dado que se ha utilizado la herramienta \textit{Jira Software} a lo largo del desarrollo, se ha asignado un identificador único a cada historia de usuario, con el formato \textit{TFG-n}. Dado que el identificador asignado por Jira corresponde con la creación de las tareas e historias de usuario, el número asociado no tiene otra función que la de garantizar que cada elemento sea unívoco.
 
 \subsubsection*{Sección de objetivos}
+
+La sección de objetivos se corresponde con el \textbf{requisito [R1]}.
 
 \begin{itemize}[leftmargin=16mm]
 	\item [\textbf{TFG-9}] Como usuario, quiero crear un objetivo para poder seguirlo.
@@ -489,6 +536,8 @@ Dado que se ha utilizado la herramienta \textit{Jira Software} a lo largo del de
 
 \subsubsection*{Sección de actividades}
 
+La sección de actividades se corresponde con el \textbf{requisito [R2]}.
+
 \begin{itemize}[leftmargin=16mm]
 	\item [\textbf{TFG-24}] Como usuario, quiero poder crear una actividad para tenerla en cuenta al organizarme 
 	
@@ -529,6 +578,8 @@ Dado que se ha utilizado la herramienta \textit{Jira Software} a lo largo del de
 
 \subsubsection*{Sección de categorías}
 
+La sección de categorías se corresponde con el \textbf{requisito [R3]}.
+
 \begin{itemize}[leftmargin=16mm]
 	\item [\textbf{TFG-15}] Como usuario, quiero poder agrupar mis objetivos en categorías, para poder ordenarlos y observarlos por separado.
 	
@@ -558,6 +609,8 @@ Dado que se ha utilizado la herramienta \textit{Jira Software} a lo largo del de
 
 \subsubsection*{Sección de panel de navegación o \textit{Vista rápida}}
 
+La sección del panel de navegación se corresponde con el \textbf{requisito [R4]}.
+
 \begin{itemize}[leftmargin=16mm]
 	\item [\textbf{TFG-32}] Como usuario, quiero disponer de un menú de navegación por las diferentes vistas de la aplicación para acceder a ellas cómodamente.
 	
@@ -581,6 +634,8 @@ Dado que se ha utilizado la herramienta \textit{Jira Software} a lo largo del de
 \end{itemize}
 
 \subsubsection*{Sección de configuración}
+
+La sección de configuración se corresponde con el \textbf{requisito [R5]}.
 
 \begin{itemize}[leftmargin=16mm]
 	\item [\textbf{TFG-34}] Como usuario, quiero poder ajustar qué día y hora se reinician mis objetivos para establecer mis rutinas.
@@ -606,6 +661,8 @@ Dado que se ha utilizado la herramienta \textit{Jira Software} a lo largo del de
 \end{itemize}
 
 \subsubsection*{Sección de accesibilidad}
+
+La sección de accesibilidad se corresponde con el \textbf{requisito [R6]}.
 
 \begin{itemize}[leftmargin=16mm]
 	\item [\textbf{TFG-40}] Como usuario con problemas de visión, quiero que la aplicación sea navegable con lectores de pantalla para poder usarla cómodamente.
@@ -672,7 +729,7 @@ A continuación se presenta el diagrama de Gantt correspondiente a dichos plazos
 
 \subsubsection{Problemas}
 
-La planificación inicial descrita contaba con numerosos fallos, principalmente debidos a la laxitud de su definición y plazos, sumada a la incertidumbre del aprendizaje autónomo de las distintas tecnologías utilizadas. Esto, sumado a a diversos factores ajenos al proyecto, propició la necesidad de replantear el estado del proyecto, y se decidió reiniciar la fase de desarrollo con una nueva planificación, ajustada esta vez a una fecha de entrega posterior, y con un nivel de detalle mucho mayor.
+La planificación inicial descrita contaba con numerosos fallos, principalmente debidos a la laxitud de su definición y plazos, sumada a la incertidumbre del aprendizaje autónomo de las distintas tecnologías utilizadas. Esto, sumado a a diversos factores ajenos al proyecto, propició la necesidad de replantear el estado del mismo, y se decidió reiniciar la fase de desarrollo con una nueva planificación, ajustada esta vez a una fecha de entrega posterior, y con un nivel de detalle mucho mayor.
 
 \subsection{Planificación final}
 
@@ -869,7 +926,7 @@ Se ofrece además un presupuesto aproximado del coste de mantenimiento de la apl
 			\hline
 			\rowcolor[HTML]{EFEFEF} 
 			\textbf{Servicio}                   & \textbf{Tarifa (€/hora)} \\ \hline
-			Salario de ingeniero informático junior a media jornada & 16   \\ \hline
+			Salario de ingeniero informático en tareas de mantenimiento & 16   \\ \hline
 		\end{tabular}
 	\end{center}
 \end{table}
@@ -900,7 +957,7 @@ Se ofrece además un presupuesto orientativo sobre el coste de desplegar y mante
 				>{\columncolor[HTML]{EFEFEF}}l |l|}
 			\hline
 			\textbf{Total}                                          & 6.000€    \\ \hline
-			\textbf{Servicios opcionales durante un año} & 5.296,08€ \\ \hline
+			\textbf{Servicios opcionales durante un año} & 946,08€ \\ \hline
 		\end{tabular}
 	\end{center}
 \end{table}
@@ -986,18 +1043,53 @@ y es necesario conocer los patrones de desarrollo específicos de la plataforma,
 Vue.js también fue considerado, pero se descartó debido a su menor ecosistema de componentes, bibliotecas y documentación frente a las otras alternativas.
 
 
+\subsection{Planteamiento de la metodología de desarrollo}
+
+La elección de definir una metodología con principios ágiles fue clara desde el principio; no obstante, extraer elementos de las distintas opciones más populares no resultó tan sencillo, puesto que este tipo de metodologías están muy orientadas a trabajar en equipos ---generalmente pequeños, pero equipos al fin y al cabo---, con muchos elementos de comunicación, retrospectiva y revisión por parte del resto de miembros que en este caso no eran posibles.
+
+Por ello, se hizo una selección de elementos generales, como el tablero Kanban, el desarrollo iterativo y las historias de usuario, pero dejando de lado el aspecto <<social>> de metodologías como \textit{SCRUM} o \textit{eXtreme Programming}. Dado que se trata de un encargo simulado, tampoco se ha podido contar con la perspectiva de un cliente real a lo largo del desarrollo, pero se han intentado imitar las distintas peculiaridades que pueden surgir de un encargo realizado por alguien que desconoce el proceso de desarrollo de software, tanto a través de las historias de usuario como de algunos cambios durante la implementación de la aplicación.
+
+\newpage
+
+\section{Iteraciones del desarrollo}
+
+Siguiendo la planificación final propuesta, se han realizado un total de ocho iteraciones, sirviendo las dos primeras para plantear y configurar el marco de trabajo y el entorno de desarrollo, y las seis restantes dedicadas a la implementación del mismo.
 
 
-\section{Primera iteración}
+\subsection{Primera iteración: investigación sobre tecnologías a utilizar}
 
-\subsection{Análisis}
+\textbf{Inicio:} 1 de mayo
+
+\textbf{Fin:} 31 de mayo
+
+\subsubsection{Análisis}
+
+Como se menciona en la sección de planificación, el proyecto se planteó de nuevo, aprendiendo de los errores cometidos en la primera propuesta elaborada, e intentando distinguir qué elementos mantener en la definitiva.
+
+Se decidió elaborar una lista de historias de usuario nueva, simulando una reunión extensa con el cliente, y aclarando los requisitos de la aplicación de forma detallada, utilizando la flexibilidad de las historias de usuario. Se decidió trabajar con la herramienta \textit{Jira Software}, ya que ofrece un excelente medio de comunicación entre el equipo de desarrollo y el cliente, al mismo tiempo que una gestión del proceso de desarrollo muy completa, e integra varios de los elementos de las metodologías ágiles elegidos para el proyecto.
+
+Después de definir la lista de historias de usuario o \textit{product backlog}, se procedió a realizar la planificación temporal. Se acordó una fecha límite para la implementación del producto mínimo viable: el 31 de agosto. Se decidió trabajar con iteraciones de dos semanas, con la salvedad de las dos primeras dados sus requisitos especiales, y se repartieron las distintas historias de usuario entre ellas de forma orientativa, ordenadas por categoría y prioridad.
+
 
 \subsection{Diseño}
 
+Durante esta iteración se definió la arquitectura de la aplicación de forma concreta. Se decidió mantener la estructura utilizada anteriormente, es decir, utilizar SQLite como sistema gestor de bases de datos, Django REST Framework como aplicación del servidor, y un cliente web desarrollado con React. 
+
+No obstante, se realizaron importantes cambios en el enfoque del proyecto. En la capa de aplicación, se decidió utilizar la especificación OpenAPI, concretamente la versión 2.0, para documentar la API expuesta. Aprovechando esto, se decidió integrar la herramienta \textit{Swagger UI} para ofrecer una forma sencilla de visualizar la documentación de la misma, así como realizar peticiones de forma cómoda durante el desarrollo.
+
+En cuanto a los cambios del cliente, se apostó por utilizar una biblioteca de componentes prediseñados, ya que, además de agilizar el proceso de desarrollo, contienen multitud de utilidades que facilitan el diseño de la experiencia de usuario. Se contemplaron diferentes opciones, como \textit{Carbon Design System} \cite{noauthor_carbon_nodate}, desarrollado por IBM, o Material UI \cite{noauthor_material-ui:_nodate}, una implementación del sistema de diseño \textit{Material Design} \cite{noauthor_material_nodate} de Google. 
+
+Debido a los problemas de rendimiento de Carbon Design System y su menor variedad de componentes, finalmente se optó por Material UI.
+
 \subsection{Implementación}
+
+Se creó un repositorio Git alojado en la plataforma GitHub, para realizar un control de versiones del proyecto. Acto seguido, se procedió a inicializar tanto el \textit{backend} como el \textit{frontend} de la aplicación con las respectivas tecnologías elegidas. Para la API, se realizó una instalación de Django tal y como describe la documentación \cite{noauthor_how_nodate} del proyecto. Para el cliente, se utilizó la herramienta \textit{create-react-app} \cite{noauthor_create_nodate}, especificando la plantilla de TypeScript.
+
+Se instalaron las dependencias necesarias en ambos proyectos, principalmente Django REST Framework, Swagger UI ---mediante la extensión de Django \textit{drf-yasg} \cite{vijdea_drf-yasg_nodate}--- y Material UI, y se configuró el cliente para conectarse al servidor.
 
 \subsection{Pruebas}
 
+Antes de proceder a la siguiente iteración, se comprobó que la conexión entre el cliente y el servidor funcionaba correctamente, las dependencias se hallaban correctamente instaladas y las aplicaciones se servían en sus respectivos puertos HTTP.
 
 % Capítulo: conclusiones y vías futuras
 \chapter{Conclusiones y vías futuras}
