@@ -1056,11 +1056,11 @@ Por ello, se hizo una selección de elementos generales, como el tablero Kanban,
 Siguiendo la planificación final propuesta, se han realizado un total de ocho iteraciones, sirviendo las dos primeras para plantear y configurar el marco de trabajo y el entorno de desarrollo, y las seis restantes dedicadas a la implementación del mismo.
 
 
-\subsection{Primera iteración: investigación sobre tecnologías a utilizar}
+\subsection{Primera y segunda iteración: investigación sobre tecnologías a utilizar y configuración inicial}
 
 \textbf{Inicio:} 1 de mayo
 
-\textbf{Fin:} 31 de mayo
+\textbf{Fin:} 7 de junio
 
 \subsubsection{Análisis}
 
@@ -1068,10 +1068,12 @@ Como se menciona en la sección de planificación, el proyecto se planteó de nu
 
 Se decidió elaborar una lista de historias de usuario nueva, simulando una reunión extensa con el cliente, y aclarando los requisitos de la aplicación de forma detallada, utilizando la flexibilidad de las historias de usuario. Se decidió trabajar con la herramienta \textit{Jira Software}, ya que ofrece un excelente medio de comunicación entre el equipo de desarrollo y el cliente, al mismo tiempo que una gestión del proceso de desarrollo muy completa, e integra varios de los elementos de las metodologías ágiles elegidos para el proyecto.
 
-Después de definir la lista de historias de usuario o \textit{product backlog}, se procedió a realizar la planificación temporal. Se acordó una fecha límite para la implementación del producto mínimo viable: el 31 de agosto. Se decidió trabajar con iteraciones de dos semanas, con la salvedad de las dos primeras dados sus requisitos especiales, y se repartieron las distintas historias de usuario entre ellas de forma orientativa, ordenadas por categoría y prioridad.
+Después de definir la lista de historias de usuario o \textit{product backlog}, se procedió a realizar la planificación temporal. Se acordó una fecha límite para la implementación del producto mínimo viable: el 31 de agosto. Además, se decidió trabajar con iteraciones de dos semanas, con la salvedad de las dos primeras dados sus requisitos especiales, y se repartieron las distintas historias de usuario entre ellas de forma orientativa, ordenadas por categoría y prioridad.
+
+La planificación quedó reflejada en dos diagramas de Gantt, organzizados tanto de forma temporal como por los objetivos del proyecto.
 
 
-\subsection{Diseño}
+\subsubsection{Diseño}
 
 Durante esta iteración se definió la arquitectura de la aplicación de forma concreta. Se decidió mantener la estructura utilizada anteriormente, es decir, utilizar SQLite como sistema gestor de bases de datos, Django REST Framework como aplicación del servidor, y un cliente web desarrollado con React. 
 
@@ -1079,24 +1081,134 @@ No obstante, se realizaron importantes cambios en el enfoque del proyecto. En la
 
 En cuanto a los cambios del cliente, se apostó por utilizar una biblioteca de componentes prediseñados, ya que, además de agilizar el proceso de desarrollo, contienen multitud de utilidades que facilitan el diseño de la experiencia de usuario. Se contemplaron diferentes opciones, como \textit{Carbon Design System} \cite{noauthor_carbon_nodate}, desarrollado por IBM, o Material UI \cite{noauthor_material-ui:_nodate}, una implementación del sistema de diseño \textit{Material Design} \cite{noauthor_material_nodate} de Google. 
 
-Debido a los problemas de rendimiento de Carbon Design System y su menor variedad de componentes, finalmente se optó por Material UI.
+Debido a los problemas de rendimiento de Carbon Design System y su menor variedad de componentes, finalmente se optó por Material UI. Se realizaron varios bocetos y prototipos, tanto estáticos como interactivos ---estos últimos utilizando la herramienta gratuita \textit{Adobe Xd}, para definir el diseño de la aplicación y la experiencia de usuario, garantizando que las funcionalidades fuesen posibles de mostrar e implementar, y resultasen útiles al usuario final.
 
-\subsection{Implementación}
+A continuación se muestran imágenes de los prototipos y bocetos elaborados.
 
-Se creó un repositorio Git alojado en la plataforma GitHub, para realizar un control de versiones del proyecto. Acto seguido, se procedió a inicializar tanto el \textit{backend} como el \textit{frontend} de la aplicación con las respectivas tecnologías elegidas. Para la API, se realizó una instalación de Django tal y como describe la documentación \cite{noauthor_how_nodate} del proyecto. Para el cliente, se utilizó la herramienta \textit{create-react-app} \cite{noauthor_create_nodate}, especificando la plantilla de TypeScript.
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=0.6]{img/sprint1-boceto-papel.jpg}
+	\caption{Bocetos iniciales a papel}
+\end{figure}
 
-Se instalaron las dependencias necesarias en ambos proyectos, principalmente Django REST Framework, Swagger UI ---mediante la extensión de Django \textit{drf-yasg} \cite{vijdea_drf-yasg_nodate}--- y Material UI, y se configuró el cliente para conectarse al servidor.
+\begin{figure}[hbt!]
+	\centering
+	%\includegraphics[scale=0.6]{img/arquitectura.png}
+	\caption{Capturas de pantalla del primer prototipo interactivo}
+\end{figure}
 
-\subsection{Pruebas}
+\begin{figure}[hbt!]
+	\centering
+	%\includegraphics[scale=0.6]{img/arquitectura.png}
+	\caption{Capturas de pantalla del segundo prototipo interactivo}
+\end{figure}
 
-Antes de proceder a la siguiente iteración, se comprobó que la conexión entre el cliente y el servidor funcionaba correctamente, las dependencias se hallaban correctamente instaladas y las aplicaciones se servían en sus respectivos puertos HTTP.
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=1.25]{img/sprint1-wireframe-objetivos.jpg}
+	\caption{Boceto en alta definición de la vista de objetivos}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=1.25]{img/sprint1-wireframe-lista-actividades.jpg}
+	\caption{Boceto en alta definición de la vista de actividades}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=1.25]{img/sprint1-wireframe-actividades.jpg}
+	\caption{Boceto en alta definición de la vista de día ---descartada en el diseño final---)}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=1.25]{img/sprint1-wireframe-popup.jpg}
+	\caption{Boceto en alta definición del aspecto de las ventanas emergentes}
+\end{figure}
+
+\clearpage
+
+\subsubsection{Implementación}
+
+Se creó un repositorio Git alojado en la plataforma GitHub, para realizar un control de versiones del proyecto. Una vez hecho esto, se procedió a inicializar tanto el \textit{backend} como el \textit{frontend} de la aplicación con las respectivas tecnologías elegidas. Para la API, se realizó una instalación de Django tal y como describe la documentación del proyecto \cite{noauthor_how_nodate}. Para el cliente, se utilizó la herramienta \textit{create-react-app} \cite{noauthor_create_nodate}, especificando la plantilla de TypeScript.
+
+Se instalaron las dependencias necesarias en ambos proyectos, principalmente Django REST Framework, Swagger UI ---mediante la extensión de Django \textit{drf-yasg} \cite{vijdea_drf-yasg_nodate}--- y Material UI, y se configuró el cliente para conectarse al servidor, configurando los parámetros necesarios.
+
+Se decidió trabajar de forma local durante el desarrollo, sirviendo el cliente y el servidor en los puertos HTTP 3000 y 8000, respectivamente.
+
+\subsubsection{Pruebas}
+
+Una vez la configuración fue completada, se comprobó que la conexión entre el cliente y el servidor funcionaba correctamente, las dependencias se hallaban correctamente instaladas y las aplicaciones se servían en sus respectivos puertos HTTP.
+
+
+\subsection{Tercera iteración: \textit{Sprint 1}}
+
+\textbf{Inicio:} 8 de junio
+
+\textbf{Fin:} 22 de junio
+
+
+\subsubsection{Análisis}
+
+Las historias de usuario asignadas a esta iteración fueron las siguientes:
+
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-9}] Como usuario, quiero crear un objetivo para poder seguirlo.
+	
+	\item [\textbf{TFG-10}] Como usuario, quiero poder editar un objetivo.
+	
+	\item [\textbf{TFG-11}] Como usuario, quiero poder actualizar el progreso de un objetivo para registrar mis hábitos.
+	
+	\item [\textbf{TFG-12}] Como usuario, quiero poder eliminar un objetivo de forma permanente.
+	
+	\item [\textbf{TFG-15}] Como usuario, quiero poder agrupar mis objetivos en categorías, para poder ordenarlos y observarlos por separado.
+	
+	\item [\textbf{TFG-17}] Como usuario, quiero poder ver una lista de mis objetivos actuales para tenerlos en cuenta.
+	
+	\item [\textbf{TFG-18}] Como usuario, quiero que el progreso de mis objetivos se reinicie una vez pasado el plazo, para poder seguirlos correctamente.
+	
+	
+	\item [\textbf{TFG-19}] Como usuario, quiero poder pausar objetivos indefinidamente sin eliminarlos, para poder retomarlos en un futuro sin eliminar mis datos.
+	
+	\item [\textbf{TFG-67}] Como usuario, quiero ver el progreso de un objetivo para seguir mi esfuerzo.
+\end{itemize}
+
+
+Se estimó su complejidad, y las tareas necesarias previas a la implementación, como la elaboración del modelo de datos para representar un \textbf{objetivo} y una \textbf{categoría}, así como la forma de actualizarlos. Para ofrecer garantías con respecto a su funcionamiento, se acordó elaborar pruebas para aquellas funcionalidades con valores calculados automáticamente, como son las historias de usuario TFG-18 y TFG-67.
+
+
+\subsubsection{Diseño}
+
+Con respecto a la experiencia de usuario, se realizó una primera aproximación a la estructura de la aplicación y la vista de objetivos, adaptando las ideas definidas en los bocetos presentados a los componentes de diseño de Material UI
+
+
 
 % Capítulo: conclusiones y vías futuras
 \chapter{Conclusiones y vías futuras}
 
+
 \section{Conclusiones del proyecto}
 
 \section{Posibles modificaciones futuras}
+
+Despliegue 
+
+Vistas responsive
+
+Funcionalidad de pausar objetivos
+
+Cuadrante de horario similar a Google calendar
+
+
+\section{Decisiones mejorables (cambiar título)}
+
+Mejor aprovechamiento de Git: uso más estandarizado, creación de ramas por funcionalidades, etc.
+
+Uso de una planificación más rígida desde el principio
+
+Uso de OpenAPI 3.0 desde el principio
+
 
 \newpage
 
