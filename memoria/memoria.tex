@@ -16,8 +16,12 @@
 \usepackage[numbers]{natbib}
 \usepackage{enumitem}
 \usepackage{colortbl}
+\usepackage{tikz}
 
 % Document settings
+
+\definecolor{green500}{HTML}{4caf50}
+\definecolor{brown500}{HTML}{795548}
 
 % Nest enumeration as numbers
 \renewcommand{\labelenumii}{\theenumii}
@@ -38,6 +42,8 @@
 	subtitle = Aplicación de gestión de rutinas semanales basada en tecnologías web
 ]
 \tableofcontents
+
+\listoffigures
 
 % Capítulo: introducción
 \chapter{Introducción}
@@ -764,7 +770,7 @@ Las etapas del proyecto quedan distribuidas de la siguiente manera:
 		
 		\item Iteración 5: del 6 al 20 de agosto.
 		
-		\item Iteración 6:del 21 al 31 de agosto.
+		\item Iteración 6: del 21 al 31 de agosto.
 	\end{enumerate}
 \end{enumerate}
 
@@ -1118,7 +1124,7 @@ A continuación se muestran imágenes de los prototipos y bocetos elaborados.
 \begin{figure}[hbt!]
 	\centering
 	\includegraphics[scale=1.25]{img/sprint1-wireframe-actividades.jpg}
-	\caption{Boceto en alta definición de la vista de día ---descartada en el diseño final---)}
+	\caption{Boceto en alta definición de la vista de día ---descartada en el diseño final---}
 \end{figure}
 
 \begin{figure}[hbt!]
@@ -1180,12 +1186,276 @@ Se estimó su complejidad, y las tareas necesarias previas a la implementación,
 
 \subsubsection{Diseño}
 
-Con respecto a la experiencia de usuario, se realizó una primera aproximación a la estructura de la aplicación y la vista de objetivos, adaptando las ideas definidas en los bocetos presentados a los componentes de diseño de Material UI
+Con respecto a la experiencia de usuario, se realizó una primera aproximación a la estructura de la aplicación y la vista de objetivos, adaptando las ideas definidas en los bocetos presentados a los componentes de diseño de Material UI. 
+
+También se comenzó a definir el modelo de datos. Debido al deseo de poder registrar el progreso de los objetivos de forma semanal, calcular su cumplimiento consecutivo y poder consultar un historial, se planteó crear dos entidades: \textbf{objetivo} y \textbf{entrada de objetivo}.
+Además, dado que el objetivo puede estar asignado a una \textbf{categoría}, y es necesario fijar un día de inicio de semana, se definieron las entidades y relaciones necesarias.
 
 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.6]{img/sprint1-modelo-datos.png}
+	\caption{Diagrama Entidad-Relación definido en el \textit{Sprint 1}}
+\end{figure}
+
+\subsubsection{Implementación}
+
+Se procede a repasar los detalles de implementación de las historias de usuario asignadas.
+
+\textbf{TFG-9}
+
+Se creó el modelo de \textbf{objetivos} en el \textit{backend}. Django REST Framework ofrece la clase \textit{ModelViewSet}, que expone las operaciones más comunes en una API REST: crear, leer, modificar, eliminar y listar. Para ello, es necesario definir un serializador, de forma que al interactuar con la API los datos se ofrezcan en el formato deseado. Django integra funciones y clases para definir serializadores, por lo que no han sido necesarias dependencias adicionales.
+
+Además de definir los \textit{endpoints} del modelo de objetivos, se definió el que ofrece la vista de Swagger UI.
+
+
+En cuanto al \textit{frontend}, se creó el formulario de objetivos. Dado que la estructura de la aplicación no estaba plenamente definida, se priorizó el funcionamiento frente al diseño. 
+
+Preveyendo que la aplicación contaría con multitud de ventanas emergentes y formularios similares, se optó por definir componentes genéricos, sobre los que se compondrían las diferentes variantes aprovechando las funcionalidades de React y los componentes \textit{Dialog} de Material UI.
+
+\medskip
+
+\textbf{TFG-10}
+
+Debido a que Django REST Framework ofrece la funcionalidad de edición gracias a la clase \textit{ModelViewSet}, no fue necesario un gran esfuerzo en el \textit{backend}.
+
+Sin embargo, en el \textit{frontend} se agregó al formulario definido en la historia TFG-9 la posibilidad de recibir un parámetro de entrada con un objetivo, y cambiando su funcionalidad por la de edición. Al ser la carga de datos del objetivo deseado una operación asíncrona, fue necesario asegurar que los elementos visuales aparecerían tras recibir la respuesta del servidor.
+
+Se decidió agrupar las diferentes funciones encargadas de contactar con la API en clases, y utilizar un serializador, \textit{dcerialize} \cite{noauthor_dcerialize_nodate}, para poder trabajar de forma más flexible con los datos recibidos. 
+
+\medskip
+
+\textbf{TFG-11}
+
+En esta tarea se definió el modelo de \textbf{entrada de objetivo}, de forma similar a la creación del modelo de objetivo, proporcionando las rutas creadas por \textit{ModelViewSet}. Dada su estrecha relación con el mismo, se decidió incluir dos \textit{endpoints} adicionales a modo de <<atajo>>: 
+
+\begin{itemize}
+	\item \textbf{[GET] /objectives/\{id\}/entries}, para listar las entradas asociadas a un objetivo
+	\item \textbf{[POST] /objectives/\{id\}/entries}, para crear una nueva entrada asociada a un objetivo
+\end{itemize}
+
+Se implementó el modelo de entradas de objetivo en el cliente, así como la clase encargada de llamar a los distintos \textit{endpoints} de la API y el formulario de creación y edición, reutilizando los componentes previamente desarrollados.
+
+\medskip
+
+\textbf{TFG-12}
+
+Debido a que esta funcionalidad viene implementada por defecto al utilizar la clase \textit{ModelViewSet} de Django REST Framework, no fue necesario hacer cambios en la API.
+
+En el cliente, se definió un componente genérico destinado a confirmar operaciones de borrado, indicándole la operación a ejecutar al confirmar, así como distintos parámetros. Se colocó un botón provisional en la aplicación para borrar objetivos, dado que la completa implementación de esta tarea dependía de representar la lista completa. Una vez estuvo lista, se incluyó un botón en cada una de las entradas, que la elimina usando el componente de confirmación mencionado. 
+
+\medskip
+
+\textbf{TFG-15}
+
+Se crearon tanto el modelo de Django como el \textit{ModelViewSet} asociados a la entidad \textbf{categoría}, añadiendo la clave externa al modelo de objetivo. Posteriormente se definieron el serializador y la documentación de OpenAPI, de forma similar a las otras dos entidades. Se creó una categoría de prueba en la base de datos para continuar el desarrollo.
+
+En el cliente, se añadió el campo \textbf{categoría} en el modelo de objetivo y el formulario asociado. Al seleccionarlo, un desplegable muestra las distintas categorías definidas por el usuario, así como la opción \textit{Ninguna}. 
+
+\medskip
+
+\textbf{TFG-17}
+
+Se decidió utilizar el componente \textit{Table} de Material UI para mostrar la lista de objetivos, encapsulándolo en otro componente dedicado a obtener la información de la API, así como controlar el renderizado condicional.
+
+\medskip
+
+\textbf{TFG-18}
+
+Se añadió una propiedad nueva al modelo de objetivo, el \textbf{progreso}, calculado en función del número de entradas añadidas en la semana actual. Para ello fue necesario implementar el modelo de \textbf{configuración}, ya que contiene el día de inicio de semana, y varias funciones dedicadas a consultar la base de datos y sumar el progreso. Gracias al decorador \textit{@Property} de Django, fue sencillo añadir la propiedad calculada al modelo.
+
+Se actualizó la documentación y el cliente para reflejar los cambios, añadiendo una columna nueva a la lista de objetivos.
+
+\medskip
+
+\textbf{TFG-19}
+
+Se añadió un nuevo \textit{endpoint} a la API destinado a cambiar el estado de un objetivo, y se definió un enumerado conteniendo los distintos valores posibles. En el cliente se añadió un botón a cada entrada de la lista de objetivos dedicado a pausar y reanudar cada uno de ellos, actualizando la base de datos.
+
+No obstante, pausar y reanudar objetivos suponía un cambio drástico en la forma de calcular el progreso, así como las rachas de cumplimiento. Se decidió posponer la implementación de esta funcionalidad de forma indefinida.
+
+\medskip
+
+\textbf{TFG-67}
+
+Esta funcionalidad quedó implementada junto con la historia de usuario \textbf{TFG-18}.
+
+
+\subsubsection{Pruebas}
+
+Se elaboraron pruebas de aceptación para las tareas de cálculo del progreso semanal, TFG-18 y TFG-67, utilizando la herramienta \textit{unittest} de Python.
+
+Dado que son funcionalidades dependientes de la fecha en la que se ejecutan, se optó por representar en las pruebas los casos límite, y utilizar la biblioteca \textit{FreezeGun} \cite{pulec_freezegun_nodate} para fijar las fechas utilizadas.
+
+
+\subsection{Cuarta iteración: \textit{Sprint 2}}
+
+\textbf{Inicio:} 23 de junio
+
+\textbf{Fin:} 7 de julio
+
+\subsubsection{Análisis}
+
+Las historias de usuario asignadas a esta iteración fueron las siguientes:
+
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-14}] Como usuario, quiero poder ver una racha de cumplimiento de cada objetivo, para mantener mi motivación.
+	
+	\item [\textbf{TFG-20}] Como usuario, quiero poder ver un historial de registro de mis objetivos para poder analizarlos y ver mi progreso.
+	
+	\item [\textbf{TFG-21}] Como usuario, quiero ver indicadores visuales de que un objetivo se ha actualizado correctamente, o si ha habido un error, para poder actuar en consecuencia.
+	
+	\item [\textbf{TFG-22}] Como usuario, quiero poder ver un resumen global de mis objetivos para ver mi progreso general.
+	
+	\item [\textbf{TFG-24}] Como usuario, quiero poder crear una actividad para tenerla en cuenta al organizarme.
+	
+	\item [\textbf{TFG-25}] Como usuario, quiero poder editar una actividad para actualizar sus condiciones.
+	
+	\item [\textbf{TFG-26}] Como usuario, quiero poder eliminar una actividad en caso de que ya no sea de mi interés.
+	
+	\item [\textbf{TFG-84}] Como usuario, quiero ver la mayor racha que he alcanzado en cada objetivo para poder tener presentes mis logros.
+\end{itemize}
+
+Al igual que en la iteración anterior, se estimó la complejidad de las tareas, y fueron implementadas según la prioridad asignada en la planificación.
+
+Se mantuvo la intención de elaborar tests para las funcionalidades de los objetivos dependientes de la fecha, es decir, las historias de usuario TFG-14 y TFG-84.
+
+\subsubsection{Diseño}
+
+Se amplió el modelo de datos para representar la entidad de \textbf{actividades}, quedando el modelo de datos de la siguiente forma:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.6]{img/sprint2-modelo-datos.png}
+	\caption{Diagrama Entidad-Relación actualizado en el \textit{Sprint 2}}
+\end{figure}
+
+
+Se definió también la vista de actividades, ajustándose de nuevo a los bocetos elaborados, y se continuó utilizando Material UI sin grandes modificaciones. Además, se definieron los colores provisionales de la aplicación, utilizando la paleta de colores de Material Design \cite{noauthor_materialcolor_nodate}:
+
+\begin{itemize}
+	\item Color principal: verde 500 \medspace \tikz\draw[green500,fill=green500] (0,0) circle (.75ex);
+	\item Color secundario: marrón 500 \medspace \tikz\draw[brown500,fill=brown500] (0,0) circle (.75ex);
+\end{itemize}
+
+Además, se estableció el diseño del historial de entradas de objetivos. Funcionaría a través de un calendario, cuyos días con entradas registradas aparecerían coloreados.
+Al seleccionar una fecha, una ventana emergente mostaría una lista con información sobre las entradas, y un menú para poder modificarlas o eliminarlas.
+
+\begin{figure}[h!]
+	\centering
+	%\includegraphics[scale=0.6]{img/sprint2-modelo-datos.png}
+	\caption{Boceto a mano del historial de entradas de objetivo}
+\end{figure}
+
+
+\subsubsection{Implementación}
+
+Se detallan a continuación las diferentes historias de usuario abordadas en esta iteración.
+
+\textbf{TFG-14}
+
+Se implementó esta funcionalidad haciendo uso del decorador \textit{@Property} de Django, al igual que el progreso de un objetivo. La función utilizada realiza un recorrido semana a semana, desde la actual hacia atrás, incrementando la racha de cumplimiento de un objetivo hasta encontrar una semana en la que no se haya completado.
+
+Se plantearon opciones para guardar este valor y evitar cálculos, pero debido a la baja densidad de datos estimada para la aplicación, se determinó que supondría un esfuerzo innecesario de momento, y perjudicaría el ritmo del proyecto.
+
+Se realizaron pequeños ajustes a la función de cálculo del progreso de un objetivo, de cara a reutilizarla en otras partes del código.
+
+En el cliente, se añadió una columna a la lista de objetivos, así como el campo correspondiente en el modelo y el serializador, para mostrar el valor calculado.
+
+\medskip
+
+\textbf{TFG-20}
+
+Para esta funcionalidad se decidió utilizar la herramienta \textit{React-Calendar} \cite{maj__react-calendar_nodate}, debido a su simplicidad, capacidad de configuración y facilidad de integración con el proyecto. 
+
+Desde la aplicación de la API se hicieron modificaciones a las rutas del modelo de objetivo para cumplir con los requisitos de la tarea:
+
+\begin{itemize}
+	\item \textbf{(Nuevo) [GET] /objective-entries/days/} 
+	
+	Devuelve los días en los que hay entradas registradas.
+	
+	\textbf{Parámetros}
+	
+	\begin{itemize}
+		\item \textbf{month:} entero positivo entre 1 y 12. Mes del cual se solicitan los días. Si no se especifica, se devuelven los resultados del mes actual.
+	\end{itemize}
+
+	\item \textbf{(Modif.) [GET] /objective-entries/} 
+	
+	Devuelve una lista con las entradas registradas.
+
+	\textbf{Parámetros}
+	
+	\begin{itemize}
+		\item \textbf{date:} fecha en formato ISO 8601 \cite{houston1993iso}. Se devolverán los resultados con la fecha indicada.
+	\end{itemize}
+\end{itemize}
+
+\medskip
+
+Desde el cliente, se instaló el paquete \textit{React-Calendar}, y se plantearon los siguientes componentes, encargados de implementar la funcionalidad deseada:
+
+\begin{itemize}
+	\item \textbf{ObjectiveEntryCalendar:} componente encargado de representar el calendario de entradas, mostrar los días disponibles y solicitar a la API los datos necesarios una vez seleccionado un día.
+	
+	\item \textbf{ObjectiveEntryHistory:} lista de entradas representadas utilizando componentes \textit{Card} de Material UI, mostrando la información de cada una de ellas. El menú contextual para editar y borrar una entrada se implementaría más adelante.
+	
+	\item \textbf{EntryHistoryDialog:} componente derivado de los previamente desarrollados para presentar ventanas emergentes. Muestra el historial de entradas al seleccionar una fecha en el calendario.
+\end{itemize}
+
+
+\medskip
+
+\textbf{TFG-21}
+
+En esta tarea se añadieron los indicadores de progreso \textit{CircularProgress} proporcionados por Material UI, para representar la espera de respuesta por parte del servidor. Se colocaron en todos los componentes que necesitasen actualizar datos, ya que antes, pese a actualizarse correctamente, el usuario no tenía forma de saber que la aplicación estaba esperando datos.
+
+\medskip
+
+\textbf{TFG-22}
+
+En esta tarea se integró el componente de historial implementado en la historia \textbf{TFG-20} en la vista de objetivos, de forma que todo lo relacionado con objetivos se encuentra en la misma vista. 
+
+\medskip
+
+\textbf{TFG-24}
+
+Para implementar esta tarea se definió en modelo de actividades en Django siguiendo el mismo proceso que los anteriores, y generando una vista con la clase \textit{ModelViewSet}, que proporciona las rutas básicas de la API. Se hizo lo mismo en la parte del cliente, definiendo el modelo, serializador y funciones de consulta. 
+
+Dado que la vista de actividades no estaba lista, se realizó la implementación del formulario de creación/edición de actividad partiendo de los ya existentes, pero no se introdujo en la aplicación de forma definitiva. Una vez añadida la funcionalidad de añadir instancias de la actividad en la vista correspondiente, se volvería a abrir esta tarea, para completarla definitivamente.
+
+\medskip
+
+\textbf{TFG-25}
+
+Esta funcionalidad se implementó junto con la creación de actividades en la historia \textbf{TFG-24}, debido a la reutilización de componentes.
+
+\medskip
+
+\textbf{TFG-26}
+
+Dado que se definió un componente de confirmación para operaciones potencialmente destructivas, y la existencia previa del \textit{endpoint} de borrado para el modelo de actividad, la implementación de esta tarea consistió en añadir una función de borrado para utilizarla con el componente de confirmación. Al igual que la historia \textbf{TFG-24}, quedaría pendiente de integrar en la aplicación una vez la vista de actividades estuviese lista.
+
+\medskip
+
+\textbf{TFG-84}
+
+Para la realización de esta tarea se definió una función en el servidor dedicada a incrementar el campo correspondiente del modelo de objetivo. Utilizando la funcionalidad de \textbf{señales} \cite{noauthor_signals_nodate} de Django, se estableció que la función se ejecutaría al añadir progreso en un objetivo. Si se había completado, actualizaría la mejor racha con el valor de la racha actual, siempre y cuando fuese mayor al valor almacenado.
+
+Dado que al editar un objetivo se puede cambiar la meta del mismo, se producían inconsistencias en los datos, pudiendo aumentar de forma artificial la mejor racha alcanzada. Para evitar esto, se estableció otra señal, que calcula de nuevo la mejor racha si la meta de un objetivo es modificada.
+
+No fue necesario realizar modificaciones en el cliente, ya que este dato se encontraba en el modelo, y se mostraba en la lista de objetivos.
+
+\medskip
+
+\subsubsection{Pruebas}
+
+Al igual que con las historias anteriores relacionadas con los cálculos automáticos de los datos de objetivos, se diseñaron tests \textit{a priori} para las funcionalidades implementadas en las historias TFG-14 y TFG-84 con la utilidad \textit{unittest} de Python.
 
 % Capítulo: conclusiones y vías futuras
 \chapter{Conclusiones y vías futuras}
+
 
 
 \section{Conclusiones del proyecto}
