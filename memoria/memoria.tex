@@ -802,7 +802,7 @@ La distribución aproximada de las épicas en las iteraciones de desarrollo se p
 
 \subsubsection*{Distribución final de las historias de usuario en las iteraciones de desarrollo}
 
-\textbf{Iteración 1}
+\textbf{Sprint 1}
 \begin{itemize}[leftmargin=16mm]
 	\item [\textbf{TFG-9}] Como usuario, quiero crear un objetivo para poder seguirlo.
 	
@@ -824,7 +824,7 @@ La distribución aproximada de las épicas en las iteraciones de desarrollo se p
 	\item [\textbf{TFG-67}] Como usuario, quiero ver el progreso de un objetivo para seguir mi esfuerzo.
 \end{itemize}
 
-\textbf{Iteración 2}
+\textbf{Sprint 2}
 \begin{itemize}[leftmargin=16mm]
 	\item [\textbf{TFG-14}] Como usuario, quiero poder ver una racha de cumplimiento de cada objetivo, para mantener mi motivación.
 
@@ -843,7 +843,7 @@ La distribución aproximada de las épicas en las iteraciones de desarrollo se p
 	\item [\textbf{TFG-84}] Como usuario, quiero ver la mayor racha que he alcanzado en cada objetivo para poder tener presentes mis logros.
 \end{itemize}
 
-\textbf{Iteración 3}
+\textbf{Sprint 3}
 \begin{itemize}[leftmargin=16mm]
 	\item [\textbf{TFG-16}] Como usuario, quiero poder ver un resumen de cada categoría de objetivos, para saber mi progreso con la misma.
 	
@@ -865,7 +865,7 @@ La distribución aproximada de las épicas en las iteraciones de desarrollo se p
 	\item [\textbf{TFG-89}] Como usuario, quiero poder eliminar los momentos en los que practico una actividad para poder ajustarlos a mi situación.
 \end{itemize}
 
-\textbf{Iteración 4}
+\textbf{Sprint 4}
 \begin{itemize}[leftmargin=16mm]
 	\item [\textbf{TFG-29}] Como usuario, quiero ver la fecha y hora actual para poder tenerla presente .
 
@@ -880,7 +880,7 @@ La distribución aproximada de las épicas en las iteraciones de desarrollo se p
 	\item [\textbf{TFG-34}] Como usuario, quiero poder ajustar qué día y hora se reinician mis objetivos para establecer mis rutinas.
 \end{itemize}
 
-\textbf{Iteración 5}
+\textbf{Sprint 5}
 \begin{itemize}[leftmargin=16mm]
 	\item [\textbf{TFG-38}] Como usuario, quiero poder fijar una vista por defecto para que al abrir la aplicación se muestre.
 	
@@ -889,11 +889,9 @@ La distribución aproximada de las épicas en las iteraciones de desarrollo se p
 	\item [\textbf{TFG-91}] Como usuario, quiero que la vista de actividades empiece en el día de la semana configurado como inicio de semana.
 \end{itemize}
 
-\textbf{Iteración 6}
+\textbf{Sprint 6}
 \begin{itemize}[leftmargin=16mm]
-	\item [\textbf{TFG-13}]  	
-	
-	Como usuario, quiero poder definir objetivos con varios tipos de progreso, para poder flexibilizar mis objetivos .
+	\item [\textbf{TFG-13}] Como usuario, quiero poder definir objetivos con varios tipos de progreso, para poder flexibilizar mis objetivos .
 	
 	\item [\textbf{TFG-28}] Como usuario, quiero ver las actividades asociadas a una categoría en la vista de esa categoría para poder ver fácilmente cuáles son.
 	
@@ -1594,49 +1592,326 @@ Las historias de usuario asignadas a esta iteración fueron las siguientes:
 	
 	\item [\textbf{TFG-33}] Como usuario, quiero poder acceder a la configuración general de la aplicación desde cualquier parte de la misma, para poder ajustar mi experiencia de forma cómoda.
 	
-	\item [\textbf{TFG-34}] Como usuario, quiero poder ajustar qué día y hora se reinician mis objetivos para establecer mis rutinas.
+	\item [\textbf{TFG-34}] Como usuario, quiero poder ajustar qué día se reinician mis objetivos para establecer mis rutinas.
 \end{itemize}
 
+\medskip
+
+En este sprint se implementarían las tareas relativas a la \textbf{barra lateral}, desbloqueando las historias de usuario que quedaban pendientes de completar:
+
+\begin{itemize}[leftmargin=16mm]
+	\item[\textbf{TFG-43}] Creación de categorías
+	\item[\textbf{TFG-44}] Edición de categorías
+	\item[\textbf{TFG-25}] Edición de actividades
+	\item[\textbf{TFG-26}] Borrado de actividades
+\end{itemize}
+
+Además, se añadiría la sección de configuración de la aplicación, una funcionalidad que ya estaba implementada en la parte del servidor, pero que era imposible modificar desde el cliente hasta ahora.
+
+
+\subsubsection{Diseño}
+
+Todas las funcionalidades de esta iteración pertenecen al cliente, salvo la historia TFG-30, para la cual se planteó devolver, a través de un nuevo \textit{endpoint} de la API, una pareja de objetivos sin completar, uno de ellos cerca de su finalización y otro aún no comenzado o con menos progreso registrado.
+
+Aparte de esto, la capa de aplicación no sufrió modificaciones en esta iteración, ya que la funcionalidad de la historia TFG-34 fue implementada en las funciones de progreso y cálculo de rachas del modelo de objetivo.
+
+Para el aspecto visual y la experiencia de usuario del cliente, se partió de nuevo de los bocetos digitales proporcionados, aunque con ligeras modificaciones, como trasladar los botones de navegación a la barra lateral ---en lugar de hallarse en la barra de título, como figuraban en los bocetos---.
+
+
+\subsubsection{Implementación}
+
+\textbf{TFG-29}
+
+Para implementar esta funcionalidad se añadió la \textbf{barra lateral}, aunque vacía, y se colocó un reloj digital y la fecha actual en la parte superior.
+
+Se realizaron los ajustes de estilo necesarios en el resto de la aplicación.
+
+\medskip
+
+\textbf{TFG-30}
+
+Se implementó un nuevo\textit{endpoint} en la API, \textbf{[GET] /objectives/suggestions}, que devuelve una lista con dos objetivos: el de mayor y menor progreso. Se implementó la función necesaria en el \textit{ModelViewSet} de objetivo, con su correspondiente documentación. 
+
+En el cliente se creó la función encargada de contactar con la API y deserializar los datos, además del componente de lista de sugerencias, que iría embebido en la barra lateral, mostrando un botón para añadir progreso en cada uno de los elementos. Al pulsar el botón, se mostraría el formulario de creación de entrada de objetivo.
+
+\medskip
+
+\textbf{TFG-31}
+
+Se elaboró un componente en el cliente para mostrar la lista de las categorías disponibles, integrándolo con las capacidades de listado ya implementadas en el servidor. Se colocó en la barra lateral, y se realizaron los ajustes de CSS necesarios para que, en caso de desbordamiento, el desplazamiento se produjese únicamente en la lista, y no en toda la barra lateral. Esto se consiguió utilizando flexbox, junto con otras propiedades CSS.
+
+\medskip
+
+
+\textbf{TFG-32}
+
+Se añadió un grupo de botones exclusivos a la barra lateral, bajo el reloj digital, encargados de controlar la vista mostrada. Para conseguir esto, se investigó sobre la API de contexto de React \cite{noauthor_context_nodate}, y se implementó un contexto global para la aplicación, responsable de controlar los parámetros globales de la misma, y almacenar datos compartidos por numerosos componentes.
+
+\medskip
+
+
+\textbf{TFG-33}
+
+Se añadió un botón estilizado en la parte inferior de la barra lateral, el cual muestra un formulario con las diferentes opciones de configuración. Durante la implementación de esta tarea, únicamente se mostraba el día de inicio de semana, como un desplegable.
+
+Debido al desajuste entre los formatos de fecha y hora de TypeScript y Python ---la semana en TypeScript comienza en domingo, mientras que en Python lo hace en lunes---, fue necesario solucionarlo de forma manual.
+
+\medskip
+
+\textbf{TFG-34}
+
+Esta tarea ya se encontraba implementada en el modelo de objetivo, y al ser necesaria para implementar la historia TFG-33, lo único necesario para finalizarla fue incluir el campo correspondiente en el formulario de configuración.
+
+\medskip
+
+
+\subsubsection{Pruebas}
+
+Las pruebas relativas al reinicio de progreso en diferentes fechas ya se encontraban implementadas, por lo que no fue necesario repetirlas.
+
+Todos los tests se mantenían superados al finalizar la implementación de esta iteración, y se simuló una reunión con el cliente para confirmar el correcto desarrollo del proyecto.
 
 
 
+\subsection{Séptima iteración: \textit{Sprint 5}}
+
+\textbf{Inicio:} 6 de agosto
+
+\textbf{Fin:} 20 de agosto
 
 
+\subsubsection{Análisis}
+
+Las historias de usuario asignadas a esta iteración fueron las siguientes:
+
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-38}] Como usuario, quiero poder fijar una vista por defecto para que al abrir la aplicación se muestre.
+	
+	\item [\textbf{TFG-40}] Como usuario con problemas visuales, quiero que la aplicación sea navegable con lectores de pantalla para poder usarla cómodamente.
+	
+	\item [\textbf{TFG-91}] Como usuario, quiero que la vista de actividades empiece en el día de la semana configurado como inicio de semana.
+\end{itemize}
+
+Debido a que la fecha de finalización se aproximaba, se acordó destinar un menor número de historias de usuario a las últimas iteraciones, y dedicar el resto de esfuerzos a solucionar posibles errores y mejorar la presentación de la aplicación.
+
+ 
+\subsubsection*{Diseño}
+
+Se analizaron los problemas de contraste de la aplicación con las herramientas de desarrollo web integradas en el navegador Firefox \cite{noauthor_firefox_nodate} para corregirlos en la implementación de la historia TFG-40, y se decidió modificar el modelo de configuración en la base de datos para guardar la vista por defecto de la aplicación.
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=0.6]{img/sprint5-modelo-datos.png}
+	\caption{Diagrama Entidad-Relación actualizado en el \textit{Sprint 5}}
+\end{figure}
 
 
+\subsubsection{Implementación}
+
+\textbf{TFG-38}
+
+En la aplicación del servidor, se añadió el campo correspondiente al modelo de \textbf{configuración} para guardar una vista por defecto. Se construyó un enumerado con los posibles valores, y un validador personalizado para evitar guardar valores extraños.
+
+En el cliente, se añadió el campo de vista por defecto tanto al modelo de configuración como al contexto de la aplicación, y se actualizó el formulario de ajustes para permitir seleccionar las distintas vistas disponibles.
+
+\medskip
+
+\textbf{TFG-40}
+
+Para implementar esta tarea se revisó el listado de problemas de contraste proporcionado por las herramientas de accesibilidad de Firefox, principalmente localizados en el historial de entradas de objetivos, y se ajustaron los valores necesarios para cumplir con los contrastes requeridos por el criterio de éxito 1.4.3 de las reglas \textit{WCAG 2.0} \cite{noauthor_understanding_nodate}.
+
+\medskip
+
+\textbf{TFG-91}
+
+Para implementar esta tarea, fue necesario aplicar los ajustes manuales para equiparar el número del día de la semana entre TypeScript y Python elaborados con anterioridad. Se modificó la forma de construir la estructura flexbox de la vista de actividades, mostrando las columnas de los días en orden, comenzando por el día definido en el contexto global de la aplicación.
+
+Se intentó ajustar el resto de calendarios de la aplicación, es decir, los usados en el historia de entradas de objetivos y los selectores de fecha. No obstante, la configuración de dichos componentes respondía a criterios distintos, siendo necesarias herramientas de internacionalización \cite{noauthor_diferencias_nodate}, por lo que quedaron pendientes.
 
 
+\subsubsection{Otros}
+
+Se implementaron notificaciones de éxito o fracaso de las operaciones relacionadas con la API en el cliente, utilizando la herramienta \textit{Notistack} \cite{dehnokhalaji_notistack_nodate}.
+
+Se actualizó la documentación de la API a la la versión OpenAPI 3.0, ofreciendo una mayor expresividad a la hora de definir tipos y esquemas.
+
+
+\subsubsection{Pruebas}
+
+Se dedicó el resto de la iteración a probar exhaustivamente las funcionalidades implementadas hasta la fecha, y recoger las distintas sugerencias e ideas proporcionadas para ser planteadas en el futuro.
+
+
+\subsection{Octava iteración: \textit{Sprint 6}}
+
+\textbf{Inicio:} 21 de agosto
+
+\textbf{Fin:} 31 de agosto
+
+\subsubsection{Análisis}
+
+La última iteración se destinó a evaluar el estado de la aplicación, realizar los cambios necesarios, y explorar las historias de usuario que respondían a requisitos opcionales o de muy baja prioridad pendientes.
+
+Las historias de usuario asignadas originalmente son las siguientes:
+
+\textbf{Sprint 6}
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-13}] Como usuario, quiero poder definir objetivos con varios tipos de progreso, para poder flexibilizar mis objetivos .
+	
+	\item [\textbf{TFG-28}] Como usuario, quiero ver las actividades asociadas a una categoría en la vista de esa categoría para poder ver fácilmente cuáles son.
+	
+	\item [\textbf{TFG-35}] Como usuario, quiero poder establecer mi zona horaria para que el reloj y el progreso funcionen adecuadamente.
+	
+	\item [\textbf{TFG-37}] Como usuario, quiero poder seleccionar el tema de la aplicación para acomodarla a mis gustos y necesidades.
+	
+	\item [\textbf{TFG-81}] Como usuario, quiero poder ocultar el panel lateral para poder ver con mayor tamaño el resto de la aplicación.
+\end{itemize}
+
+Se exploró la aún pendiente funcionalidad de pausar objetivos descrita en la historia de usuario TFG-19. No obstante, las ideas que surgieron supondrían grandes cambios en la estructura de los objetivos, por lo que se exploraría en un futuro para cumplir el plazo de entrega de la forma más ajustada posible.
+
+Con respecto a la historia TFG-28, dado que la vista de categoría es realmente un filtro sobre la vista de objetivos, se plantearon serias dudas. Introducir una lista de actividades en la vista de objetivos supondría romper la separación entre ambas partes de la aplicación, y se decidió cancelar la implementación de esta característica. Se propusieron, no obstante, futuras funcionalidades a implementar en la vista de objetivos ---y categoría---, relacionadas con el análisis de los datos registrados de forma visual.
+
+La historia TFG-35 también fue revisada, ya que, para trabajar con ajustes manuales sobre la zona horaria, sería necesario replantear muchas de las funcionalidades implementadas, los estándares utilizados para el almacenamiento de fechas, la internacionalización de varios módulos de la aplicación, y el uso de bibliotecas externas que habría que dominar previa implementación. Al igual que la historia TFG-19, se decidió posponer su realización para ajustarse a la entrega sin afectar al trabajo ya realizado.
+
+En cuanto a la historia de usuario TFG-37, se planteó la posibilidad de utilizar las capacidades de Material UI para definir un tema visual, y elegir entre una serie de opciones predefinidas en los ajustes de la aplicación. Además, surgió la idea de utilizar el color definido en una categoría para representar la vista de la misma. Se idearon un total de doce temas, correspondiendo con los posibles colores asignables a una categoría, utilizando colores de la paleta de \textit{Material Design}.
+
+Por último, se descartó la historia de usuario TFG-13 debido a que no encajaba con el enfoque de la aplicación tomado.
+
+\subsubsection{Diseño}
+
+Al llegar a esta iteración, todas las consideraciones de diseño de la aplicación habían sido tomadas. No obstante, para añadir la elección del tema de la aplicación, fue necesario modificar el modelo de configuración para añadir el tema seleccionado.
+
+El modelo de datos final queda representado en el siguiente diagrama:
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=0.6]{img/sprint5-modelo-datos.png}
+	\caption{Diagrama Entidad-Relación final}
+\end{figure}
+
+\subsubsection{Implementación}
+
+Se implementaron los temas descritos en la historia TFG-37, se añadió el campo correspondiente en el modelo de datos y un enumerado con los distintos temas disponibles, para validar el modelo en la base de datos.
+
+En el cliente, se añadieron los distintos temas utilizando las herramientas proporcionadas por Material UI. Se añadió el campo de tema al formulario de configuración, al modelo y al serializador. 
+
+Para conseguir cambiar el tema por el color definido en cada categoría en la vista correspondiente, se decidió almacenar la lista de categorías en el contexto de la aplicación, ya que era necesario consultar los valores desde muchos componentes, y era la opción más cómoda, además de uno de los casos de uso del contexto en React.
+
+
+\subsubsection{Pruebas}
+
+Se realizaron pruebas exhaustivas de uso de la aplicación, además de comprobar que los tests definidos en la base de datos seguían siendo superados sin problemas.
+
+Se concluyó que se habían alcanzado los objetivos previstos, salvo las excepciones acordadas, y el encargo había sido entregado en el plazo correspondiente.
 
 
 % Capítulo: conclusiones y vías futuras
 \chapter{Conclusiones y vías futuras}
 
-
-
 \section{Conclusiones del proyecto}
+
+La propuesta inicial de este proyecto fue la de profundizar en el uso de tecnologías web, metodologías de desarrollo y gestión de un proyecto a largo plazo
+de forma directa, utilizando para ello una propuesta verosímil, como es la de una <<aplicación de gestión de horarios>>, que va tomando forma a lo largo de distintas reuniones, estudios de mercado, propuestas de requisitos, análisis de complejidad y planificación. 
+
+
+\subsubsection*{Metodología de desarrollo}
+
+Al haber trabajado previamente con metodologías ágiles, se decidió que ofrecerían el mejor marco de trabajo posible dadas las dimensiones del proyecto y las circunstancias en las que sería desarrollado, y ha probado ser una muy buena decisión. La flexibilidad de las historias de usuario ha permitido añadir y modificar funcionalidades de forma rápida y directa, y al realizarse la planificación desde el punto de vista del usuario final, ha sido sencillo identificar aquellos elementos que, o bien no tenía sentido incluir, o se propusieron inicialmente, pero quedaron descartados con el tiempo al haberse concluido que no eran relevantes.
+
+La utilización de herramientas como \textit{Jira Software}, un tablero \textit{Kanban} o elementos de \textit{SCRUM} y \textit{eXtreme Programming} para confeccionar una metodología ágil individual fue un reto al principio, pero con algunos ajustes, como la exhaustiva planificación realizada en respuesta a un primer concepto fallido, o la decisión de no incluir fases de retrospectiva dado el carácter individual del proyecto, se ha logrado definir un marco de trabajo funcional, manteniendo el proceso iterativo y flexible de las metodologías ágiles más populares.
+
+
+\subsubsection{Tecnologías utilizadas}
+
+De forma previa a este proyecto, la experiencia en desarrollo de aplicaciones web era mínima. Se había trabajado ocasionalmente con HTML, y se realizó una página web sencilla en las prácticas de la asignatura Sistemas de Información Basados en Web, pero para realizar un proyecto con las características deseadas, era necesario aprender nuevas tecnologías, estudiar patrones de diseño, adoptar estándares utilizados y, dado que se intentaba simular un encargo profesional, realizar un estudio de herramientas populares y valoradas por empresas de desarrollo. 
+
+La implementación de los requisitos propuestos en la aplicación desarrollada demuestra la adquisición de dichos conocimientos y el manejo de las tecnologías elegidas. A continuación se detallan los aspectos más destacables de cada una de ellas.
+
+\textbf{Conocimientos adquiridos en materia de desarrollo \textit{back-end}}
+
+Django ha permitido liberar mucha carga de trabajo a la hora de configurar conexiones entre la capa de datos y la de aplicación, definir una abstracción sobre el modelo, implementar relaciones entre distintas entidades y servir una API REST plenamente funcional y siguiendo estándares abiertos. No obstante, es una herramienta muy compleja, con multitud de conceptos y formas de trabajar específicas, que han entorpecido en varias ocasiones el desarrollo. No obstante, es indudable que la elección de Django como marco de trabajo para definir la capa de aplicación ha sido acertada, y ha permitido dedicar más tiempo al diseño y correcto funcionamiento de las funcionalidades específicas descritas en los requisitos.
+
+La elección de ofrecer una documentación utilizando el estándar OpenAPI fue motivada, entre otros factores, por el uso de la herramienta Swagger UI. Sin embargo, ha evitado errores de forma temprana y permitido definir la estructura de la API desarrollada de forma mucho más clara e intuitiva, y, aunque no haya sido utilizado en este proyecto, permitiría a otros clientes consultar la estructura de la misma de forma programática.
+
+\bigskip
+
+\textbf{Conocimientos adquiridos en materia de desarrollo \textit{front-end}}
+
+El uso de React como biblioteca para desarrollar la experiencia de usuario ha sido muy satisfactorio. Se trata de un proyecto acorde con la filosofía de trabajo planteada inicialmente, con un ecosistema de proyectos comunitarios amplio y una documentación sencilla pero completa.
+
+Aunque en un principio la decisión de utilizar TypeScript se tomó con reservas, ha probado ser un acierto a lo largo de todo el desarrollo, evitando errores de forma temprana, proporcionando definiciones y aclaraciones útiles para integrar herramientas de terceros y un proceso de serialización y deserialización de datos mucho más cómodo y seguro que el posible utilizando JavaScript, entre otras ventajas. Además, no ha sido necesario dedicar un gran esfuerzo en adaptarse a TypeScript, puesto que su sistema de tipos es similar a lenguajes ya aprendidos previamente. 
+
+Por último, la utilización de la biblioteca Material UI ha resultado realmente útil a la hora de ajustarse a los prototipos y bocetos realizados en las fases tempranas del proyecto, ofreciendo un diseño intuitivo y flexible, una gran variedad y una documentación muy completa. Ha sido fácil de adaptar al entorno de desarrollo y no ha presentado problemas de forma posterior, a diferencia de otras opciones exploradas.
+
+
+\subsubsection{Aplicación desarrollada}
+
+La aplicación cumple con los objetivos propuestos inicialmente, extraídos de un análisis de aplicaciones similares y usuarios objetivo. Si bien es cierto que los plazos inicialmente propuestos fueron incumplidos, se trataba de un planteamiento poco realista, y se evaluó la situación para solucionarlo con un nuevo calendario de trabajo, que se ha respetado de forma adecuada, y haciendo un mejor uso de las herramientas escogidas.
+
+A la hora de elaborar el presupuesto aproximado del desarrollo, se exploraron las distintas opciones de la plataforma \textit{AWS}, lo cual ayudó a comprender el funcionamiento de la misma de cara al cliente: cómo contratar servicios en la nube, qué instancias son adecuadas para la aplicación desarrollada o qué servicio de base de datos elegir, entre muchas otras opciones.
+
+En general, la aplicación se ajusta a los requisitos planteados. Se ha ofrecido una aplicación web desarrollada utilizando metodologías ágiles y tecnologías modernas, con una arquitectura escalable respetando la separación Modelo-Vista-Controlador y una experiencia de usuario ajustada a la propuesta realizada.
+
+
+\section{Aspectos a mejorar}
+
+\subsection*{Mejor uso de Git}
+
+Uno de los principales aspectos a mejorar del proyecto es un mejor control de versiones. Se ha utilizado Git a lo largo de todo el proyecto, pero al consistir el equipo de un único desarrollador, se decidió no profundizar en el uso de características como ramas o integración continua proporcionada por plataformas como GitHub o GitLab.
+
+En retrospectiva, estos cambios hubiesen mantenido las versiones del proyecto mucho mejor estructuradas, y de haberse producido algún fallo o cambio drástico, hubiese sido mucho más sencillo trabajar con él.
+
+
+\subsection*{Planificación flexible, pero concreta}
+
+Sin duda, la planificación inicial elaborada en el proyecto tiene grandes fallos a primera vista, y pese a haberse corregido, causó el retraso de la entrega del proyecto.
+Una planificación más concreta, con iteraciones mejor definidas, tareas estimadas de antemano y previsión de posibles obstáculos hubiese ahorrado gran cantidad de problemas en el desarrollo del proyecto.
+
+
+\subsection{Detección temprana de relaciones de dependencia entre tareas}
+
+La tardía implementación de la barra lateral en el proyecto bloqueó multitud de tareas casi completadas, por lo que dedicar mayor tiempo en la fase de planificación a definir dependencias entre tareas y tenerlas en cuenta a la hora de distribuirlas en las iteraciones descritas hubiese sido beneficioso para el desarrollo.
+
+
+\subsection*{Uso de OpenAPI 3.0 desde el principio}
+
+Pese a ser un detalle menor, el cambio entre las versiones 2.0 y 3.0 de OpenAPI simplificó en gran medida la forma de definir la documentación de la API. Se decidió no implementarlo en un principio debido a una mayor complicación al configurar Swagger UI, pero una vez realizada la actualización, la herramienta no supuso problema alguno.
+
 
 \section{Posibles modificaciones futuras}
 
-Despliegue 
+Se han ideado posibles planes futuros en caso de que el proyecto continuase su desarrollo.
 
-Vistas responsive
+\subsection*{Implementación de las funcionalidades opcionales cubiertas en los objetivos}
 
-Funcionalidad de pausar objetivos
+Como se concluyó en la última iteración, algunas de las funcionalidades opcionales quedarían pendientes para su desarrollo en el futuro:
 
-Cuadrante de horario similar a Google calendar
+\begin{itemize}
+	\item Posibilidad de pausar y reanudar objetivos manteniendo las rachas conseguidas
+	\item Posibilidad de seleccionar la zona horaria de la aplicación
+\end{itemize}
 
-Información gráfica, estadísticas
+
+\subsubsection*{Despliegue en un entorno de producción}
+
+El proyecto se ha ejecutado y probado utilizando los servidores de desarrollo proporcionados por Django y React. No obstante, uno de los planes previstos es 
+servir la aplicación desde un entorno contratado en AWS, utilizando las instancias descritas en el presupuesto. Esto requiere preparar la aplicación para dicho entorno, así como migrar la base de datos a la instancia requerida.
+
+Alternativamente, se podría desplegar la aplicación en un cluster de servidores locales, configurado con las herramientas y sistemas necesarios para garantizar la integridad y seguridad de la misma, a la vez que maximizar el tiempo de actividad.
 
 
-\section{Decisiones mejorables (cambiar título)}
+\subsubsection*{Adaptación del cliente a dispositivos móviles}
 
-Mejor aprovechamiento de Git: uso más estandarizado, creación de ramas por funcionalidades, etc.
+Pese a que la aplicación cuenta con un diseño adaptable a distintas resoluciones, sería deseable contar con una experiencia de usuario diseñada para móviles, ya sea adaptando el cliente actual o desarrollando uno específico.
 
-Uso de una planificación más rígida desde el principio
 
-Uso de OpenAPI 3.0 desde el principio
+\subsubsection*{Estadísticas de cumplimiento de objetivos}
 
-Detección más temprana de dependencias entre tareas que afecte a la planificación
+Una de las ideas propuestas en la última iteración del desarrollo es la de mostrar diversas estadísticas basadas en los datos registrados, como gráficas de cumplimiento de objetivos por mes, métricas de constancia y similares. Se mostrarían en la la vista de objetivos, junto al historial.
+
+
+\subsubsection*{Modos de visualización alternativos para la vista de actividades}
+
+La vista de actividades implementada consiste en una colección de listas de elementos que muestran las diferentes actividades definidas cada día de la semana. Se desea ofrecer la posibilidad de alternar entre este modo y otro similar a un horario, en el que las actividades aparecen en su lugar correspondiente.
 
 
 \newpage
