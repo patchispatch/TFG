@@ -760,17 +760,17 @@ Las etapas del proyecto quedan distribuidas de la siguiente manera:
 	
 	\item Iteraciones de desarrollo o \textit{sprints}: 
 	\begin{enumerate}
-		\item Iteración 1: del 8 al 22 de junio.
+		\item Sprint 1: del 8 al 22 de junio.
 		
-		\item Iteración 2: del 23 de junio al  7 de julio.
+		\item Sprint 2: del 23 de junio al  7 de julio.
 		
-		\item Iteración 3: del 7 al 21 de julio.
+		\item Sprint 3: del 8 al 21 de julio.
 		
-		\item Iteración 4: del 22 de julio al 5 de agosto.
+		\item Sprint 4: del 22 de julio al 5 de agosto.
 		
-		\item Iteración 5: del 6 al 20 de agosto.
+		\item Sprint 5: del 6 al 20 de agosto.
 		
-		\item Iteración 6: del 21 al 31 de agosto.
+		\item Sprint 6: del 21 al 31 de agosto.
 	\end{enumerate}
 \end{enumerate}
 
@@ -1453,6 +1453,161 @@ No fue necesario realizar modificaciones en el cliente, ya que este dato se enco
 
 Al igual que con las historias anteriores relacionadas con los cálculos automáticos de los datos de objetivos, se diseñaron tests \textit{a priori} para las funcionalidades implementadas en las historias TFG-14 y TFG-84 con la utilidad \textit{unittest} de Python.
 
+
+\subsection{Quinta iteración: \textit{Sprint 3}}
+
+\textbf{Inicio:} 8 de julio
+
+\textbf{Fin:} 21 de julio
+
+\subsubsection{Análisis}
+
+Las historias de usuario asignadas a esta iteración fueron las siguientes:
+
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-16}] Como usuario, quiero poder ver un resumen de cada categoría de objetivos, para saber mi progreso con la misma.
+	
+	\item [\textbf{TFG-23}] Como usuario, quiero poder acceder a una vista semanal de mis actividades para poder visualizar mi tiempo.
+	
+	\item [\textbf{TFG-43}] Como usuario, quiero poder crear una categoría para organizar mis actividades y objetivos.
+	
+	\item [\textbf{TFG-44}] Como usuario, quiero poder editar una categoría si es necesario.
+	
+	\item [\textbf{TFG-45}] Como usuario, quiero poder asignar objetivos a una categoría, para poder ver mi progreso de forma ordenada.
+	
+	\item [\textbf{TFG-46}] Como usuario, quiero poder asignar actividades a una categoría, para poder ver mi semana de forma clara.
+	
+	\item [\textbf{TFG-87}] Como usuario, quiero poder añadir los momentos en los que practico una actividad para poder organizarme.
+	
+	\item [\textbf{TFG-88}] Como usuario, quiero poder editar los momentos en los que practico una actividad para poder ajustarlos a mi situación.
+	
+	\item [\textbf{TFG-89}] Como usuario, quiero poder eliminar los momentos en los que practico una actividad para poder ajustarlos a mi situación.
+\end{itemize}
+
+Se priorizó el desarrollo de la historia TFG-23, dado que en el sprint anterior se comenzaron a implementar dos tareas que dependían de su finalización. Se vio que el desarrollo de las operaciones de creación y edición de categorías presentarían un problema similar, puesto que aún quedaría pendiente implementar la barra lateral, donde aparecerían listadas. No obstante, se consideró que era más importante garantizar el correcto funcionamiento de los datos y su manejo, y dejar la presentación para más adelante.
+
+Se puede observar que la historia de usuario TFG-45 es un duplicado de la ya implementada TFG-15, por lo que se decidió marcarla como completada y no tenerla en cuenta.
+
+
+\subsubsection{Diseño}
+
+Es en esta iteración cuando se define formalmente la entidad \textbf{instancia de actividad}, entendiéndose como una repetición de una actividad en un horario semanal fijo, con día, hora de inicio y hora de finalización.
+
+Tras las modificaciones realizadas, el modelo de datos quedó definido de la siguiente forma:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.6]{img/sprint3-modelo-datos.png}
+	\caption{Diagrama Entidad-Relación actualizado en el \textit{Sprint 3}}
+\end{figure}
+
+
+\subsubsection{Implementación}
+
+\textbf{TFG-16}
+
+Para la implementación de esta tarea se decidió ofrecer un filtro de la vista de objetivos actual, mostrando únicamente la información de los objetivos asociados con la categoría seleccionada. Para ello, se añadió la posibilidad de filtrar los datos desde la API, añadiendo el parámetro \textit{category} a las rutas de listado tanto de objetivos como de entradas.
+
+Desde el cliente, se añadió una propiedad opcional a los distintos componentes que forman la vista de objetivos para recibir una categoría. Si esta propiedad se hallaba definida, era enviada como parámetro al solicitar los datos. 
+
+Surgió la idea de utilizar el color de las categorías para sobreescribir el tema de la aplicación al filtrar la vista de objetivos, por lo que se añadió una nueva historia de usuario al \textit{backlog}, aunque de baja prioridad.
+
+Dado que la barra lateral aún no estaba completada, las pruebas de implementación se realizaron sobre una lista provisional de categorías. Una vez estuviese terminada, se implementaría el filtrado al seleccionar un elemento de la lista.
+
+\medskip
+
+\textbf{TFG-23}
+
+Para la implementación de la vista semanal se decidió utilizar un diseño muy similar al propuesto en los bocetos digitales, mostrando una lista flexible de tarjetas que contienen la información sobre las diferentes instancias, su horario y su categoría. 
+
+Dado que la funcionalidad de listado de actividades e instancias en el servidor ya se había implementado con anterioridad, esta tarea se centró en el cliente. La vista se construyó utilizando flexbox \cite{noauthor_flexbox_nodate} y los componentes auxiliares proporcionados por Material UI.
+
+Una vez finalizada la implementación de la vista, se colocaron en ella los botones y formularios necesarios para crear actividades e instancias, así como un menú desplegable en cada tarjeta para permitir la edición y el borrado. Las funcionalidades de listado, edición y borrado de actividades seguirían pendientes de ser integradas en la aplicación hasta que la barra lateral fuese implementada.
+
+\medskip
+
+\textbf{TFG-43}
+
+Dado que el modelo de categorías llevaba creado en la base de datos desde la primera iteración debido a su relación con el modelo de objetivos, las operaciones básicas de la API con respecto a él ya se encontraban definidas. Al igual que otras tareas similares, el desarrollo se centró en reutilizar los componentes de formularios y ventanas emergentes definidos y adaptarlos al modelo de categorías. 
+
+De nuevo, la integración de esta funcionalidad en la aplicación quedó pendiente del desarrollo de la barra lateral, ya que tanto la lista de categorías como el botón de creación de las mismas se colocaría en ella. 
+
+\medskip
+
+\textbf{TFG-44}
+
+Esta funcionalidad ya había sido incluida en la historia TFG-43, debido a la reutilización de componentes previos.
+
+\medskip
+
+\textbf{TFG-46}
+
+Pese a que no se había definido como tarea en la épica de actividades, al crear el modelo de datos se tuvo en cuenta la posibilidad de asignar una categoría a una actividad, por lo que esta historia de usuario ya se encontraba completada.
+
+\medskip
+
+\textbf{TFG-87}
+
+Para implementar esta funcionalidad, se añadió el modelo de \textbf{instancia de actividad}. Al igual que el resto de entidades de datos, se creó un modelo de Django, junto con las respectivas rutas de la API generadas por \textit{ModelViewSet} en el servidor, y las distintas funciones y definiciones necesarias en el cliente.
+
+Sin embargo, en lugar de crear un nuevo formulario, se decidió expandir el ya creado para las actividades, implementando una sección condicional. Se añadió un campo que permitía seleccionar entre crear una actividad o seleccionar una ya existente. Al elegir crear una nueva, aparecerían los campos del formulario de nueva actividad, seguidos de los necesarios para crear una instancia, y se crearían ambos elementos. En caso contrario, aparecerían únicamente los de la instancia.
+
+\medskip
+
+\textbf{TFG-88}
+
+Debido a la peculiaridad del formulario de creación de instancias de actividades, fue necesario elaborar un componente aparte para modificarlas, a diferencia del resto de modelos de la aplicación. Dicho formulario contiene únicamente los campos relativos a la instancia, es decir, día de la semana, hora de inicio y hora de finalización. La funcionalidad del servidor permaneció intacta.
+
+\medskip
+
+\textbf{TFG-89}
+
+Al igual que el resto de operaciones destructivas, se implementó esta funcionalidad instanciando el componente de confirmación, utilizando la función de borrado definida junto con el modelo.
+
+
+\subsubsection{Pruebas}
+
+Se planteó implementar tests para comprobar el funcionamiento de todos los \textit{endpoints} de la API, pero dado que la mayoría de ellos eran servidos de forma automática por Django REST Framework y el resto correspondían a funcionalidades ya cubiertas en otros tests, se decidió descartar la idea.
+
+Se comprobó que los tests definidos eran superados correctamente.
+
+
+\subsection{Sexta iteración: \textit{Sprint 4}}
+
+\textbf{Inicio:} 22 de julio
+
+\textbf{Fin:} 5 de agosto
+
+
+\subsubsection{Análisis}
+
+Las historias de usuario asignadas a esta iteración fueron las siguientes:
+
+\begin{itemize}[leftmargin=16mm]
+	\item [\textbf{TFG-29}] Como usuario, quiero ver la fecha y hora actual para poder tenerla presente .
+	
+	\item [\textbf{TFG-30}] Como usuario, quiero ver algunos objetivos pendientes que podría completar hoy, como sugerencia por si no se me ocurre qué hacer ahora.
+	
+	\item [\textbf{TFG-31}] Como usuario, quiero ver un menú con las categorías que he creado, para poder acceder a la vista de categoría de cada una.
+	
+	\item [\textbf{TFG-32}] Como usuario, quiero disponer de un menú de navegación por las diferentes vistas de la aplicación para acceder a ellas cómodamente.
+	
+	\item [\textbf{TFG-33}] Como usuario, quiero poder acceder a la configuración general de la aplicación desde cualquier parte de la misma, para poder ajustar mi experiencia de forma cómoda.
+	
+	\item [\textbf{TFG-34}] Como usuario, quiero poder ajustar qué día y hora se reinician mis objetivos para establecer mis rutinas.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
 % Capítulo: conclusiones y vías futuras
 \chapter{Conclusiones y vías futuras}
 
@@ -1470,6 +1625,8 @@ Funcionalidad de pausar objetivos
 
 Cuadrante de horario similar a Google calendar
 
+Información gráfica, estadísticas
+
 
 \section{Decisiones mejorables (cambiar título)}
 
@@ -1478,6 +1635,8 @@ Mejor aprovechamiento de Git: uso más estandarizado, creación de ramas por fun
 Uso de una planificación más rígida desde el principio
 
 Uso de OpenAPI 3.0 desde el principio
+
+Detección más temprana de dependencias entre tareas que afecte a la planificación
 
 
 \newpage
