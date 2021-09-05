@@ -67,7 +67,8 @@ export function ActivityEditForm({activity, postSubmit}: ActivityFormProps) {
 
   // On submit
   function onSubmit(data: ActivityFormValues) {
-    const newAct = new Activity(data.name, data.description, data.category, activity.id);
+    const newAct = new Activity(data.name, data.description, 
+      data.category !== -1 ? data.category : undefined, activity.id);
     activityService.update(newAct).subscribe(response => {
       if (postSubmit)
         postSubmit(response, true);

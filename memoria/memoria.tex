@@ -39,16 +39,21 @@
 \AqMaketitle[%
 	cover    = img/logo.png,
 	org      = Grado en Ingeniería Informática,
-	subtitle = Aplicación de gestión de rutinas semanales basada en tecnologías web
+	subtitle = Aplicación de gestión de rutinas semanales basada en tecnologías web,
+	url		 = https://github.com/patchispatch/TFG,
+	author   = Autor: Juan Ocaña Valenzuela\\Director: Sergio Alonso Burgos
 ]
 \tableofcontents
 
 \listoffigures
 
-% Capítulo: introducción
-\chapter{Introducción}
+\newpage
 
-\section{Resumen}
+Yo, Juan Ocaña Valenzuela, estudiante del Grado en Ingeniería Informática de la Escuela Técnica Superior de Ingenierías Informática y de Telecomunicación de la Universidad de Granada, con DNI nº 32732331L, autorizo la ubicación de la siguiente copia de mi Trabajo Fin de Grado en la biblioteca del centro para que pueda ser consultada por las personas que lo deseen.
+
+\newpage
+
+\section*{Resumen}
 \textbf{Palabras clave:} desarrollo web, \textit{React}, \textit{Typescript}, aplicación web, \textit{REST}, arquitectura cliente-servidor
 
 \bigskip
@@ -67,10 +72,8 @@ Se plantea una propuesta de aplicación con una funcionalidad simple, orientada 
 
 La aplicación propuesta se ha desarrollado utilizando tecnologías web extendidas y con gran soporte en la actualidad, y una arquitectura cliente-servidor basada en el patrón \textit{REST} \cite{fielding2000architectural}. Se ha hecho énfasis en el aprendizaje de nuevas tecnologías, como \textit{TypeScript} \cite{bierman2014understanding}, \textit{React} \cite{react} o el popular entorno de desarrollo Django \cite{django}, junto con su \textit{Django REST Framework} \cite{drf}.
 
-\newpage
 
-
-\section{\textit{Abstract}}
+\section*{\textit{Abstract}}
 
 \textbf{Keywords:} web development, \textit{React}, \textit{Typescript}, web application, \textit{REST}, client-server architecture
 
@@ -94,6 +97,10 @@ the TypesScript language \cite{bierman2014understanding}, the popular Django Web
 
 
 \newpage
+
+
+% Capítulo: estado del arte
+\chapter{Introducción}
 
 \section{Integración de conocimientos previos}
 
@@ -150,8 +157,6 @@ Dado que este proyecto se centra en los aspectos del desarrollo utilizando metod
 	\item Metodologías de Desarrollo Ágil
 \end{itemize}
 
-% Capítulo: estado del arte
-\chapter{Estado del arte}
 
 \section{Crítica al estado del arte}
 
@@ -274,7 +279,7 @@ No obstante, pese a que gozan de gran popularidad y variedad, muchas de ellas of
 
 Debido a la gran variedad y flexibilidad que se puede encontrar en el mercado, las aplicaciones de seguimiento de hábitos son un marco perfecto para desarrollar un proyecto utilizando tecnologías web: presenta una variedad de requisitos aceptable, un modelo de datos interesante, y peticiones específicas de un posible cliente que se han de satisfacer. Además, una aplicación de este estilo puede beneficiarse del formato propuesto ---una aplicación de página única o \textit{SPA}---, como ya hacen muchas de las alternativas exploradas.
 
-Con esto en mente, se idea una aplicación sencilla, desarrollada siguiendo una metodología ágil, e intentando ajustarse a un modelo de trabajo profesional, al mismo tiempo que se profundiza en las tecnologías utilizadas.
+Con esto en mente, se idea una aplicación sencilla, desarrollada siguiendo una metodología ágil, e intentando ajustarse a un modelo de trabajo profesional, al mismo tiempo que se profundiza en las tecnologías escogidas para ello.
 
 
 \subsection{Requisitos}
@@ -1341,7 +1346,7 @@ Al seleccionar una fecha, una ventana emergente mostaría una lista con informac
 
 \begin{figure}[h!]
 	\centering
-	%\includegraphics[scale=0.6]{img/sprint2-modelo-datos.png}
+	\includegraphics[scale=0.4]{img/boceto-historial-entradas.jpg}
 	\caption{Boceto a mano del historial de entradas de objetivo}
 \end{figure}
 
@@ -1804,6 +1809,58 @@ Se realizaron pruebas exhaustivas de uso de la aplicación, además de comprobar
 Se concluyó que se habían alcanzado los objetivos previstos, salvo las excepciones acordadas, y el encargo había sido entregado en el plazo correspondiente.
 
 
+\section{Aplicación final}
+
+Se adjuntan algunas capturas de pantalla mostrando algunas secciones de la aplicación desarrollada.
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=0.25]{img/demo-obj-1.png}
+	\caption{Vista de objetivos}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=0.25]{img/demo-historial-1.png}
+	\caption{Historial de entradas de objetivo}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=0.25]{img/demo-category-1.png}
+	\caption{Formulario de creación de categoría}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=0.25]{img/demo-catfilter-1.png}
+	\caption{Vista de la categoría <<Comida>>}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=0.25]{img/demo-actividades-1.png}
+	\caption{Vista de actividades}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=0.25]{img/demo-form-actividades-1.png}
+	\caption{Formulario de creación de actividad e instancia (1)}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=0.25]{img/demo-formact-2.png}
+	\caption{Formulario de creación de actividad e instancia (2)}
+\end{figure}
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[scale=0.25]{img/demo-ajustes-1.png}
+	\caption{Formulario de configuración}
+\end{figure}
+
 % Capítulo: conclusiones y vías futuras
 \chapter{Conclusiones y vías futuras}
 
@@ -1867,7 +1924,7 @@ Sin duda, la planificación inicial elaborada en el proyecto tiene grandes fallo
 Una planificación más concreta, con iteraciones mejor definidas, tareas estimadas de antemano y previsión de posibles obstáculos hubiese ahorrado gran cantidad de problemas en el desarrollo del proyecto.
 
 
-\subsection{Detección temprana de relaciones de dependencia entre tareas}
+\subsection*{Detección temprana de relaciones de dependencia entre tareas}
 
 La tardía implementación de la barra lateral en el proyecto bloqueó multitud de tareas casi completadas, por lo que dedicar mayor tiempo en la fase de planificación a definir dependencias entre tareas y tenerlas en cuenta a la hora de distribuirlas en las iteraciones descritas hubiese sido beneficioso para el desarrollo.
 
@@ -1917,7 +1974,7 @@ La vista de actividades implementada consiste en una colección de listas de ele
 \newpage
 
 % Capítulo: bibliografía
-\bibliographystyle{apalike}
+\bibliographystyle{plainurl}
 \addcontentsline{toc}{chapter}{Bibliografía}
 \bibliography{bibliography}
 

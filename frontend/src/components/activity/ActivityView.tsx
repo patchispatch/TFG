@@ -14,7 +14,6 @@ import { Subscription } from "rxjs";
 interface ActivityViewProps {
   activityList: Activity[],
   refreshActivityList: () => Subscription,
-  activityListLoaded: boolean
 }
 
 // Styles
@@ -51,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 // Component
-export function ActivityView({activityList, refreshActivityList, activityListLoaded}: ActivityViewProps) {
+export function ActivityView({activityList, refreshActivityList}: ActivityViewProps) {
   // Services
   const instanceService = useMemo(() => new ActivityInstanceService(), []);
 
@@ -104,7 +103,7 @@ export function ActivityView({activityList, refreshActivityList, activityListLoa
             Activities
           </Typography>
 
-          {activityListLoaded && activityLoaded
+          {activityLoaded
           ? 
             <ActivityTable 
               activities={activityList}

@@ -154,7 +154,7 @@ export function Sidebar({
       </div>
 
       <FormDialog 
-        title="New objective"
+        title="Settings"
         formId="settingsForm"
         isOpen={settingsDialogState}
         onClose={() => setSettingsDialogState(false)}

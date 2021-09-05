@@ -208,12 +208,14 @@ function App() {
               <main className={classes.mainView}>
                 {view === AppView.OBJECTIVES 
                 ? <ObjectiveView category={selectedCategory} /> 
-                : <ActivityView 
-                    activityList={activityList}
-                    refreshActivityList={refreshActivityList}
-                    activityListLoaded={activityListLoaded}
-                  />
-                }
+                : <>
+                  {activityListLoaded && 
+                    <ActivityView 
+                      activityList={activityList}
+                      refreshActivityList={refreshActivityList}
+                    />
+                  }
+                </>}
               </main>
 
               {/* Dialogs */}
