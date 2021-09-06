@@ -41,7 +41,7 @@
 	org      = Grado en Ingeniería Informática,
 	subtitle = Aplicación de gestión de rutinas semanales basada en tecnologías web,
 	url		 = https://github.com/patchispatch/TFG,
-	author   = Autor: Juan Ocaña Valenzuela\\Director: Sergio Alonso Burgos
+	author   = Autor: Juan Ocaña Valenzuela\\Tutor: Sergio Alonso Burgos
 ]
 \tableofcontents
 
@@ -49,7 +49,40 @@
 
 \newpage
 
-Yo, Juan Ocaña Valenzuela, estudiante del Grado en Ingeniería Informática de la Escuela Técnica Superior de Ingenierías Informática y de Telecomunicación de la Universidad de Granada, con DNI nº 32732331L, autorizo la ubicación de la siguiente copia de mi Trabajo Fin de Grado en la biblioteca del centro para que pueda ser consultada por las personas que lo deseen.
+Yo, \textbf{Juan Ocaña Valenzuela}, estudiante del Grado en Ingeniería Informática de la Escuela Técnica Superior de Ingenierías Informática y de Telecomunicación de la Universidad de Granada, con DNI nº \textbf{32732331L}, autorizo la ubicación de la siguiente copia de mi Trabajo Fin de Grado en la biblioteca del centro para que pueda ser consultada por las personas que lo deseen.
+
+
+\vspace{6cm}
+
+\includegraphics[scale=0.16]{img/firma.jpg}
+
+\textbf{Firmado: Juan Ocaña Valenzuela.}
+
+\bigskip
+
+En Granada, a 6 de septiembre de 2021.
+
+\newpage
+
+\textbf{D. Sergio Alonso Burgos}, profesor del Departamento de Lenguajes y Sistemas Informáticos de la Universidad de Granada,
+
+\textbf{\large{INFORMA}}
+
+Que el presente trabajo, titulado \textbf{Aplicación de gestión de rutinas semanales basada en tecnologías web}, ha sido realizado bajo su supervisión por \textbf{Juan Ocaña Valenzuela}, y autoriza la defensa de dicho trabajo ante el tribunal que corresponda.
+
+\bigskip
+
+Y para que conste, expide y firma el presente informe en Granada a 6 de septiembre de 2021.
+
+\bigskip
+
+\textbf{\large{El tutor:}}
+
+\vspace{4cm}
+
+\includegraphics[scale=0.12]{img/firmaZerjillo.png}
+
+\textbf{Sergio Alonso Burgos}
 
 \newpage
 
@@ -101,64 +134,6 @@ the TypesScript language \cite{bierman2014understanding}, the popular Django Web
 
 % Capítulo: estado del arte
 \chapter{Introducción}
-
-\section{Integración de conocimientos previos}
-
-Este proyecto se centra en la adquisición de nuevos conocimientos a la hora de desarrollar aplicaciones web, así como en el desarrollo de los aquiridos a lo largo del grado. A continuación se repasan varias materias útiles en la elaboración de este trabajo, así como las asignaturas en las que se imparten y desarrollan.
-
-\subsection*{Conocimientos de bases de datos}
-
-Ha sido de especial utilidad conocer los diferentes tipos de sistemas gestores de bases de datos, sus ventajas e inconvenientes, y el manejo de lenguajes de 
-consulta como SQL. También ha resultado indispensable el saber cómo establecer una conexión con una base de datos, realizar un correcto modelo de los mismos, 
-y aprovechar el esquema relacional.
-
-\textbf{Asignaturas útiles} 
-
-\begin{itemize}
-	\item Fundamentos de Bases de Datos
-	\item Diseño y Desarrollo de Sistemas de Información
-	\item Sistemas de Información Basados en Web
-\end{itemize}
-
-
-\subsection*{Conocimientos de desarrollo web}
-
-Pese a haber trabajado poco en este campo anteriormente, los conocimientos previos en la materia han sido de gran ayuda de cara a comprender el funcionamiento de tecnologías como TypeScript, HTML, el protocolo HTTP o el patrón Modelo-Vista-Controlador, así como el funcionamiento de un servidor web y la infraestructura necesaria para un proyecto de estas características. Además, las prácticas de empresa realizadas en el grado han complementado la formación recibida, ya que se ha trabajado con diferentes tecnologías web.
-
-\textbf{Asignaturas útiles}
-
-\begin{itemize}
-	\item Sistemas de Información Basados en Web
-	\item Fundamentos de Redes
-	\item Servidores Web de Altas Prestaciones
-	\item Prácticas de empresa
-\end{itemize}
-
-
-\subsection*{Conocimientos de metodologías de desarrollo y gestión de proyectos}
-
-Dado que este proyecto se centra en los aspectos del desarrollo utilizando metodologías ágiles, los conocimientos adquiridos en el grado acerca de ello han sido de vital importancia para la realización del mismo.
-
-\textbf{Asignaturas útiles}
-
-\begin{itemize}
-	\item Fundamentos de Ingeniería del Software
-	\item Metodologías de Desarrollo Ágil
-	\item Dirección y Gestión de Proyectos
-\end{itemize}
-
-
-\begin{itemize}
-	\item Fundamentos de Bases de Datos
-	\item Fundamentos de Ingeniería del Software
-	\item Ingeniería de Servidores
-	\item Sistemas de Información Basados en Web
-	\item Dirección y Gestión de Proyectos
-	\item Metodologías de Desarrollo Ágil
-\end{itemize}
-
-
-\section{Crítica al estado del arte}
 
 El mercado de aplicaciones de organización personal está repleto de opciones, con algunas de ellas muy populares. Las aplicaciones estudiadas pueden dividirse en las siguientes categorías, según su principal enfoque en cuanto a la organización personal
 
@@ -408,6 +383,53 @@ Se plantean los siguientes requisitos para la aplicación propuesta. Pueden divi
 \begin{enumerate}[label=\textbf{R6.\arabic*f}, leftmargin=10mm]
 	\item Se debe garantizar la compatibilidad de la aplicación con herramientas de accesibilidad, y mantener un contraste adecuado.
 \end{enumerate}
+
+
+\section{Integración de conocimientos previos}
+
+Este proyecto se centra en la adquisición de nuevos conocimientos a la hora de desarrollar aplicaciones web, así como en el desarrollo de los aquiridos a lo largo del grado. A continuación se repasan varias materias útiles en la elaboración de este trabajo, así como las asignaturas en las que se imparten y desarrollan.
+
+\subsection*{Conocimientos de bases de datos}
+
+Ha sido de especial utilidad conocer los diferentes tipos de sistemas gestores de bases de datos, sus ventajas e inconvenientes, y el manejo de lenguajes de 
+consulta como SQL. También ha resultado indispensable el saber cómo establecer una conexión con una base de datos, realizar un correcto modelo de los mismos, 
+y aprovechar el esquema relacional.
+
+\textbf{Asignaturas útiles} 
+
+\begin{itemize}
+	\item Fundamentos de Bases de Datos
+	\item Diseño y Desarrollo de Sistemas de Información
+	\item Sistemas de Información Basados en Web
+\end{itemize}
+
+
+\subsection*{Conocimientos de desarrollo web}
+
+Pese a haber trabajado poco en este campo anteriormente, los conocimientos previos en la materia han sido de gran ayuda de cara a comprender el funcionamiento de tecnologías como TypeScript, HTML, el protocolo HTTP o el patrón Modelo-Vista-Controlador, así como el funcionamiento de un servidor web y la infraestructura necesaria para un proyecto de estas características. Además, las prácticas de empresa realizadas en el grado han complementado la formación recibida, ya que se ha trabajado con diferentes tecnologías web.
+
+\textbf{Asignaturas útiles}
+
+\begin{itemize}
+	\item Sistemas de Información Basados en Web
+	\item Fundamentos de Redes
+	\item Servidores Web de Altas Prestaciones
+	\item Prácticas de empresa
+\end{itemize}
+
+
+\subsection*{Conocimientos de metodologías de desarrollo y gestión de proyectos}
+
+Dado que este proyecto se centra en los aspectos del desarrollo utilizando metodologías ágiles, los conocimientos adquiridos en el grado acerca de ello han sido de vital importancia para la realización del mismo.
+
+\textbf{Asignaturas útiles}
+
+\begin{itemize}
+	\item Fundamentos de Ingeniería del Software
+	\item Metodologías de Desarrollo Ágil
+	\item Dirección y Gestión de Proyectos
+\end{itemize}
+
 
 
 \chapter{Metodología}
@@ -1098,18 +1120,6 @@ A continuación se muestran imágenes de los prototipos y bocetos elaborados.
 	\centering
 	\includegraphics[scale=0.6]{img/sprint1-boceto-papel.jpg}
 	\caption{Bocetos iniciales a papel}
-\end{figure}
-
-\begin{figure}[hbt!]
-	\centering
-	%\includegraphics[scale=0.6]{img/arquitectura.png}
-	\caption{Capturas de pantalla del primer prototipo interactivo}
-\end{figure}
-
-\begin{figure}[hbt!]
-	\centering
-	%\includegraphics[scale=0.6]{img/arquitectura.png}
-	\caption{Capturas de pantalla del segundo prototipo interactivo}
 \end{figure}
 
 \begin{figure}[hbt!]
@@ -1864,8 +1874,6 @@ Se adjuntan algunas capturas de pantalla mostrando algunas secciones de la aplic
 % Capítulo: conclusiones y vías futuras
 \chapter{Conclusiones y vías futuras}
 
-\section{Conclusiones del proyecto}
-
 La propuesta inicial de este proyecto fue la de profundizar en el uso de tecnologías web, metodologías de desarrollo y gestión de un proyecto a largo plazo
 de forma directa, utilizando para ello una propuesta verosímil, como es la de una <<aplicación de gestión de horarios>>, que va tomando forma a lo largo de distintas reuniones, estudios de mercado, propuestas de requisitos, análisis de complejidad y planificación. 
 
@@ -1972,6 +1980,8 @@ La vista de actividades implementada consiste en una colección de listas de ele
 
 
 \newpage
+
+\renewcommand{\bibpreamble}{Todas las referencias web aquí listadas fueron revisadas el día 5 de septiembre de 2021.\\}
 
 % Capítulo: bibliografía
 \bibliographystyle{plainurl}

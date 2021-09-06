@@ -133,3 +133,4 @@ yarn-error.log*
 *.synctex.gz
 *.toc
 *.blg
+*.pdf
